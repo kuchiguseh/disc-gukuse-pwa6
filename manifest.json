@@ -1,0 +1,21 @@
+{
+  "name": "DISC別口ぐせ診断",
+  "short_name": "口ぐせ診断",
+  "description": "あなたの言葉が人生を変える。DISC別口ぐせ診断",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fff8f5",
+  "theme_color": "#f97316",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
