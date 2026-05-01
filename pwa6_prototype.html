@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>DiSC口ぐせ診断 | MBWコンサルティング</title>
+<style>
+/* ===========================================
+   PART 3: スタイル定義（白×パステル 藍青・オレンジ）
+   =========================================== */
+
+/* ---- カラーパレット ---- */
+:root {
+  --c-primary: #5B8DEF;       /* 藍青 */
+  --c-primary-deep: #3D6FCF;  /* 藍青ダーク（押下） */
+  --c-primary-bg: #E8F0FE;    /* 藍青背景 */
+  --c-accent: #FF9F6B;        /* オレンジ */
+  --c-accent-deep: #E8845C;   /* オレンジダーク */
+  --c-accent-bg: #FFF1E8;     /* オレンジ背景 */
+  --c-text: #1A2A3A;          /* メインテキスト（濃いめ） */
+  --c-text-sub: #5A6B7B;      /* サブテキスト（読めるグレー） */
+  --c-bg: #FBFCFE;            /* 全体背景（ほぼ白） */
+  --c-card: #FFFFFF;          /* カード背景 */
+  --c-border: #C8D2DC;        /* 罫線（視認できる濃さ） */
+  --c-success: #4FA34F;       /* 成功・S型用 */
+  --c-warn: #D4A82B;          /* i型用 */
+  --c-danger: #C84A4A;        /* D型用 */
+
+  --shadow-sm: 0 2px 8px rgba(91,141,239,0.10);
+  --shadow-md: 0 4px 16px rgba(91,141,239,0.16);
+  --radius: 14px;
+  --radius-sm: 8px;
+}
+
+/* ---- リセット ---- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  font-family: "Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
+  background: var(--c-bg);
+  color: var(--c-text);
+  line-height: 1.8;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, select, textarea { font: inherit; color: inherit; }
+
+/* ---- レイアウト共通 ---- */
+.app {
+  max-width: 640px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 20px 16px 40px;
+  display: flex;
+  flex-direction: column;
+}
+.screen { display: none; flex: 1; flex-direction: column; }
+.screen.active { display: flex; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ---- ヘッダー（共通） ---- */
+.app-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--c-border);
+}
+.app-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--c-primary);
+  letter-spacing: 0.04em;
+}
+.app-subtitle {
+  font-size: 13px;
+  color: var(--c-text-sub);
+  margin-top: 4px;
+}
+
+/* ---- 共通カード ---- */
+.card {
+  background: var(--c-card);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--c-border);
+}
+
+/* ---- 共通ボタン ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 18px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+  min-height: 56px;
+}
+.btn-primary {
+  background: var(--c-primary);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+.btn-primary:hover { background: var(--c-primary-deep); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+.btn-accent { background: var(--c-accent); color: white; box-shadow: var(--shadow-md); }
+.btn-accent:hover { background: var(--c-accent-deep); transform: translateY(-1px); }
+.btn-ghost {
+  background: transparent;
+  color: var(--c-primary);
+  border: 1px solid var(--c-primary);
+}
+.btn-ghost:hover { background: var(--c-primary-bg); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+/* ===========================================
+   1. スタート画面
+   =========================================== */
+.start-hero {
+  text-align: center;
+  padding: 32px 20px;
+  background: linear-gradient(135deg, var(--c-primary-bg) 0%, var(--c-accent-bg) 100%);
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+}
+.start-hero-emoji { font-size: 56px; margin-bottom: 12px; }
+
+/* 小さな星装飾（タイトル両脇） */
+.start-hero-stars {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  letter-spacing: 0.3em;
+}
+.start-hero-stars span {
+  color: var(--c-accent);
+  opacity: 0.7;
+  animation: starTwinkle 2.4s ease-in-out infinite;
+}
+.start-hero-stars span:nth-child(2) {
+  font-size: 20px;
+  color: var(--c-primary);
+  opacity: 0.85;
+  animation-delay: 0.6s;
+}
+.start-hero-stars span:nth-child(3) {
+  animation-delay: 1.2s;
+}
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.4; transform: scale(0.95); }
+  50% { opacity: 0.9; transform: scale(1.05); }
+}
+.start-hero-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--c-text);
+  margin-bottom: 12px;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+.start-hero-text {
+  font-size: 15px;
+  color: var(--c-text-sub);
+  margin-bottom: 0;
+  line-height: 1.7;
+}
+.start-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 24px 0;
+}
+.start-feature {
+  text-align: center;
+  padding: 18px 8px;
+  background: var(--c-card);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--c-border);
+}
+.start-feature-icon { font-size: 24px; margin-bottom: 6px; }
+.start-feature-text { font-size: 12px; color: var(--c-text-sub); line-height: 1.5; }
+.start-feature-text strong { display: block; color: var(--c-primary); font-size: 15px; margin-bottom: 2px; }
+
+.start-description {
+  background: var(--c-card);
+  border-radius: var(--radius);
+  padding: 22px;
+  margin-bottom: 20px;
+  border: 1px solid var(--c-border);
+}
+.start-description h3 {
+  font-size: 16px;
+  color: var(--c-primary);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.start-description h3::before { content: "📝"; }
+.start-description p {
+  font-size: 15px;
+  color: var(--c-text);
+  margin-bottom: 10px;
+  line-height: 1.7;
+}
+.start-description p:last-child { margin-bottom: 0; }
+
+/* ===========================================
+   2. プロフィール画面
+   =========================================== */
+.profile-intro {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.profile-intro h2 {
+  font-size: 22px;
+  color: var(--c-primary);
+  margin-bottom: 10px;
+  letter-spacing: 0.03em;
+}
+.profile-intro p { font-size: 14px; color: var(--c-text-sub); line-height: 1.7; }
+
+.form-group {
+  margin-bottom: 22px;
+}
+.form-label {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--c-text);
+  margin-bottom: 10px;
+}
+.form-label .required {
+  color: var(--c-accent);
+  font-size: 12px;
+  margin-left: 4px;
+}
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 16px 18px;
+  border: 2px solid var(--c-border);
+  border-radius: var(--radius-sm);
+  background: var(--c-card);
+  font-size: 17px;
+  color: var(--c-text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none;
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 3px var(--c-primary-bg);
+}
+.form-textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+.form-radio-group { display: flex; gap: 8px; flex-wrap: wrap; }
+.form-radio {
+  flex: 1;
+  min-width: calc(50% - 4px);
+  position: relative;
+}
+.form-radio input { position: absolute; opacity: 0; pointer-events: none; }
+.form-radio label {
+  display: block;
+  padding: 12px 8px;
+  text-align: center;
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--radius-sm);
+  background: var(--c-card);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.form-radio input:checked + label {
+  border-color: var(--c-primary);
+  background: var(--c-primary-bg);
+  color: var(--c-primary-deep);
+  font-weight: 700;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+}
+.form-actions .btn-ghost { flex: 0 0 32%; }
+.form-actions .btn-primary { flex: 1; }
+
+/* ===========================================
+   3. 質問画面
+   =========================================== */
+.q-progress {
+  margin-bottom: 24px;
+}
+.q-progress-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: var(--c-text);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.q-progress-label strong {
+  color: var(--c-primary);
+  font-size: 16px;
+  font-weight: 700;
+}
+.q-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--c-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.q-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--c-primary) 0%, var(--c-accent) 100%);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+  width: 10%;
+}
+
+.q-card {
+  background: var(--c-card);
+  border-radius: var(--radius);
+  padding: 28px 22px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--c-border);
+}
+.q-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--c-text);
+  margin-bottom: 26px;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+.q-options { display: flex; flex-direction: column; gap: 12px; }
+.q-option {
+  display: block;
+  width: 100%;
+  padding: 18px 20px;
+  background: var(--c-card);
+  border: 2px solid var(--c-border);
+  border-radius: var(--radius-sm);
+  text-align: left;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--c-text);
+  transition: all 0.2s ease;
+  min-height: 60px;
+}
+.q-option:hover {
+  border-color: var(--c-primary);
+  background: var(--c-primary-bg);
+  transform: translateX(2px);
+}
+.q-option.selected {
+  border-color: var(--c-primary);
+  background: var(--c-primary-bg);
+  color: var(--c-primary-deep);
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+  border-width: 2.5px;
+}
+
+.q-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+.q-actions .btn-ghost { flex: 0 0 32%; }
+.q-actions .btn-primary { flex: 1; }
+
+/* ===========================================
+   4. 結果画面
+   =========================================== */
+.result-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.result-label-small {
+  display: inline-block;
+  background: var(--c-accent-bg);
+  color: var(--c-accent-deep);
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+}
+.result-name {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--c-text);
+  margin-bottom: 8px;
+  letter-spacing: 0.03em;
+}
+.result-code {
+  display: inline-block;
+  background: var(--c-primary);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-right: 10px;
+  letter-spacing: 0.05em;
+}
+.result-summary {
+  font-size: 16px;
+  color: var(--c-text);
+  background: var(--c-primary-bg);
+  padding: 18px 20px;
+  border-radius: var(--radius);
+  margin: 18px 0 26px;
+  line-height: 1.8;
+}
+
+/* スコアバー（4タイプ横並び） */
+.scores {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 0 0 26px;
+}
+.score-item {
+  text-align: center;
+  padding: 14px 6px;
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-sm);
+}
+.score-item.is-primary {
+  background: var(--c-primary-bg);
+  border-color: var(--c-primary);
+  border-width: 2px;
+}
+.score-item.is-secondary {
+  background: var(--c-accent-bg);
+  border-color: var(--c-accent);
+}
+.score-letter {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  letter-spacing: 0.05em;
+}
+.score-letter[data-type="D"] { color: var(--c-danger); }
+.score-letter[data-type="i"] { color: var(--c-warn); }
+.score-letter[data-type="S"] { color: var(--c-success); }
+.score-letter[data-type="C"] { color: var(--c-primary); }
+.score-value { font-size: 15px; color: var(--c-text); font-weight: 700; }
+.score-bar { font-size: 10px; letter-spacing: -1px; margin-top: 4px; }
+
+/* セクション */
+.result-section { margin-bottom: 22px; }
+.result-section-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--c-primary);
+  margin-bottom: 12px;
+  letter-spacing: 0.03em;
+}
+.result-section-title.warn { color: var(--c-accent-deep); }
+
+.result-list {
+  background: var(--c-card);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  border: 1px solid var(--c-border);
+  list-style: none;
+}
+.result-list li {
+  font-size: 16px;
+  line-height: 1.7;
+  padding: 10px 0 10px 22px;
+  position: relative;
+}
+.result-list li:not(:last-child) { border-bottom: 1px dashed var(--c-border); }
+.result-list li::before {
+  content: "・";
+  position: absolute;
+  left: 0;
+  color: var(--c-primary);
+  font-weight: 700;
+  font-size: 18px;
+}
+.result-list.warn li::before { color: var(--c-accent); }
+
+/* 口ぐせ→置き換え 対比 */
+.kuchiguse-pairs {
+  background: var(--c-card);
+  border-radius: var(--radius);
+  border: 1px solid var(--c-border);
+  overflow: hidden;
+}
+.kuchiguse-pair {
+  display: grid;
+  grid-template-columns: 1fr 32px 1fr;
+  align-items: center;
+  padding: 14px 16px;
+  gap: 8px;
+}
+.kuchiguse-pair:not(:last-child) { border-bottom: 1px solid var(--c-border); }
+.kuchiguse-from {
+  font-size: 15px;
+  color: var(--c-text);
+  background: #FDECEC;
+  padding: 10px 12px;
+  border-radius: 6px;
+  text-align: center;
+  line-height: 1.5;
+}
+.kuchiguse-arrow {
+  text-align: center;
+  color: var(--c-primary);
+  font-weight: 700;
+  font-size: 18px;
+}
+.kuchiguse-to {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--c-text);
+  background: #E8F4E8;
+  padding: 10px 12px;
+  border-radius: 6px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* アドバイス */
+.advice {
+  background: var(--c-accent-bg);
+  border-left: 5px solid var(--c-accent);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-top: 22px;
+}
+.advice-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--c-accent-deep);
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+}
+.advice-body { font-size: 16px; line-height: 1.8; color: var(--c-text); }
+
+/* 結果アクション */
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--c-border);
+}
+
+/* フッター */
+.app-footer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--c-text-sub);
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--c-border);
+  line-height: 1.7;
+}
+
+/* ---- 画面サイズ最適化（小型スマホ） ---- */
+@media (max-width: 380px) {
+  .start-features { gap: 6px; }
+  .start-feature { padding: 14px 4px; }
+  .start-feature-text { font-size: 11px; }
+  .start-feature-text strong { font-size: 14px; }
+  .q-text { font-size: 18px; }
+  .q-option { font-size: 16px; padding: 16px 16px; }
+  .result-name { font-size: 23px; }
+  .kuchiguse-pair { grid-template-columns: 1fr 24px 1fr; padding: 12px 10px; }
+  .kuchiguse-from, .kuchiguse-to { font-size: 14px; padding: 8px 8px; }
+  .result-list li { font-size: 15px; }
+}
+
+/* ============================================
+   印刷用CSS（@media print）— A4×1枚に最適化
+   ============================================ */
+@media print {
+  /* 印刷時のページ設定 */
+  @page {
+    size: A4 portrait;
+    margin: 12mm 14mm;
+  }
+
+  /* 全体リセット */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  body {
+    background: white !important;
+    font-size: 11pt;
+    line-height: 1.6;
+  }
+
+  .app {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* 結果画面以外は印刷しない */
+  .screen { display: none !important; }
+  #screen-result { display: block !important; padding: 0; animation: none; }
+
+  /* 画面用の要素を印刷時は非表示 */
+  .app-header,
+  .app-footer,
+  .result-actions {
+    display: none !important;
+  }
+
+  /* 印刷専用ヘッダーを表示 */
+  .print-only {
+    display: block !important;
+  }
+
+  /* 印刷ヘッダー */
+  .print-header {
+    text-align: center;
+    margin-bottom: 8mm;
+    padding-bottom: 4mm;
+    border-bottom: 2px solid #5B8DEF;
+  }
+  .print-header h1 {
+    font-size: 16pt;
+    font-weight: 700;
+    color: #5B8DEF;
+    margin-bottom: 2mm;
+  }
+  .print-header .print-meta {
+    font-size: 9pt;
+    color: #5A6B7B;
+  }
+
+  /* 結果ヘッダー */
+  .result-header {
+    margin-bottom: 4mm;
+  }
+  .result-label-small {
+    font-size: 8pt;
+    padding: 2px 10px;
+    margin-bottom: 4px;
+  }
+  .result-name {
+    font-size: 18pt;
+  }
+  .result-code {
+    font-size: 12pt;
+    padding: 3px 12px;
+    background: #5B8DEF !important;
+    color: white !important;
+  }
+  .result-summary {
+    font-size: 10pt;
+    padding: 8px 12px;
+    margin: 8px 0 12px;
+    background: #E8F0FE !important;
+    line-height: 1.5;
+  }
+
+  /* スコアバー */
+  .scores {
+    margin-bottom: 6mm;
+    gap: 4px;
+  }
+  .score-item {
+    padding: 6px 4px;
+  }
+  .score-letter { font-size: 14pt; }
+  .score-value { font-size: 9pt; }
+  .score-bar { font-size: 7pt; }
+  .score-item.is-primary {
+    background: #E8F0FE !important;
+    border-color: #5B8DEF !important;
+  }
+  .score-item.is-secondary {
+    background: #FFF1E8 !important;
+    border-color: #FF9F6B !important;
+  }
+
+  /* セクション */
+  .result-section { margin-bottom: 4mm; page-break-inside: avoid; }
+  .result-section-title {
+    font-size: 10pt;
+    margin-bottom: 4px;
+  }
+  .result-list {
+    padding: 8px 12px;
+  }
+  .result-list li {
+    font-size: 10pt;
+    padding: 3px 0 3px 14px;
+    line-height: 1.5;
+  }
+
+  /* 口ぐせ→置き換え */
+  .kuchiguse-pair {
+    padding: 6px 10px;
+    grid-template-columns: 1fr 24px 1fr;
+  }
+  .kuchiguse-from {
+    font-size: 9pt;
+    padding: 5px 8px;
+    background: #FDECEC !important;
+  }
+  .kuchiguse-to {
+    font-size: 9pt;
+    padding: 5px 8px;
+    background: #E8F4E8 !important;
+  }
+  .kuchiguse-arrow { font-size: 11pt; }
+
+  /* アドバイス */
+  .advice {
+    padding: 8px 12px;
+    margin-top: 4mm;
+    background: #FFF1E8 !important;
+    border-left: 4px solid #FF9F6B !important;
+    page-break-inside: avoid;
+  }
+  .advice-title { font-size: 10pt; margin-bottom: 3px; }
+  .advice-body { font-size: 10pt; line-height: 1.5; }
+
+  /* 印刷フッター */
+  .print-footer {
+    display: block !important;
+    text-align: center;
+    margin-top: 8mm;
+    padding-top: 4mm;
+    border-top: 1px solid #C8D2DC;
+    font-size: 8pt;
+    color: #5A6B7B;
+    line-height: 1.6;
+  }
+}
+
+/* 画面表示時は印刷専用要素を隠す */
+.print-only { display: none; }
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============================================
+       共通ヘッダー
+       ============================================ -->
+  <header class="app-header">
+    <div class="app-title">DiSC 口ぐせ診断</div>
+    <div class="app-subtitle">あなたの言葉のクセを、やさしく見つける</div>
+  </header>
+
+  <!-- ============================================
+       1. スタート画面
+       ============================================ -->
+  <section class="screen active" id="screen-start">
+    <div class="start-hero">
+      <div class="start-hero-stars">
+        <span>✦</span><span>✦</span><span>✦</span>
+      </div>
+      <div class="start-hero-title">口ぐせを変えると、<br>人生が変わる。</div>
+      <p class="start-hero-text">10問の質問に答えて、<br>あなたのタイプと口ぐせを見つけましょう</p>
+    </div>
+
+    <div class="start-features">
+      <div class="start-feature">
+        <div class="start-feature-icon">⏱️</div>
+        <div class="start-feature-text"><strong>3分</strong>で完了</div>
+      </div>
+      <div class="start-feature">
+        <div class="start-feature-icon">✨</div>
+        <div class="start-feature-text"><strong>12タイプ</strong>診断</div>
+      </div>
+      <div class="start-feature">
+        <div class="start-feature-icon">🎯</div>
+        <div class="start-feature-text"><strong>10問</strong>に答えるだけ</div>
+      </div>
+    </div>
+
+    <div class="start-description">
+      <h3>診断の流れ</h3>
+      <p>① プロフィールを入力(任意)</p>
+      <p>② 10問の質問に答える</p>
+      <p>③ あなたのタイプと、おすすめの「置き換え口ぐせ」が表示されます</p>
+    </div>
+
+    <button class="btn btn-primary" onclick="goToScreen('profile')">
+      はじめる →
+    </button>
+
+    <div class="app-footer">
+      MBWコンサルティング / 口ぐセラピスト 大石ゆうじ
+    </div>
+  </section>
+
+  <!-- ============================================
+       2. プロフィール画面
+       ============================================ -->
+  <section class="screen" id="screen-profile">
+    <div class="profile-intro">
+      <h2>はじめに教えてください</h2>
+      <p>より良いアドバイスのために、<br>教えていただけると嬉しいです。</p>
+    </div>
+
+    <div class="card">
+      <div class="form-group">
+        <label class="form-label" for="profile-name">お名前(ニックネームでもOK)</label>
+        <input type="text" id="profile-name" class="form-input" placeholder="例)山田 花子">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="profile-job">職業</label>
+        <select id="profile-job" class="form-select">
+          <option value="">選択してください</option>
+          <option value="経営者・役員">経営者・役員</option>
+          <option value="管理職">管理職</option>
+          <option value="会社員">会社員</option>
+          <option value="営業職">営業職</option>
+          <option value="事務職">事務職</option>
+          <option value="技術職・エンジニア">技術職・エンジニア</option>
+          <option value="専門職(医療・教育・士業など)">専門職(医療・教育・士業など)</option>
+          <option value="コンサルタント">コンサルタント</option>
+          <option value="個人事業主・フリーランス">個人事業主・フリーランス</option>
+          <option value="主婦・主夫">主婦・主夫</option>
+          <option value="パート・アルバイト">パート・アルバイト</option>
+          <option value="学生">学生</option>
+          <option value="退職後・年金生活">退職後・年金生活</option>
+          <option value="その他">その他</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="profile-age">年齢層</label>
+        <select id="profile-age" class="form-select">
+          <option value="">選択してください</option>
+          <option value="20代">20代</option>
+          <option value="30代">30代</option>
+          <option value="40代">40代</option>
+          <option value="50代">50代</option>
+          <option value="60代以上">60代以上</option>
+          <option value="回答しない">回答しない</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="profile-gender">性別</label>
+        <select id="profile-gender" class="form-select">
+          <option value="">選択してください</option>
+          <option value="女性">女性</option>
+          <option value="男性">男性</option>
+          <option value="その他">その他</option>
+          <option value="回答しない">回答しない</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="profile-pref">お住まいの都道府県</label>
+        <select id="profile-pref" class="form-select">
+          <option value="">選択してください</option>
+          <option value="北海道">北海道</option>
+          <option value="青森県">青森県</option>
+          <option value="岩手県">岩手県</option>
+          <option value="宮城県">宮城県</option>
+          <option value="秋田県">秋田県</option>
+          <option value="山形県">山形県</option>
+          <option value="福島県">福島県</option>
+          <option value="茨城県">茨城県</option>
+          <option value="栃木県">栃木県</option>
+          <option value="群馬県">群馬県</option>
+          <option value="埼玉県">埼玉県</option>
+          <option value="千葉県">千葉県</option>
+          <option value="東京都">東京都</option>
+          <option value="神奈川県">神奈川県</option>
+          <option value="新潟県">新潟県</option>
+          <option value="富山県">富山県</option>
+          <option value="石川県">石川県</option>
+          <option value="福井県">福井県</option>
+          <option value="山梨県">山梨県</option>
+          <option value="長野県">長野県</option>
+          <option value="岐阜県">岐阜県</option>
+          <option value="静岡県">静岡県</option>
+          <option value="愛知県">愛知県</option>
+          <option value="三重県">三重県</option>
+          <option value="滋賀県">滋賀県</option>
+          <option value="京都府">京都府</option>
+          <option value="大阪府">大阪府</option>
+          <option value="兵庫県">兵庫県</option>
+          <option value="奈良県">奈良県</option>
+          <option value="和歌山県">和歌山県</option>
+          <option value="鳥取県">鳥取県</option>
+          <option value="島根県">島根県</option>
+          <option value="岡山県">岡山県</option>
+          <option value="広島県">広島県</option>
+          <option value="山口県">山口県</option>
+          <option value="徳島県">徳島県</option>
+          <option value="香川県">香川県</option>
+          <option value="愛媛県">愛媛県</option>
+          <option value="高知県">高知県</option>
+          <option value="福岡県">福岡県</option>
+          <option value="佐賀県">佐賀県</option>
+          <option value="長崎県">長崎県</option>
+          <option value="熊本県">熊本県</option>
+          <option value="大分県">大分県</option>
+          <option value="宮崎県">宮崎県</option>
+          <option value="鹿児島県">鹿児島県</option>
+          <option value="沖縄県">沖縄県</option>
+          <option value="海外">海外</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="profile-worry">今の一番の悩み</label>
+        <select id="profile-worry" class="form-select">
+          <option value="">選択してください</option>
+          <option value="人間関係がうまくいかない">人間関係がうまくいかない</option>
+          <option value="自分に自信が持てない">自分に自信が持てない</option>
+          <option value="お金・収入の悩み">お金・収入の悩み</option>
+          <option value="感情をうまく伝えられない">感情をうまく伝えられない</option>
+          <option value="やる気が続かない">やる気が続かない</option>
+          <option value="職場・家族との関係">職場・家族との関係</option>
+          <option value="特になし・回答しない">特になし・回答しない</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-ghost" onclick="goToScreen('start')">戻る</button>
+      <button class="btn btn-primary" onclick="startQuestions()">質問へ →</button>
+    </div>
+  </section>
+
+  <!-- ============================================
+       3. 質問画面
+       ============================================ -->
+  <section class="screen" id="screen-question">
+    <div class="q-progress">
+      <div class="q-progress-label">
+        <span>質問 <strong id="q-num">1</strong> / 10</span>
+        <span id="q-percent">10%</span>
+      </div>
+      <div class="q-progress-bar">
+        <div class="q-progress-fill" id="q-progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-text" id="q-text">質問文がここに表示されます</div>
+      <div class="q-options" id="q-options">
+        <!-- JSで挿入 -->
+      </div>
+    </div>
+
+    <div class="q-actions">
+      <button class="btn btn-ghost" id="q-back" onclick="prevQuestion()">戻る</button>
+      <button class="btn btn-primary" id="q-next" onclick="nextQuestion()" disabled>次へ →</button>
+    </div>
+  </section>
+
+  <!-- ============================================
+       4. 結果画面
+       ============================================ -->
+  <section class="screen" id="screen-result">
+    <!-- 印刷時のみ表示されるヘッダー -->
+    <div class="print-only print-header">
+      <h1>DiSC 口ぐせ診断 結果シート</h1>
+      <div class="print-meta">
+        <span id="print-name"></span>
+        <span id="print-date"></span>
+      </div>
+    </div>
+
+    <div class="result-header">
+      <span class="result-label-small">あなたのタイプ</span>
+      <div>
+        <span class="result-code" id="r-code">C-D</span>
+        <span class="result-name" id="r-name">結果を出す論理派</span>
+      </div>
+    </div>
+
+    <div class="result-summary" id="r-summary">概要文が入ります</div>
+
+    <!-- スコアバー -->
+    <div class="scores" id="r-scores">
+      <!-- JSで挿入 -->
+    </div>
+
+    <!-- 強み -->
+    <div class="result-section">
+      <div class="result-section-title">◎ あなたの強み</div>
+      <ul class="result-list" id="r-strength"></ul>
+    </div>
+
+    <!-- 陥りやすいパターン -->
+    <div class="result-section">
+      <div class="result-section-title warn">△ 陥りやすいパターン</div>
+      <ul class="result-list warn" id="r-weakness"></ul>
+    </div>
+
+    <!-- 口ぐせ → 置き換え -->
+    <div class="result-section">
+      <div class="result-section-title">◇ 口ぐせを変える3つの言葉</div>
+      <div class="kuchiguse-pairs" id="r-kuchiguse"></div>
+    </div>
+
+    <!-- アドバイス -->
+    <div class="advice">
+      <div class="advice-title">✦ 一言アドバイス</div>
+      <div class="advice-body" id="r-advice"></div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn btn-accent" onclick="exportPDF()">📄 PDFで保存する</button>
+      <button class="btn btn-ghost" onclick="restart()">最初からやり直す</button>
+    </div>
+
+    <div class="app-footer">
+      口ぐせを変えると、人生が変わる。<br>
+      MBWコンサルティング / 口ぐセラピスト 大石ゆうじ
+    </div>
+
+    <!-- 印刷時のみ表示されるフッター -->
+    <div class="print-only print-footer">
+      口ぐせを変えると、人生が変わる。<br>
+      MBWコンサルティング / 口ぐセラピスト 大石ゆうじ
+    </div>
+  </section>
+
+</div>
+
+<!-- ============================================
+     PART 3: 画面遷移ロジック（仮データで動作確認）
+     PART 4で本物のデータと差し替え予定
+     ============================================ -->
+<script>
+// ===== 質問データ + 判定ロジック（PART 1） =====
+// ========================================
+// PART 1（確定版）: 質問データ + 判定ロジック
+// 形式: 場面提示型・4択択一（D/i/S/C から1つ選ぶ）
+// 構成: 改善後質問10問 / 「口ぐせ」をQ5に配置
+// ========================================
+
+const QUESTIONS = [
+  {
+    id: 1,
+    question: "「やったことのない新しいこと」を前にしたとき、最初の気持ちは？",
+    options: [
+      { type: "D", text: "面白そう、すぐにやってみたい" },
+      { type: "i", text: "誰かと一緒に、楽しくやりたい" },
+      { type: "S", text: "今のままでも十分かな、と感じる" },
+      { type: "C", text: "ちゃんと調べて、納得してから始めたい" }
+    ]
+  },
+  {
+    id: 2,
+    question: "誰かに何かをお願いするとき、自然と出る言い方は？",
+    options: [
+      { type: "D", text: "「○○までにお願い」とはっきり伝える" },
+      { type: "i", text: "「ねえ、一緒にやらない？楽しそうだよ」と誘う" },
+      { type: "S", text: "「もしよかったら、お願いできますか？」と丁寧に伝える" },
+      { type: "C", text: "「この手順でやってもらえると助かります」と説明する" }
+    ]
+  },
+  {
+    id: 3,
+    question: "何かうまくいかなかったとき、心の中で最初につぶやく言葉は？",
+    options: [
+      { type: "D", text: "「次はどうする？すぐ立て直そう」" },
+      { type: "i", text: "「まあ、なんとかなる！気持ち切り替えよう」" },
+      { type: "S", text: "「迷惑かけてないかな…」と気になる" },
+      { type: "C", text: "「なぜこうなったんだろう」と原因を考える" }
+    ]
+  },
+  {
+    id: 4,
+    question: "ふだんの会話でよく使う言葉は、どれに近いですか？",
+    options: [
+      { type: "D", text: "「決めた！やろう」「今がチャンス」" },
+      { type: "i", text: "「楽しそう！」「それ素敵！」" },
+      { type: "S", text: "「大丈夫？」「いつもありがとう」" },
+      { type: "C", text: "「ちゃんと確認しよう」「段取りが大事」" }
+    ]
+  },
+  {
+    id: 5,
+    question: "ふと口から出る「口ぐせ」、一番近いのはどれ？",
+    options: [
+      { type: "D", text: "「早くやろう」「こうすれば絶対うまくいく」系" },
+      { type: "i", text: "「楽しみだね」「なんとかなる」系" },
+      { type: "S", text: "「ありがとう」「無理しないでね」系" },
+      { type: "C", text: "「確認しよう」「間違えたくない」系" }
+    ]
+  },
+  {
+    id: 6,
+    question: "意見が合わない人が目の前にいるとき、自分はどうする？",
+    options: [
+      { type: "D", text: "自分の意見をはっきり伝え、議論をリードする" },
+      { type: "i", text: "明るい雰囲気で場を和ませながら、妥協点を探す" },
+      { type: "S", text: "相手の気持ちに寄り添いながら、丁寧にまとめる" },
+      { type: "C", text: "事実やデータを元に、冷静に整理して話す" }
+    ]
+  },
+  {
+    id: 7,
+    question: "親しい人から「最近どう？」と聞かれたとき、自然と出る答え方は？",
+    options: [
+      { type: "D", text: "「忙しいけど充実してる。○○に挑戦してるよ」" },
+      { type: "i", text: "「最高！すごいことがあってね～！」と盛り上がる" },
+      { type: "S", text: "「まあまあかな。あなたは？」と相手に聞き返す" },
+      { type: "C", text: "「いくつか課題があるけど、順調に進んでいます」" }
+    ]
+  },
+  {
+    id: 8,
+    question: "ここぞという場面で、自分の中に湧いてくる言葉は？",
+    options: [
+      { type: "D", text: "「絶対できる。行くぞ！」" },
+      { type: "i", text: "「楽しんだもの勝ち！なんとかなる！」" },
+      { type: "S", text: "「みんながいるから大丈夫。一緒に頑張ろう」" },
+      { type: "C", text: "「準備はできてる。落ち着いて確認しよう」" }
+    ]
+  },
+  {
+    id: 9,
+    question: "大切な人が元気をなくしていたら、自分はどうする？",
+    options: [
+      { type: "D", text: "「次はどうする？一緒に考えよう」と解決策を出す" },
+      { type: "i", text: "「絶対大丈夫！元気出して！」と明るく励ます" },
+      { type: "S", text: "「話したいことあったら聞くよ」とそっと寄り添う" },
+      { type: "C", text: "「何が原因か整理してみよう」と冷静に分析する" }
+    ]
+  },
+  {
+    id: 10,
+    question: "あなたが毎日、大切にしていることは？",
+    options: [
+      { type: "D", text: "目標に向かって、前に進み続けること" },
+      { type: "i", text: "人とのつながりや、楽しい時間を味わうこと" },
+      { type: "S", text: "周りの人が笑顔でいられる空間を作ること" },
+      { type: "C", text: "物事を丁寧に、正確にこなすこと" }
+    ]
+  }
+];
+
+// ========================================
+// スコア計算ロジック
+// ========================================
+
+/**
+ * answers: { 1: "D", 2: "i", 3: "S", ... } の形式（id: 選んだtype）
+ * 戻り値: { D, i, S, C }（合計10点になる）
+ */
+function calculateScores(answers) {
+  const scores = { D: 0, i: 0, S: 0, C: 0 };
+  QUESTIONS.forEach(q => {
+    const chosenType = answers[q.id];
+    if (chosenType && scores.hasOwnProperty(chosenType)) {
+      scores[chosenType] += 1;
+    }
+  });
+  return scores;
+}
+
+// ========================================
+// 主タイプ＋サブタイプ判定
+// 同点時の優先順位: D > i > C > S（行動を起こしやすい順）
+// ========================================
+
+const TIE_BREAK_ORDER = ["D", "i", "C", "S"];
+
+function determineType(scores) {
+  const sorted = ["D", "i", "S", "C"].sort((a, b) => {
+    if (scores[b] !== scores[a]) return scores[b] - scores[a];
+    return TIE_BREAK_ORDER.indexOf(a) - TIE_BREAK_ORDER.indexOf(b);
+  });
+
+  const primary = sorted[0];
+  const secondary = sorted[1];
+  const code = `${primary}-${secondary}`;
+
+  return { primary, secondary, scores, code };
+}
+
+// ========================================
+// 12組み合わせコード一覧
+// ========================================
+const TYPE_CODES = [
+  "D-i", "D-S", "D-C",
+  "i-D", "i-S", "i-C",
+  "S-D", "S-i", "S-C",
+  "C-D", "C-i", "C-S"
+];
+
+
+// ===== 12組み合わせ解説データ（PART 2） =====
+// ========================================
+// PART 2（確定版）: 12組み合わせ解説データ
+// 方針: 中立言語 × 寄り添いトーン（ジャッジしない）
+// ブロック1〜4を統合
+// ========================================
+
+const TYPE_DESCRIPTIONS = {
+
+  // ===== ブロック1: D主導 =====
+  "D-i": {
+    name: "突破するリーダー",
+    summary: "決断のスピードと、人を巻き込む明るさを併せ持つタイプ。動きながら道を作っていく力があります。",
+    strength: [
+      "決断が早く、止まらずに前に進める",
+      "周りを乗せて、勢いのある場をつくれる",
+      "予期せぬ場面でも動じず、力を発揮する"
+    ],
+    weakness: [
+      "勢いの強さの裏側で、周りが追いつくスピードに気づきにくいことがある",
+      "感情が動きやすく、勢いのまま言葉が出ることがある",
+      "推進力が高いぶん、細部の確認が後回しになりやすい"
+    ],
+    kuchiguse: [
+      "とにかくやってみよう",
+      "細かいことはあとで",
+      "なんとかなるって"
+    ],
+    replace: [
+      "一回だけ、立ち止まって確認する",
+      "周りの様子を、一拍見てから動く",
+      "詰めの部分を、先にメモしておく"
+    ],
+    advice: "あなたの推進力は、周りにとっても希望になっています。走るスピードはそのままで、5分だけ振り返る時間を持つと、結果がもっと安定していきます。"
+  },
+
+  "D-S": {
+    name: "粘り強い実行者",
+    summary: "推進する力と、続けていく力を併せ持つタイプ。決めたことを最後までやり抜く安定感があります。",
+    strength: [
+      "決めたことを最後までやり抜く",
+      "感情に流されず、安定したペースで動ける",
+      "現場の信頼を、地道に積み上げていける"
+    ],
+    weakness: [
+      "やり方が定まっているぶん、別の選択肢に切り替える機会が少なくなりやすい",
+      "我慢強さの裏側で、内側に感情をためやすい",
+      "新しい方法を試すまでに、時間をかける傾向がある"
+    ],
+    kuchiguse: [
+      "今までこうやってきたから",
+      "変えなくていい",
+      "我慢すればいい"
+    ],
+    replace: [
+      "一度だけ、別のやり方を試してみる",
+      "我慢する前に、一言だけ伝えてみる",
+      "新しい意見も、一回聞いてから決める"
+    ],
+    advice: "やり抜く力は、何よりの財産です。たまに「変えてもいい」と自分に許可を出してあげると、もっと自由に動けるようになります。"
+  },
+
+  "D-C": {
+    name: "戦略型の推進者",
+    summary: "推進する力と、論理で考える力を併せ持つタイプ。根拠をもって動くため、結果が積み上がりやすい傾向があります。",
+    strength: [
+      "目標に向かう筋道を描ける",
+      "感情よりも事実をもとに判断できる",
+      "ムダを省いて、効率よく動ける"
+    ],
+    weakness: [
+      "正しさを大切にするぶん、相手にとって厳しい言い方になりやすい",
+      "完成度を求める気持ちが強く、失敗を受け入れにくいことがある",
+      "論理を優先するため、相手の感情に気づくのが遅れる傾向がある"
+    ],
+    kuchiguse: [
+      "それ、根拠ある？",
+      "普通に考えればわかる",
+      "なんでできないの"
+    ],
+    replace: [
+      "どう感じている？と、一言聞いてみる",
+      "そう考えたんだね、と受けてから返す",
+      "できない理由を、一緒に整理してみる"
+    ],
+    advice: "正しさは、あなたの強みです。その正しさに「相手の気持ちを受け止める一拍」を加えると、相手が動き出すスピードが変わっていきます。"
+  },
+
+  // ===== ブロック2: i主導 =====
+  "i-D": {
+    name: "巻き込み型のチャレンジャー",
+    summary: "明るさと行動力を併せ持つタイプ。場の空気を動かしながら、新しいことに飛び込んでいく力があります。",
+    strength: [
+      "場を明るくして、人の気持ちを動かせる",
+      "新しいことに、ためらいなく飛び込める",
+      "発想と行動のサイクルが、テンポよく回る"
+    ],
+    weakness: [
+      "勢いの良さの裏側で、約束を抱えすぎる傾向がある",
+      "気持ちで動けるぶん、計画を立てる前にスタートしやすい",
+      "テンポが速いため、関心が次の対象へ移るのが早いことがある"
+    ],
+    kuchiguse: [
+      "やります！やれます！",
+      "なんとかなる",
+      "あとで考えればいい"
+    ],
+    replace: [
+      "今わかる範囲で、答えるね",
+      "段取りだけ、先に決めておく",
+      "終わるところまでが、ひとつの区切り"
+    ],
+    advice: "あなたの勢いは、それ自体が才能です。スタートとゴールに「小さな仕組み」を一つずつ置くと、その勢いがそのまま結果につながっていきます。"
+  },
+
+  "i-S": {
+    name: "あたたかいムードメーカー",
+    summary: "明るさと寄り添う力を併せ持つタイプ。人の気持ちを察しながら、場をやわらかくしていく力があります。",
+    strength: [
+      "場の雰囲気を、自然にやわらかくできる",
+      "相手の感情の動きを、敏感に感じ取れる",
+      "人と人の間をつなぐ役割が、自然にこなせる"
+    ],
+    weakness: [
+      "やさしさの裏側で、自分の意見を後ろに置きやすい",
+      "相手を思う気持ちが強いぶん、自分の感情が後回しになりやすい",
+      "場の調和を大切にするため、決断を相手にゆだねる傾向がある"
+    ],
+    kuchiguse: [
+      "どっちでもいいよ",
+      "嫌われたくないし",
+      "私はいいから"
+    ],
+    replace: [
+      "私は〜のほうがいいかな",
+      "正直なところを、伝えてみる",
+      "自分の希望も、ちゃんと言ってみる"
+    ],
+    advice: "あなたのやさしさは、周りの安心の源です。週に一度、自分の気持ちを優先する時間を持つと、そのやさしさをもっと長く保てるようになります。"
+  },
+
+  "i-C": {
+    name: "考える発信者",
+    summary: "感性と分析する力を併せ持つタイプ。気持ちで届けながら、論理で裏付けていけるバランスがあります。",
+    strength: [
+      "感情と論理の両面で、人に届けられる",
+      "発想に裏付けがあり、説得力につながる",
+      "言葉の選び方が、丁寧で行き届いている"
+    ],
+    weakness: [
+      "考える力が深いぶん、発信までに時間をかける傾向がある",
+      "丁寧さを大切にするため、完成までのハードルが高くなりやすい",
+      "感情と分析の両方を使うため、エネルギーを多く使うことがある"
+    ],
+    kuchiguse: [
+      "ちゃんと考えてから言わないと",
+      "もっと調べてから出そう",
+      "これでいいのかな"
+    ],
+    replace: [
+      "60点で、出してみる",
+      "今の段階で、一回出してみる",
+      "出してから、直していけばいい"
+    ],
+    advice: "考える力は、あなたの大切な武器です。「出す前提」で考えるリズムに切り替えると、その武器がもっと多くの人に届くようになります。"
+  },
+
+  // ===== ブロック3: S主導 =====
+  "S-D": {
+    name: "静かな実行者",
+    summary: "穏やかさの中に、芯の強さを併せ持つタイプ。決めたことをコツコツとやり遂げる安定感があります。",
+    strength: [
+      "決めたことを、最後まで着実にやり抜ける",
+      "周りの動きに振り回されにくく、芯がぶれない",
+      "一度決断すると、迷わずに前へ進める"
+    ],
+    weakness: [
+      "丁寧に考えるぶん、決断までに時間をかける傾向がある",
+      "頼まれごとを大切にする気持ちから、抱え込みやすいことがある",
+      "穏やかさの裏側で、本音を言葉にするまでに時間がかかる傾向がある"
+    ],
+    kuchiguse: [
+      "とりあえず引き受けます",
+      "私がやっておきます",
+      "大丈夫です"
+    ],
+    replace: [
+      "少し考えてから、お返事します",
+      "今は手一杯なので、相談させてください",
+      "正直なところ、少しキツいかもしれません"
+    ],
+    advice: "断ることは、協調性と矛盾しません。自分を守ることが、長く力を貸し続けるための土台になっていきます。"
+  },
+
+  "S-i": {
+    name: "やわらかな調整役",
+    summary: "穏やかさと親しみやすさを併せ持つタイプ。人と人の間に立って、関係をなめらかにしていく力があります。",
+    strength: [
+      "人を安心させる、やわらかい雰囲気を持っている",
+      "対立した場の温度を、自然に下げていける",
+      "相手の話を、じっくり最後まで聞ける"
+    ],
+    weakness: [
+      "場の調和を大切にするぶん、対立を避ける選択をしやすい",
+      "相手を尊重する気持ちから、意見を伝えるタイミングが遅れることがある",
+      "周りの気持ちに敏感なため、全員の感情を背負いやすい"
+    ],
+    kuchiguse: [
+      "まあまあ、そう言わずに",
+      "波風立てたくないし",
+      "みんなが良ければそれで"
+    ],
+    replace: [
+      "それは違うと思います、と一回だけ言ってみる",
+      "言うべきことは、静かに伝えてみる",
+      "私はこう感じています、と主語を立ててみる"
+    ],
+    advice: "全員に好かれることを目指さなくて大丈夫です。大切な人に誠実でいる。それだけで、あなたの価値は十分に伝わっています。"
+  },
+
+  "S-C": {
+    name: "誠実な堅実派",
+    summary: "穏やかさと丁寧さを併せ持つタイプ。約束を守り、コツコツと積み上げていく信頼感があります。",
+    strength: [
+      "約束や期日を、確実に守れる",
+      "ミスが少なく、丁寧に仕上げられる",
+      "感情に振り回されず、安定して進められる"
+    ],
+    weakness: [
+      "丁寧さを大切にするぶん、新しいことへの一歩に時間がかかる傾向がある",
+      "完成度を求める気持ちから、自分を追い込みやすいことがある",
+      "責任感が強いぶん、自分への評価が厳しくなりやすい"
+    ],
+    kuchiguse: [
+      "ちゃんとやらないと",
+      "私なんてまだまだ",
+      "迷惑かけたくない"
+    ],
+    replace: [
+      "ひとまず、やってみる",
+      "今のままで、十分やれている",
+      "頼ることも、ひとつの仕事"
+    ],
+    advice: "あなたの丁寧さは、すでに周りを支えています。「これでいい」と自分にOKを出す練習を、少しずつ重ねていきましょう。"
+  },
+
+  // ===== ブロック4: C主導 =====
+  "C-D": {
+    name: "結果を出す論理派",
+    summary: "考え抜く力と、前へ進める力を併せ持つタイプ。慎重さと推進力の両方を持ち、ぶれない判断ができる安定感があります。",
+    strength: [
+      "根拠と筋道をもって、正確に判断できる",
+      "曖昧なまま進めず、前提を整えて動ける",
+      "進む方向が定まると、迷わず一気に進められる"
+    ],
+    weakness: [
+      "丁寧に考えるぶん、動き出すタイミングが遅くなりやすい",
+      "基準を高く持つため、自分自身を疲れさせることがある",
+      "理性で進めるぶん、感情のガス抜きを後回しにしやすい"
+    ],
+    kuchiguse: [
+      "ちゃんと考えてから",
+      "もう少し調べてから",
+      "失敗したくない"
+    ],
+    replace: [
+      "ひとまず、やってみる",
+      "60点で、出してみる",
+      "試した分だけ、わかることがある"
+    ],
+    advice: "考える力は、あなたの大切な強みです。「考える時間に締切」を加えてあげると、その強みがそのまま結果のスピードに変わっていきます。"
+  },
+
+  "C-i": {
+    name: "伝える研究者",
+    summary: "深く考える力と、言葉にして届ける力を併せ持つタイプ。専門性と表現力を、両立させていける器用さがあります。",
+    strength: [
+      "深い内容を、わかりやすく伝えられる",
+      "感情と論理のバランスをとって届けられる",
+      "学ぶことを楽しめ、知識が広く積み上がる"
+    ],
+    weakness: [
+      "丁寧に伝えたい気持ちから、完成のハードルが高くなりやすい",
+      "受け手の反応を大切にするぶん、消耗することがある",
+      "考える深さがあるぶん、発信のタイミングを後にしやすい"
+    ],
+    kuchiguse: [
+      "もっとちゃんと伝えないと",
+      "誤解されたらどうしよう",
+      "完璧じゃないと出せない"
+    ],
+    replace: [
+      "今わかっている範囲で、伝えてみる",
+      "誤解は、出てから直していけばいい",
+      "60点で出してから、磨いていく"
+    ],
+    advice: "完璧な伝え方は、そもそも誰にも届かないものです。出して、反応を見て、直していく。そのリズムが、いちばん多くの人に届くいちばんの近道です。"
+  },
+
+  "C-S": {
+    name: "緻密で誠実な職人",
+    summary: "考える力と、続けていく力を併せ持つタイプ。細部まで手を抜かず、信頼を地道に積み上げていく丁寧さがあります。",
+    strength: [
+      "ミスが少なく、品質を安定させられる",
+      "コツコツと、長く積み上げる力がある",
+      "信頼を裏切らない、確かな仕事ができる"
+    ],
+    weakness: [
+      "基準を高く持つぶん、自分を追い込みやすいことがある",
+      "丁寧さを大切にするぶん、新しいやり方を試すまでに時間をかける傾向がある",
+      "責任感が深いぶん、感情を内側に抱えやすい"
+    ],
+    kuchiguse: [
+      "ちゃんとやらないと",
+      "もっと完璧に",
+      "自分はまだまだだ"
+    ],
+    replace: [
+      "ひとまず、形にしてみる",
+      "今の自分を、一回認めてあげる",
+      "完璧より、続けることを大切に"
+    ],
+    advice: "あなたの基準の高さは、品質の源そのものです。でも自分にだけは、少し低い基準を許可してあげてください。それで品質が落ちることは、ありません。"
+  }
+
+};
+
+// ========================================
+// 補助関数
+// ========================================
+function getDescription(code) {
+  return TYPE_DESCRIPTIONS[code] || null;
+}
+
+// 検証用：12コード一覧
+const REQUIRED_CODES = [
+  "D-i", "D-S", "D-C",
+  "i-D", "i-S", "i-C",
+  "S-D", "S-i", "S-C",
+  "C-D", "C-i", "C-S"
+];
+
+
+// ============================================
+// 【設定】Google Sheets送信用 GAS Webhook URL
+// ============================================
+// ↓↓↓ ここに、GASでデプロイしたウェブアプリURLを貼り付けてください ↓↓↓
+// 空文字のままでもアプリは動作します（送信のみスキップされます）
+const GAS_WEBHOOK_URL = "";
+// 例: const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfy.../exec";
+// ============================================
+
+
+// ===== アプリ状態 =====
+const appState = {
+  profile: { name: "", job: "", age: "", gender: "", pref: "", worry: "" },
+  answers: {},          // { 1: "D", 2: "i", ... }
+  currentQ: 0,          // 0始まり
+  result: null
+};
+
+// ===== 画面遷移 =====
+function goToScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ===== プロフィール入力 → 質問へ =====
+function startQuestions() {
+  appState.profile.name   = document.getElementById('profile-name').value.trim();
+  appState.profile.job    = document.getElementById('profile-job').value;
+  appState.profile.age    = document.getElementById('profile-age').value;
+  appState.profile.gender = document.getElementById('profile-gender').value;
+  appState.profile.pref   = document.getElementById('profile-pref').value;
+  appState.profile.worry  = document.getElementById('profile-worry').value;
+  appState.currentQ = 0;
+  appState.answers = {};
+  renderQuestion();
+  goToScreen('question');
+}
+
+// ===== 質問描画 =====
+function renderQuestion() {
+  const q = QUESTIONS[appState.currentQ];
+  const num = appState.currentQ + 1;
+  const total = QUESTIONS.length;
+
+  document.getElementById('q-num').textContent = num;
+  document.getElementById('q-percent').textContent = Math.round(num / total * 100) + "%";
+  document.getElementById('q-progress-fill').style.width = (num / total * 100) + "%";
+  document.getElementById('q-text').textContent = q.question;
+
+  const optsEl = document.getElementById('q-options');
+  optsEl.innerHTML = "";
+  const currentAns = appState.answers[q.id];
+  q.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'q-option';
+    btn.textContent = opt.text;
+    if (currentAns === opt.type) btn.classList.add('selected');
+    btn.onclick = () => selectAnswer(q.id, opt.type);
+    optsEl.appendChild(btn);
+  });
+
+  // ボタン状態更新
+  document.getElementById('q-back').disabled = (appState.currentQ === 0);
+  document.getElementById('q-next').disabled = !appState.answers[q.id];
+  document.getElementById('q-next').textContent = (num === total) ? "結果を見る ✓" : "次へ →";
+}
+
+function selectAnswer(qId, type) {
+  appState.answers[qId] = type;
+  renderQuestion();
+}
+
+function nextQuestion() {
+  if (appState.currentQ < QUESTIONS.length - 1) {
+    appState.currentQ++;
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function prevQuestion() {
+  if (appState.currentQ > 0) {
+    appState.currentQ--;
+    renderQuestion();
+  }
+}
+
+// ===== 結果計算（PART 1のロジック + PART 2の解説を使用） =====
+function calculateResult() {
+  // PART 1のcalculateScores()とdetermineType()を活用
+  const scores = calculateScores(appState.answers);
+  const typeInfo = determineType(scores);
+  const desc = TYPE_DESCRIPTIONS[typeInfo.code] || null;
+
+  return {
+    primary: typeInfo.primary,
+    secondary: typeInfo.secondary,
+    code: typeInfo.code,
+    scores: typeInfo.scores,
+    desc: desc
+  };
+}
+
+// ===== 結果描画 =====
+function showResult() {
+  const r = calculateResult();
+  appState.result = r;
+
+  document.getElementById('r-code').textContent = r.code;
+  document.getElementById('r-name').textContent = r.desc.name;
+  document.getElementById('r-summary').textContent = r.desc.summary;
+
+  // スコアバー
+  const scoresEl = document.getElementById('r-scores');
+  scoresEl.innerHTML = "";
+  ["D","i","S","C"].forEach(t => {
+    const v = r.scores[t];
+    const cls = (t === r.primary) ? "is-primary" : (t === r.secondary ? "is-secondary" : "");
+    const bar = "■".repeat(v) + "□".repeat(10 - v);
+    scoresEl.innerHTML += `
+      <div class="score-item ${cls}">
+        <div class="score-letter" data-type="${t}">${t}</div>
+        <div class="score-value">${v}</div>
+        <div class="score-bar" data-type="${t}" style="color:var(--c-${t === 'D' ? 'danger' : t === 'i' ? 'warn' : t === 'S' ? 'success' : 'primary'})">${bar}</div>
+      </div>`;
+  });
+
+  // 強み・弱点
+  const fillList = (id, items) => {
+    const el = document.getElementById(id);
+    el.innerHTML = items.map(s => `<li>${s}</li>`).join("");
+  };
+  fillList('r-strength', r.desc.strength);
+  fillList('r-weakness', r.desc.weakness);
+
+  // 口ぐせ→置き換え
+  const kEl = document.getElementById('r-kuchiguse');
+  kEl.innerHTML = r.desc.kuchiguse.map((k, i) => `
+    <div class="kuchiguse-pair">
+      <div class="kuchiguse-from">「${k}」</div>
+      <div class="kuchiguse-arrow">→</div>
+      <div class="kuchiguse-to">「${r.desc.replace[i]}」</div>
+    </div>`).join("");
+
+  document.getElementById('r-advice').textContent = r.desc.advice;
+
+  // 印刷用の名前・日付を埋め込み
+  const name = appState.profile.name || "ゲスト";
+  const today = new Date();
+  const dateStr = `${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日`;
+  document.getElementById('print-name').textContent = `お名前:${name}　`;
+  document.getElementById('print-date').textContent = `診断日:${dateStr}`;
+
+  goToScreen('result');
+
+  // Google Sheetsへバックグラウンド送信（失敗しても画面に影響しない）
+  sendToSheets(r);
+}
+
+// ===== Google Sheets 送信 =====
+function sendToSheets(result) {
+  // GAS URL未設定なら何もしない
+  if (!GAS_WEBHOOK_URL || GAS_WEBHOOK_URL.trim() === "") {
+    console.log("[GAS] URL未設定のためスキップ");
+    return;
+  }
+
+  const payload = {
+    name:      appState.profile.name,
+    job:       appState.profile.job,
+    age:       appState.profile.age,
+    gender:    appState.profile.gender,
+    pref:      appState.profile.pref,
+    worry:     appState.profile.worry,
+    scoreD:    result.scores.D,
+    scoreI:    result.scores.i,
+    scoreS:    result.scores.S,
+    scoreC:    result.scores.C,
+    primary:   result.primary,
+    secondary: result.secondary,
+    code:      result.code,
+    typeName:  result.desc ? result.desc.name : ""
+  };
+
+  // GASはCORSプリフライトを受けないので、no-cors + text/plain で送る
+  // 結果は読めないが、Sheetへの追加は成功する
+  fetch(GAS_WEBHOOK_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    console.log("[GAS] 送信完了");
+  }).catch(err => {
+    console.warn("[GAS] 送信エラー:", err);
+    // エラーはユーザーには見せない（体験を損なわない）
+  });
+}
+
+// ===== PDF出力（ブラウザの印刷ダイアログ経由） =====
+function exportPDF() {
+  // 印刷前に少し待ってから（描画完了を待つ）
+  // モバイルでも動くよう setTimeout を使う
+  setTimeout(() => {
+    window.print();
+  }, 100);
+}
+
+// ===== やり直し =====
+function restart() {
+  appState.profile = { name: "", job: "", age: "", gender: "", pref: "", worry: "" };
+  appState.answers = {};
+  appState.currentQ = 0;
+  appState.result = null;
+  // 入力リセット
+  document.getElementById('profile-name').value = "";
+  document.getElementById('profile-job').value = "";
+  document.getElementById('profile-age').value = "";
+  document.getElementById('profile-gender').value = "";
+  document.getElementById('profile-pref').value = "";
+  document.getElementById('profile-worry').value = "";
+  goToScreen('start');
+}
+</script>
+
+</body>
+</html>
