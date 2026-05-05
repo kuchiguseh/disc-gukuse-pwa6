@@ -3248,20 +3248,20 @@ function exportPDF() {
 
 // ===== 端末検出ユーティリティ =====
 function isIOS() {
-  return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  return /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+    (navigator.userAgent.includes("Mac") && "ontouchend" in document);
 }
 function isAndroid() {
   return /Android/i.test(navigator.userAgent);
 }
 
-// ===== 画像出力（iPhone・Android・PC全対応版） =====
+// ===== 画像出力（iPhone・Android・PC全対応版 v2 / Blob URL方式） =====
 async function exportImage(evt) {
   if (typeof html2canvas !== 'function') {
     alert("画像保存に必要なライブラリが読み込めませんでした。\nインターネット接続を確認して再度お試しください。");
     return;
   }
 
-  // 保存中表示
   const btn = evt && evt.currentTarget;
   const originalText = btn ? btn.textContent : '';
   if (btn) {
@@ -3269,7 +3269,6 @@ async function exportImage(evt) {
     btn.disabled = true;
   }
 
-  // アクションボタンとアプリヘッダーを一時的に非表示
   const target = document.getElementById('screen-result');
   if (!target) {
     alert("レポート画面が見つかりません");
@@ -3281,200 +3280,142 @@ async function exportImage(evt) {
   if (actionsEl) actionsEl.style.display = 'none';
   if (headerEl) headerEl.style.display = 'none';
 
+  window.scrollTo(0, 0);
+  await new Promise(r => setTimeout(r, 100));
+
   try {
-    // html2canvas で画面をキャプチャ
-    // iOS では scale=2 だとメモリエラーになる可能性があるので、自動調整
-    const captureScale = isIOS() ? 1.5 : 2;
+    const captureScale = isIOS() ? 1.2 : 2;
     const canvas = await html2canvas(target, {
       scale: captureScale,
       backgroundColor: '#FFFFFF',
       logging: false,
       useCORS: true,
-      allowTaint: false
+      allowTaint: false,
+      windowWidth: target.scrollWidth,
+      windowHeight: target.scrollHeight
     });
 
-    // ボタンを再表示
     if (actionsEl) actionsEl.style.display = '';
     if (headerEl) headerEl.style.display = '';
 
-    // ファイル名（お名前+日付）
     const userName = (appState.profile.name || 'guest').replace(/[\s\\/:*?"<>|]/g, '_');
     const today = new Date();
     const dateStr = `${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}`;
     const fileName = `口ぐせ診断_${userName}_${dateStr}.png`;
 
-    // 画像をBase64データURLに変換
-    const dataUrl = canvas.toDataURL('image/png');
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        alert("画像の生成に失敗しました。もう一度お試しください。");
+        if (btn) { btn.textContent = originalText; btn.disabled = false; }
+        return;
+      }
 
-    // ----- 端末別の保存処理 -----
-    if (isIOS()) {
-      // iPhone/iPad: 新しいページに画像を表示し、長押しで保存してもらう
-      showImageForIOS(dataUrl, fileName);
-    } else if (isAndroid()) {
-      // Android: download属性とBlobで確実にダウンロード
-      downloadImageForAndroid(canvas, fileName);
-    } else {
-      // PC: 通常のダウンロード
-      downloadImageForPC(canvas, fileName);
-    }
+      const blobUrl = URL.createObjectURL(blob);
+
+      if (isIOS()) {
+        showImageInOverlay(blobUrl, fileName);
+      } else if (isAndroid()) {
+        downloadImageForAndroid(blobUrl, fileName);
+      } else {
+        downloadImageForPC(blobUrl, fileName);
+      }
+
+      if (btn) { btn.textContent = originalText; btn.disabled = false; }
+    }, 'image/png', 0.92);
 
   } catch (e) {
     console.error('画像保存エラー:', e);
     if (actionsEl) actionsEl.style.display = '';
     if (headerEl) headerEl.style.display = '';
     alert("画像の保存に失敗しました。\nもう一度試すか、PCからお試しください。\n\nエラー: " + (e.message || e));
-  } finally {
-    if (btn) {
-      btn.textContent = originalText;
-      btn.disabled = false;
-    }
+    if (btn) { btn.textContent = originalText; btn.disabled = false; }
   }
 }
 
-// ===== iPhone/iPad向け：新しいページに画像を表示 =====
-function showImageForIOS(dataUrl, fileName) {
-  // 新しいウィンドウを開く
-  const w = window.open('', '_blank');
-  if (!w) {
-    // ポップアップブロック等で開けなかった場合は、現在のページに画像を表示
-    showImageInOverlay(dataUrl, fileName);
-    return;
-  }
-
-  // 画像保存方法の案内付きHTMLを表示
-  w.document.write(`
-    <!DOCTYPE html>
-    <html lang="ja">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>${fileName}</title>
-      <style>
-        body { margin: 0; padding: 0; background: #f0f0f0; font-family: -apple-system, "Hiragino Kaku Gothic ProN", sans-serif; }
-        .info-bar {
-          position: sticky;
-          top: 0;
-          background: #2A8F66;
-          color: white;
-          padding: 14px 18px;
-          font-size: 14px;
-          font-weight: 700;
-          line-height: 1.5;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-          z-index: 10;
-        }
-        .info-bar .title { font-size: 15px; margin-bottom: 4px; }
-        .info-bar .step { font-size: 13px; opacity: 0.95; font-weight: 500; }
-        .info-bar .step-num {
-          display: inline-block;
-          background: white;
-          color: #2A8F66;
-          width: 18px;
-          height: 18px;
-          border-radius: 50%;
-          text-align: center;
-          line-height: 18px;
-          font-size: 11px;
-          font-weight: 700;
-          margin-right: 4px;
-        }
-        .image-container { padding: 12px; }
-        .image-container img {
-          width: 100%;
-          height: auto;
-          display: block;
-          border-radius: 8px;
-          box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-        }
-      </style>
-    </head>
-    <body>
-      <div class="info-bar">
-        <div class="title">📸 画像を写真に保存する手順</div>
-        <div class="step"><span class="step-num">1</span>下の画像を<strong>長押し</strong></div>
-        <div class="step"><span class="step-num">2</span>「<strong>"写真"に追加</strong>」をタップ</div>
-      </div>
-      <div class="image-container">
-        <img src="${dataUrl}" alt="${fileName}" />
-      </div>
-    </body>
-    </html>
-  `);
-  w.document.close();
-}
-
-// ===== ポップアップブロック時のフォールバック：オーバーレイ表示 =====
-function showImageInOverlay(dataUrl, fileName) {
-  // 既存のオーバーレイがあれば削除
-  const existingOverlay = document.getElementById('image-save-overlay');
-  if (existingOverlay) existingOverlay.remove();
+// ===== iPhone/iPad向け: 画面内オーバーレイで画像表示 =====
+function showImageInOverlay(blobUrl, fileName) {
+  const existing = document.getElementById('image-save-overlay');
+  if (existing) existing.remove();
 
   const overlay = document.createElement('div');
   overlay.id = 'image-save-overlay';
   overlay.style.cssText = `
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.85); z-index: 99999; overflow-y: auto;
+    position: fixed; inset: 0; background: #000;
+    z-index: 99999; overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   `;
 
   overlay.innerHTML = `
-    <div style="position: sticky; top: 0; background: #2A8F66; color: white; padding: 14px 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
-      <div style="font-size: 15px; font-weight: 700; margin-bottom: 4px;">📸 画像を写真に保存する手順</div>
-      <div style="font-size: 13px;">① 下の画像を<strong>長押し</strong> → ②「<strong>"写真"に追加</strong>」をタップ</div>
-      <button id="overlay-close-btn" style="position: absolute; top: 10px; right: 12px; background: white; color: #2A8F66; border: none; border-radius: 999px; padding: 6px 14px; font-size: 13px; font-weight: 700; cursor: pointer;">✕ 閉じる</button>
+    <div style="position: sticky; top: 0; background: #2A8F66; color: white; padding: 14px 16px 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.4); z-index: 10;">
+      <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px; padding-right: 80px;">📸 画像を写真に保存する手順</div>
+      <div style="font-size: 13px; line-height: 1.6; padding-right: 80px;">
+        <div>① 下の画像を <strong>長押し</strong></div>
+        <div>② 「<strong>"写真"に追加</strong>」をタップ</div>
+      </div>
+      <button id="overlay-close-btn" style="position: absolute; top: 12px; right: 12px; background: white; color: #2A8F66; border: none; border-radius: 999px; padding: 8px 16px; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">✕ 閉じる</button>
     </div>
-    <div style="padding: 16px;">
-      <img src="${dataUrl}" alt="${fileName}" style="width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.4);" />
+    <div id="overlay-img-wrap" style="padding: 12px; min-height: 200px; display: flex; justify-content: center; align-items: flex-start;">
+      <div id="overlay-loading" style="color: white; padding: 40px 20px; text-align: center; font-size: 14px;">画像を読み込み中…</div>
     </div>
   `;
 
   document.body.appendChild(overlay);
+  document.body.style.overflow = 'hidden';
 
-  // 閉じるボタン
+  const wrap = overlay.querySelector('#overlay-img-wrap');
+  const loading = overlay.querySelector('#overlay-loading');
+  const img = new Image();
+  img.style.cssText = `
+    width: 100%; max-width: 100%; height: auto; display: block;
+    border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    -webkit-touch-callout: default !important;
+    -webkit-user-select: auto !important;
+    user-select: auto !important;
+    pointer-events: auto !important;
+  `;
+  img.alt = fileName;
+
+  img.onload = () => {
+    if (loading) loading.remove();
+    wrap.appendChild(img);
+  };
+  img.onerror = () => {
+    if (loading) loading.textContent = '画像の読み込みに失敗しました。閉じてもう一度お試しください。';
+  };
+
+  img.src = blobUrl;
+
   document.getElementById('overlay-close-btn').onclick = () => {
     overlay.remove();
+    document.body.style.overflow = '';
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
   };
 }
 
-// ===== Android向け：Blobダウンロード =====
-function downloadImageForAndroid(canvas, fileName) {
-  canvas.toBlob((blob) => {
-    if (!blob) {
-      alert("画像の生成に失敗しました");
-      return;
-    }
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 2000);
+// ===== Android向け: ダウンロード =====
+function downloadImageForAndroid(blobUrl, fileName) {
+  const a = document.createElement('a');
+  a.href = blobUrl;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(blobUrl), 2000);
 
-    // 保存完了後、案内メッセージ
-    setTimeout(() => {
-      alert("画像をダウンロードしました！\n\n「ダウンロード」フォルダまたは「ギャラリー」から確認できます。\nLINEやメールで送る時は、その場所から画像を選んでください。");
-    }, 500);
-  }, 'image/png');
+  setTimeout(() => {
+    alert("画像をダウンロードしました!\n\n「ダウンロード」フォルダまたは「ギャラリー」から確認できます。");
+  }, 500);
 }
 
-// ===== PC向け：通常のダウンロード =====
-function downloadImageForPC(canvas, fileName) {
-  canvas.toBlob((blob) => {
-    if (!blob) {
-      alert("画像の生成に失敗しました");
-      return;
-    }
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 2000);
-  }, 'image/png');
+// ===== PC向け: 通常のダウンロード =====
+function downloadImageForPC(blobUrl, fileName) {
+  const a = document.createElement('a');
+  a.href = blobUrl;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(blobUrl), 2000);
 }
 
 // ===== やり直し =====
