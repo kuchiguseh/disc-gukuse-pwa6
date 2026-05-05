@@ -1674,8 +1674,8 @@ input, select, textarea { font: inherit; color: inherit; }
 
     <!-- アクションボタン -->
     <div class="result-actions">
-      <button class="btn btn-accent" onclick="exportPDF()">📄 PDFで保存する</button>
-      <button class="btn btn-accent" onclick="exportImage(event)" style="background:#3D6FCF;">🖼 画像で保存(スマホ向け)</button>
+      <button class="btn btn-accent" onclick="exportPDF()">📄 PDFで保存(PC向け)</button>
+      <button class="btn btn-accent" onclick="exportImage(event)" style="background:#3D6FCF;">📷 画像で保存(スマホ推奨)</button>
       <button class="btn btn-ghost" onclick="restart()">最初からやり直す</button>
     </div>
 
@@ -3246,38 +3246,51 @@ function exportPDF() {
   }, 100);
 }
 
-// ===== 画像出力（スマホ向け・確実な保存方法） =====
+// ===== 端末検出ユーティリティ =====
+function isIOS() {
+  return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+function isAndroid() {
+  return /Android/i.test(navigator.userAgent);
+}
+
+// ===== 画像出力（iPhone・Android・PC全対応版） =====
 async function exportImage(evt) {
   if (typeof html2canvas !== 'function') {
-    alert("画像保存ライブラリが読み込めませんでした。\nオフライン環境では使えません。");
+    alert("画像保存に必要なライブラリが読み込めませんでした。\nインターネット接続を確認して再度お試しください。");
     return;
   }
 
   // 保存中表示
-  const btn = evt && evt.target;
+  const btn = evt && evt.currentTarget;
   const originalText = btn ? btn.textContent : '';
-  if (btn) btn.textContent = '画像生成中…';
+  if (btn) {
+    btn.textContent = '画像生成中…(数秒お待ちください)';
+    btn.disabled = true;
+  }
+
+  // アクションボタンとアプリヘッダーを一時的に非表示
+  const target = document.getElementById('screen-result');
+  if (!target) {
+    alert("レポート画面が見つかりません");
+    if (btn) { btn.textContent = originalText; btn.disabled = false; }
+    return;
+  }
+  const actionsEl = target.querySelector('.result-actions');
+  const headerEl = document.querySelector('.app-header');
+  if (actionsEl) actionsEl.style.display = 'none';
+  if (headerEl) headerEl.style.display = 'none';
 
   try {
-    // レポート全体（screen-result）をキャプチャ対象に
-    const target = document.getElementById('screen-result');
-    if (!target) {
-      alert("レポート画面が見つかりません");
-      return;
-    }
-
-    // アクションボタンとアプリヘッダーを一時的に非表示にしてから撮影
-    const actionsEl = target.querySelector('.result-actions');
-    const headerEl = document.querySelector('.app-header');
-    if (actionsEl) actionsEl.style.display = 'none';
-    if (headerEl) headerEl.style.display = 'none';
-
     // html2canvas で画面をキャプチャ
+    // iOS では scale=2 だとメモリエラーになる可能性があるので、自動調整
+    const captureScale = isIOS() ? 1.5 : 2;
     const canvas = await html2canvas(target, {
-      scale: 2,           // 高解像度
+      scale: captureScale,
       backgroundColor: '#FFFFFF',
       logging: false,
-      useCORS: true
+      useCORS: true,
+      allowTaint: false
     });
 
     // ボタンを再表示
@@ -3290,37 +3303,178 @@ async function exportImage(evt) {
     const dateStr = `${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}`;
     const fileName = `口ぐせ診断_${userName}_${dateStr}.png`;
 
-    // 画像化してダウンロード
-    canvas.toBlob((blob) => {
-      if (!blob) {
-        alert("画像の生成に失敗しました");
-        return;
-      }
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      // メモリ解放
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    // 画像をBase64データURLに変換
+    const dataUrl = canvas.toDataURL('image/png');
 
-      // スマホで使い方の案内
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      if (isMobile) {
-        setTimeout(() => {
-          alert("画像が保存されました！\n\nダウンロードフォルダ、またはアルバムから確認できます。\nLINEやメールで簡単に送れます。");
-        }, 500);
-      }
-    }, 'image/png');
+    // ----- 端末別の保存処理 -----
+    if (isIOS()) {
+      // iPhone/iPad: 新しいページに画像を表示し、長押しで保存してもらう
+      showImageForIOS(dataUrl, fileName);
+    } else if (isAndroid()) {
+      // Android: download属性とBlobで確実にダウンロード
+      downloadImageForAndroid(canvas, fileName);
+    } else {
+      // PC: 通常のダウンロード
+      downloadImageForPC(canvas, fileName);
+    }
 
   } catch (e) {
     console.error('画像保存エラー:', e);
-    alert("画像の保存に失敗しました。\nブラウザを変えるか、PCからお試しください。");
+    if (actionsEl) actionsEl.style.display = '';
+    if (headerEl) headerEl.style.display = '';
+    alert("画像の保存に失敗しました。\nもう一度試すか、PCからお試しください。\n\nエラー: " + (e.message || e));
   } finally {
-    if (btn && originalText) btn.textContent = originalText;
+    if (btn) {
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }
   }
+}
+
+// ===== iPhone/iPad向け：新しいページに画像を表示 =====
+function showImageForIOS(dataUrl, fileName) {
+  // 新しいウィンドウを開く
+  const w = window.open('', '_blank');
+  if (!w) {
+    // ポップアップブロック等で開けなかった場合は、現在のページに画像を表示
+    showImageInOverlay(dataUrl, fileName);
+    return;
+  }
+
+  // 画像保存方法の案内付きHTMLを表示
+  w.document.write(`
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>${fileName}</title>
+      <style>
+        body { margin: 0; padding: 0; background: #f0f0f0; font-family: -apple-system, "Hiragino Kaku Gothic ProN", sans-serif; }
+        .info-bar {
+          position: sticky;
+          top: 0;
+          background: #2A8F66;
+          color: white;
+          padding: 14px 18px;
+          font-size: 14px;
+          font-weight: 700;
+          line-height: 1.5;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+          z-index: 10;
+        }
+        .info-bar .title { font-size: 15px; margin-bottom: 4px; }
+        .info-bar .step { font-size: 13px; opacity: 0.95; font-weight: 500; }
+        .info-bar .step-num {
+          display: inline-block;
+          background: white;
+          color: #2A8F66;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          text-align: center;
+          line-height: 18px;
+          font-size: 11px;
+          font-weight: 700;
+          margin-right: 4px;
+        }
+        .image-container { padding: 12px; }
+        .image-container img {
+          width: 100%;
+          height: auto;
+          display: block;
+          border-radius: 8px;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+      </style>
+    </head>
+    <body>
+      <div class="info-bar">
+        <div class="title">📸 画像を写真に保存する手順</div>
+        <div class="step"><span class="step-num">1</span>下の画像を<strong>長押し</strong></div>
+        <div class="step"><span class="step-num">2</span>「<strong>"写真"に追加</strong>」をタップ</div>
+      </div>
+      <div class="image-container">
+        <img src="${dataUrl}" alt="${fileName}" />
+      </div>
+    </body>
+    </html>
+  `);
+  w.document.close();
+}
+
+// ===== ポップアップブロック時のフォールバック：オーバーレイ表示 =====
+function showImageInOverlay(dataUrl, fileName) {
+  // 既存のオーバーレイがあれば削除
+  const existingOverlay = document.getElementById('image-save-overlay');
+  if (existingOverlay) existingOverlay.remove();
+
+  const overlay = document.createElement('div');
+  overlay.id = 'image-save-overlay';
+  overlay.style.cssText = `
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); z-index: 99999; overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  `;
+
+  overlay.innerHTML = `
+    <div style="position: sticky; top: 0; background: #2A8F66; color: white; padding: 14px 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+      <div style="font-size: 15px; font-weight: 700; margin-bottom: 4px;">📸 画像を写真に保存する手順</div>
+      <div style="font-size: 13px;">① 下の画像を<strong>長押し</strong> → ②「<strong>"写真"に追加</strong>」をタップ</div>
+      <button id="overlay-close-btn" style="position: absolute; top: 10px; right: 12px; background: white; color: #2A8F66; border: none; border-radius: 999px; padding: 6px 14px; font-size: 13px; font-weight: 700; cursor: pointer;">✕ 閉じる</button>
+    </div>
+    <div style="padding: 16px;">
+      <img src="${dataUrl}" alt="${fileName}" style="width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.4);" />
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  // 閉じるボタン
+  document.getElementById('overlay-close-btn').onclick = () => {
+    overlay.remove();
+  };
+}
+
+// ===== Android向け：Blobダウンロード =====
+function downloadImageForAndroid(canvas, fileName) {
+  canvas.toBlob((blob) => {
+    if (!blob) {
+      alert("画像の生成に失敗しました");
+      return;
+    }
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+
+    // 保存完了後、案内メッセージ
+    setTimeout(() => {
+      alert("画像をダウンロードしました！\n\n「ダウンロード」フォルダまたは「ギャラリー」から確認できます。\nLINEやメールで送る時は、その場所から画像を選んでください。");
+    }, 500);
+  }, 'image/png');
+}
+
+// ===== PC向け：通常のダウンロード =====
+function downloadImageForPC(canvas, fileName) {
+  canvas.toBlob((blob) => {
+    if (!blob) {
+      alert("画像の生成に失敗しました");
+      return;
+    }
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }, 'image/png');
 }
 
 // ===== やり直し =====
