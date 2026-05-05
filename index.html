@@ -1675,6 +1675,7 @@ input, select, textarea { font: inherit; color: inherit; }
     <!-- アクションボタン -->
     <div class="result-actions">
       <button class="btn btn-accent" onclick="exportPDF()">📄 PDFで保存する</button>
+      <button class="btn btn-accent" onclick="exportImage(event)" style="background:#3D6FCF;">🖼 画像で保存(スマホ向け)</button>
       <button class="btn btn-ghost" onclick="restart()">最初からやり直す</button>
     </div>
 
@@ -1702,6 +1703,8 @@ input, select, textarea { font: inherit; color: inherit; }
      ============================================ -->
 <!-- QRコード生成ライブラリ（軽量・CDNから読み込み） -->
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<!-- 画像保存用ライブラリ（スマホ向けPDF代替） -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 // ===== 質問データ + 判定ロジック（PART 1） =====
 // ========================================
@@ -3222,13 +3225,102 @@ function sendToSheets(result) {
   });
 }
 
-// ===== PDF出力（ブラウザの印刷ダイアログ経由） =====
+// ===== PDF出力（ブラウザの印刷ダイアログ経由・PC向け） =====
 function exportPDF() {
-  // 印刷前に少し待ってから（描画完了を待つ）
-  // モバイルでも動くよう setTimeout を使う
+  // モバイル端末を検出
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    // モバイルでは印刷ダイアログが期待通り動かない可能性が高いので画像保存を案内
+    if (confirm("スマホからの保存は『画像で保存』ボタンの方が確実です。\nそれでもPDFを試しますか？\n\n（PDFが出ない場合は『画像で保存』をご利用ください）")) {
+      window.print();
+    } else {
+      exportImage();
+    }
+    return;
+  }
+
+  // PC：通常通り印刷ダイアログ
   setTimeout(() => {
     window.print();
   }, 100);
+}
+
+// ===== 画像出力（スマホ向け・確実な保存方法） =====
+async function exportImage(evt) {
+  if (typeof html2canvas !== 'function') {
+    alert("画像保存ライブラリが読み込めませんでした。\nオフライン環境では使えません。");
+    return;
+  }
+
+  // 保存中表示
+  const btn = evt && evt.target;
+  const originalText = btn ? btn.textContent : '';
+  if (btn) btn.textContent = '画像生成中…';
+
+  try {
+    // レポート全体（screen-result）をキャプチャ対象に
+    const target = document.getElementById('screen-result');
+    if (!target) {
+      alert("レポート画面が見つかりません");
+      return;
+    }
+
+    // アクションボタンとアプリヘッダーを一時的に非表示にしてから撮影
+    const actionsEl = target.querySelector('.result-actions');
+    const headerEl = document.querySelector('.app-header');
+    if (actionsEl) actionsEl.style.display = 'none';
+    if (headerEl) headerEl.style.display = 'none';
+
+    // html2canvas で画面をキャプチャ
+    const canvas = await html2canvas(target, {
+      scale: 2,           // 高解像度
+      backgroundColor: '#FFFFFF',
+      logging: false,
+      useCORS: true
+    });
+
+    // ボタンを再表示
+    if (actionsEl) actionsEl.style.display = '';
+    if (headerEl) headerEl.style.display = '';
+
+    // ファイル名（お名前+日付）
+    const userName = (appState.profile.name || 'guest').replace(/[\s\\/:*?"<>|]/g, '_');
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}`;
+    const fileName = `口ぐせ診断_${userName}_${dateStr}.png`;
+
+    // 画像化してダウンロード
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        alert("画像の生成に失敗しました");
+        return;
+      }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      // メモリ解放
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+      // スマホで使い方の案内
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        setTimeout(() => {
+          alert("画像が保存されました！\n\nダウンロードフォルダ、またはアルバムから確認できます。\nLINEやメールで簡単に送れます。");
+        }, 500);
+      }
+    }, 'image/png');
+
+  } catch (e) {
+    console.error('画像保存エラー:', e);
+    alert("画像の保存に失敗しました。\nブラウザを変えるか、PCからお試しください。");
+  } finally {
+    if (btn && originalText) btn.textContent = originalText;
+  }
 }
 
 // ===== やり直し =====
