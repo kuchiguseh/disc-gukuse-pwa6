@@ -1873,6 +1873,111 @@ function isAndroid() {
   return /Android/i.test(navigator.userAgent);
 }
 
+// ===== iOS Safari対策: DOM要素に直接 style 属性で色を強制適用する =====
+function applyInlineColorsForCapture(root) {
+  // すべての子要素に直接スタイルを適用 (CSS変数依存を完全に排除)
+  const colorMap = [
+    // [セレクタ, 適用するスタイル(オブジェクト)]
+    ['.report-header', { background: '#2A8F66', color: '#FFFFFF' }],
+    ['.report-header h1', { color: '#FFFFFF' }],
+    ['.report-header p', { color: '#FFFFFF' }],
+    ['.report-header .date', { color: '#FFFFFF' }],
+    ['.report-header .name', { color: '#FFFFFF' }],
+    ['.report-card', { background: '#FFFFFF', border: '1px solid #C8D2DC' }],
+    ['.report-card-header', { background: '#2A8F66', color: '#FFFFFF' }],
+    ['.report-card-body', { color: '#1A2A3A' }],
+    ['.report-type-card', { background: '#F0F9F4', border: '1px solid #C8E6D5' }],
+    ['.report-type-label', { background: '#FFFFFF', color: '#2A8F66' }],
+    ['.report-type-name', { color: '#1A2A3A' }],
+    ['.report-type-name .type-code', { color: '#2A8F66' }],
+    ['.report-catchcopy', { color: '#1A2A3A' }],
+    ['.report-tiebreak-badge', { background: '#F4ECFF', border: '1.5px solid #B89AE5', color: '#6B4FA0' }],
+    ['.report-tiebreak-badge strong', { color: '#4A2F7A' }],
+    ['.report-score-row', { color: '#1A2A3A' }],
+    ['.report-score-label', { color: '#1A2A3A' }],
+    ['.report-score-value', { color: '#1A2A3A' }],
+    ['.report-score-bar-bg', { background: '#EEF1F4' }],
+    ['.report-prescription-from', { background: '#F4F4F8', color: '#1A2A3A' }],
+    ['.report-prescription-to', { background: '#E8F4E8', color: '#1A2A3A' }],
+    ['.report-prescription-arrow', { color: '#2A8F66' }],
+    ['.report-script-before', { background: '#FDECEC', color: '#1A2A3A' }],
+    ['.report-script-after', { background: '#E8F4E8', color: '#1A2A3A' }],
+    ['.report-script-label', { color: '#2A8F66' }],
+    ['.report-script-arrow', { color: '#2A8F66' }],
+    ['.report-practice-item', { color: '#1A2A3A', borderLeft: '3px solid #2A8F66' }],
+    ['.report-worry-section', { background: '#F0F9F4' }],
+    ['.report-worry-label', { color: '#2A8F66' }],
+    ['.report-worry-pattern', { color: '#1A2A3A' }],
+    ['.report-worry-pattern-text', { background: '#FFFFFF', color: '#1A2A3A' }],
+    ['.report-worry-suggestion', { color: '#1A2A3A', borderLeft: '3px solid #2A8F66' }],
+    ['.disc-overview-intro', { color: '#1A2A3A' }],
+    ['.disc-overview-card-traits', { color: '#1A2A3A' }],
+    ['.disc-overview-card-kuchiguse', { color: '#1A2A3A' }],
+    ['.report-instructor-block', { background: '#FFF1E8' }],
+    ['.instructor-info .label', { color: '#C84A4A' }],
+    ['.instructor-info .name', { color: '#1A2A3A' }],
+    ['.instructor-info .titles', { color: '#5A6B7B' }],
+    ['.instructor-info .schedule', { color: '#1A2A3A' }],
+    ['.instructor-info .note', { color: '#5A6B7B' }],
+    ['.instructor-qr-button', { background: '#2A8F66', color: '#FFFFFF' }],
+    ['.report-tagline', { color: '#5A6B7B' }],
+  ];
+  
+  colorMap.forEach(([selector, styles]) => {
+    root.querySelectorAll(selector).forEach(el => {
+      Object.assign(el.style, styles);
+    });
+  });
+
+  // selfcare カードの番号別スタイル
+  const selfcareCards = root.querySelectorAll('.report-selfcare-card');
+  const selfcareStyles = [
+    { background: '#FFF1E8', border: '2px solid #FFB57A' },
+    { background: '#FFFAE5', border: '2px solid #E8C46B' },
+    { background: '#E8F4F8', border: '2px solid #7BC1D6' }
+  ];
+  selfcareCards.forEach((card, i) => {
+    const s = selfcareStyles[i % 3];
+    Object.assign(card.style, s);
+    card.querySelectorAll('.report-selfcare-phrase').forEach(el => el.style.color = '#1A2A3A');
+    card.querySelectorAll('.report-selfcare-scene').forEach(el => el.style.color = '#1A2A3A');
+  });
+
+  // タグ TOP3 の色
+  const tags = root.querySelectorAll('.report-tag');
+  const tagStyles = [
+    { background: '#FDECEC', color: '#C84A4A' },
+    { background: '#FFF6E0', color: '#B68120' },
+    { background: '#E8F4E8', color: '#4FA34F' }
+  ];
+  tags.forEach((tag, i) => {
+    Object.assign(tag.style, tagStyles[i % 3]);
+  });
+
+  // スコアバーの色 (data-type別)
+  root.querySelectorAll('.report-score-bar-fill').forEach(el => {
+    const t = el.getAttribute('data-type');
+    const colors = { D: '#E07A7A', i: '#E8B645', S: '#4FA34F', C: '#5B8DEF' };
+    if (colors[t]) el.style.background = colors[t];
+  });
+
+  // DiSC概要カード (data-type別)
+  root.querySelectorAll('.disc-overview-card').forEach(el => {
+    const t = el.getAttribute('data-type');
+    const cardStyles = {
+      D: { background: '#FDECEC', border: '1.5px solid #E07A7A' },
+      i: { background: '#FFF6E0', border: '1.5px solid #E8B645' },
+      S: { background: '#E8F4E8', border: '1.5px solid #4FA34F' },
+      C: { background: '#E8F0FE', border: '1.5px solid #5B8DEF' }
+    };
+    const titleColors = { D: '#C84A4A', i: '#B68120', S: '#2D7A2D', C: '#3D6FCF' };
+    if (cardStyles[t]) Object.assign(el.style, cardStyles[t]);
+    el.querySelectorAll('.disc-overview-card-title').forEach(title => {
+      if (titleColors[t]) title.style.color = titleColors[t];
+    });
+  });
+}
+
 async function exportImage(evt) {
   if (typeof html2canvas !== 'function') {
     alert("画像保存に必要なライブラリが読み込めませんでした。\nインターネット接続を確認して再度お試しください。");
@@ -1894,72 +1999,47 @@ async function exportImage(evt) {
   const headerEl = document.querySelector('.app-header');
   if (actionsEl) actionsEl.style.display = 'none';
   if (headerEl) headerEl.style.display = 'none';
+
+  // ★ 重要: 元のDOMに直接スタイルを適用してCSS変数依存を排除
+  // (キャプチャ後に元に戻す)
+  const originalStyles = new Map();
+  const allEls = target.querySelectorAll('*');
+  allEls.forEach(el => {
+    originalStyles.set(el, el.getAttribute('style') || '');
+  });
+  
+  applyInlineColorsForCapture(target);
+  // ベースの文字色も明示的に設定
+  target.style.color = '#1A2A3A';
+  target.style.background = '#FFFFFF';
+
   window.scrollTo(0, 0);
-  await new Promise(r => setTimeout(r, 100));
+  await new Promise(r => setTimeout(r, 200));
+
   try {
-    const captureScale = isIOS() ? 1.2 : 2;
+    const captureScale = isIOS() ? 1.5 : 2;
     const canvas = await html2canvas(target, {
       scale: captureScale,
       backgroundColor: '#FFFFFF',
       logging: false,
       useCORS: true,
       allowTaint: false,
+      foreignObjectRendering: false,
       windowWidth: target.scrollWidth,
-      windowHeight: target.scrollHeight,
-      onclone: (clonedDoc) => {
-        const style = clonedDoc.createElement('style');
-        style.textContent = `
-          #screen-result, #screen-result * { color: #1A2A3A !important; }
-          #screen-result .report-header,
-          #screen-result .report-header *,
-          #screen-result .report-card-header,
-          #screen-result .report-card-header * { color: #FFFFFF !important; }
-          #screen-result .report-header { background: #2A8F66 !important; }
-          #screen-result .report-card-header { background: #2A8F66 !important; }
-          #screen-result .report-type-card { background: #F0F9F4 !important; border-color: #C8E6D5 !important; }
-          #screen-result .report-type-label { color: #2A8F66 !important; background: #FFFFFF !important; }
-          #screen-result .report-type-name .type-code { color: #2A8F66 !important; }
-          #screen-result .report-tiebreak-badge { background: #F4ECFF !important; border-color: #B89AE5 !important; color: #6B4FA0 !important; }
-          #screen-result .report-tiebreak-badge strong { color: #4A2F7A !important; }
-          #screen-result .report-card { background: #FFFFFF !important; border-color: #C8D2DC !important; }
-          #screen-result .report-tag { background: #FDECEC !important; color: #C84A4A !important; }
-          #screen-result .report-tag:nth-child(2) { background: #FFF6E0 !important; color: #B68120 !important; }
-          #screen-result .report-tag:nth-child(3) { background: #E8F4E8 !important; color: #4FA34F !important; }
-          #screen-result .report-prescription-from { background: #F4F4F8 !important; }
-          #screen-result .report-prescription-to { background: #E8F4E8 !important; }
-          #screen-result .report-prescription-arrow { color: #2A8F66 !important; }
-          #screen-result .report-selfcare-card:nth-child(1) { background: #FFF1E8 !important; border-color: #FFB57A !important; }
-          #screen-result .report-selfcare-card:nth-child(2) { background: #FFFAE5 !important; border-color: #E8C46B !important; }
-          #screen-result .report-selfcare-card:nth-child(3) { background: #E8F4F8 !important; border-color: #7BC1D6 !important; }
-          #screen-result .report-script-before { background: #FDECEC !important; }
-          #screen-result .report-script-after { background: #E8F4E8 !important; }
-          #screen-result .report-script-label,
-          #screen-result .report-script-arrow { color: #2A8F66 !important; }
-          #screen-result .report-practice-item { border-left-color: #2A8F66 !important; }
-          #screen-result .report-worry-section { background: #F0F9F4 !important; }
-          #screen-result .report-worry-label { color: #2A8F66 !important; }
-          #screen-result .report-worry-pattern-text { background: #FFFFFF !important; }
-          #screen-result .report-worry-suggestion { border-left-color: #2A8F66 !important; }
-          #screen-result .report-score-bar-bg { background: #EEF1F4 !important; }
-          #screen-result .report-score-bar-fill[data-type="D"] { background: #E07A7A !important; }
-          #screen-result .report-score-bar-fill[data-type="i"] { background: #E8B645 !important; }
-          #screen-result .report-score-bar-fill[data-type="S"] { background: #4FA34F !important; }
-          #screen-result .report-score-bar-fill[data-type="C"] { background: #5B8DEF !important; }
-          #screen-result .disc-overview-card[data-type="D"] { border-color: #E07A7A !important; background: #FDECEC !important; }
-          #screen-result .disc-overview-card[data-type="i"] { border-color: #E8B645 !important; background: #FFF6E0 !important; }
-          #screen-result .disc-overview-card[data-type="S"] { border-color: #4FA34F !important; background: #E8F4E8 !important; }
-          #screen-result .disc-overview-card[data-type="C"] { border-color: #5B8DEF !important; background: #E8F0FE !important; }
-          #screen-result .disc-overview-card[data-type="D"] .disc-overview-card-title { color: #C84A4A !important; }
-          #screen-result .disc-overview-card[data-type="i"] .disc-overview-card-title { color: #B68120 !important; }
-          #screen-result .disc-overview-card[data-type="S"] .disc-overview-card-title { color: #2D7A2D !important; }
-          #screen-result .disc-overview-card[data-type="C"] .disc-overview-card-title { color: #3D6FCF !important; }
-          #screen-result .report-instructor-block { background: #FFF1E8 !important; }
-          #screen-result .instructor-info .label { color: #C84A4A !important; }
-          #screen-result .instructor-qr-button { background: #2A8F66 !important; color: #FFFFFF !important; }
-        `;
-        clonedDoc.head.appendChild(style);
+      windowHeight: target.scrollHeight
+    });
+    
+    // 元のスタイルに戻す
+    allEls.forEach(el => {
+      const original = originalStyles.get(el);
+      if (original === '') {
+        el.removeAttribute('style');
+      } else {
+        el.setAttribute('style', original);
       }
     });
+    target.removeAttribute('style');
+    
     if (actionsEl) actionsEl.style.display = '';
     if (headerEl) headerEl.style.display = '';
     const userName = (appState.profile.name || 'guest').replace(/[\s\\/:*?"<>|]/g, '_');
@@ -1984,6 +2064,16 @@ async function exportImage(evt) {
     }, 'image/png', 0.92);
   } catch (e) {
     console.error('画像保存エラー:', e);
+    // エラー時もスタイルを元に戻す
+    allEls.forEach(el => {
+      const original = originalStyles.get(el);
+      if (original === '') {
+        el.removeAttribute('style');
+      } else if (original) {
+        el.setAttribute('style', original);
+      }
+    });
+    target.removeAttribute('style');
     if (actionsEl) actionsEl.style.display = '';
     if (headerEl) headerEl.style.display = '';
     alert("画像の保存に失敗しました。\nもう一度試すか、PCからお試しください。\n\nエラー: " + (e.message || e));
