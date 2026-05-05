@@ -3292,6 +3292,213 @@ async function exportImage(evt) {
       useCORS: true,
       allowTaint: false,
       windowWidth: target.scrollWidth,
+      windowHeight: target.scrollHeight,
+      // ★ iOS Safari対応: CSS変数を実値に強制変換
+      onclone: (clonedDoc) => {
+        const style = clonedDoc.createElement('style');
+        style.textContent = `
+          /* CSS変数を実値で上書き(html2canvas iOS対応) */
+          #screen-result, #screen-result * {
+            color: #1A2A3A !important;
+          }
+          #screen-result .report-header,
+          #screen-result .report-header *,
+          #screen-result .report-card-header,
+          #screen-result .report-card-header * {
+            color: #FFFFFF !important;
+          }
+          #screen-result .report-header {
+            background: #2A8F66 !important;
+          }
+          #screen-result .report-card-header {
+            background: #2A8F66 !important;
+          }
+          #screen-result .report-type-card {
+            background: #F0F9F4 !important;
+            border-color: #C8E6D5 !important;
+          }
+          #screen-result .report-type-label {
+            color: #2A8F66 !important;
+            background: #FFFFFF !important;
+          }
+          #screen-result .report-type-name .type-code {
+            color: #2A8F66 !important;
+          }
+          #screen-result .report-tiebreak-badge {
+            background: #F4ECFF !important;
+            border-color: #B89AE5 !important;
+            color: #6B4FA0 !important;
+          }
+          #screen-result .report-tiebreak-badge strong {
+            color: #4A2F7A !important;
+          }
+          #screen-result .report-card {
+            background: #FFFFFF !important;
+            border-color: #C8D2DC !important;
+          }
+          #screen-result .report-tag {
+            background: #FDECEC !important;
+            color: #C84A4A !important;
+          }
+          #screen-result .report-tag:nth-child(2) {
+            background: #FFF6E0 !important;
+            color: #B68120 !important;
+          }
+          #screen-result .report-tag:nth-child(3) {
+            background: #E8F4E8 !important;
+            color: #4FA34F !important;
+          }
+          #screen-result .report-prescription-from {
+            background: #F4F4F8 !important;
+          }
+          #screen-result .report-prescription-to {
+            background: #E8F4E8 !important;
+          }
+          #screen-result .report-prescription-arrow {
+            color: #2A8F66 !important;
+          }
+          #screen-result .report-selfcare-card:nth-child(1) {
+            background: #FFF1E8 !important;
+            border-color: #FFB57A !important;
+          }
+          #screen-result .report-selfcare-card:nth-child(2) {
+            background: #FFFAE5 !important;
+            border-color: #E8C46B !important;
+          }
+          #screen-result .report-selfcare-card:nth-child(3) {
+            background: #E8F4F8 !important;
+            border-color: #7BC1D6 !important;
+          }
+          #screen-result .report-script-before {
+            background: #FDECEC !important;
+          }
+          #screen-result .report-script-after {
+            background: #E8F4E8 !important;
+          }
+          #screen-result .report-script-label,
+          #screen-result .report-script-arrow {
+            color: #2A8F66 !important;
+          }
+          #screen-result .report-practice-item {
+            border-left-color: #2A8F66 !important;
+          }
+          #screen-result .report-worry-section {
+            background: #F0F9F4 !important;
+          }
+          #screen-result .report-worry-label {
+            color: #2A8F66 !important;
+          }
+          #screen-result .report-worry-pattern-text {
+            background: #FFFFFF !important;
+          }
+          #screen-result .report-worry-suggestion {
+            border-left-color: #2A8F66 !important;
+          }
+          #screen-result .report-score-bar-bg {
+            background: #EEF1F4 !important;
+          }
+          #screen-result .report-score-bar-fill[data-type="D"] { background: #E07A7A !important; }
+          #screen-result .report-score-bar-fill[data-type="i"] { background: #E8B645 !important; }
+          #screen-result .report-score-bar-fill[data-type="S"] { background: #4FA34F !important; }
+          #screen-result .report-score-bar-fill[data-type="C"] { background: #5B8DEF !important; }
+          #screen-result .disc-overview-card[data-type="D"] {
+            border-color: #E07A7A !important; background: #FDECEC !important;
+          }
+          #screen-result .disc-overview-card[data-type="i"] {
+            border-color: #E8B645 !important; background: #FFF6E0 !important;
+          }
+          #screen-result .disc-overview-card[data-type="S"] {
+            border-color: #4FA34F !important; background: #E8F4E8 !important;
+          }
+          #screen-result .disc-overview-card[data-type="C"] {
+            border-color: #5B8DEF !important; background: #E8F0FE !important;
+          }
+          #screen-result .disc-overview-card[data-type="D"] .disc-overview-card-title { color: #C84A4A !important; }
+          #screen-result .disc-overview-card[data-type="i"] .disc-overview-card-title { color: #B68120 !important; }
+          #screen-result .disc-overview-card[data-type="S"] .disc-overview-card-title { color: #2D7A2D !important; }
+          #screen-result .disc-overview-card[data-type="C"] .disc-overview-card-title { color: #3D6FCF !important; }
+          #screen-result .report-instructor-block {
+            background: #FFF1E8 !important;
+          }
+          #screen-result .instructor-info .label {
+            color: #C84A4A !important;
+          }
+          #screen-result .instructor-qr-button {
+            background: #2A8F66 !important;
+            color: #FFFFFF !important;
+          }
+        `;
+        clonedDoc.head.appendChild(style);
+      }
+    });
+
+    if (actionsEl) actionsEl.style.display = '';
+    if (headerEl) headerEl.style.display = '';
+
+    const userName = (appState.profile.name || 'guest').replace(/[\s\\/:*?"<>|]/g, '_');
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}`;
+    const fileName = `口ぐせ診断_${userName}_${dateStr}.png`;
+
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        alert("画像の生成に失敗しました。もう一度お試しください。");
+        if (btn) { btn.textContent = originalText; btn.disabled = false; }
+        return;
+      }
+
+      const blobUrl = URL.createObjectURL(blob);
+
+      if (isIOS()) {
+        showImageInOverlay(blobUrl, fileName);
+      } else if (isAndroid()) {
+        downloadImageForAndroid(blobUrl, fileName);
+      } else {
+        downloadImageForPC(blobUrl, fileName);
+      }
+
+      if (btn) { btn.textContent = originalText; btn.disabled = false; }
+    }, 'image/png', 0.92);
+
+  } catch (e) {
+    console.error('画像保存エラー:', e);
+    if (actionsEl) actionsEl.style.display = '';
+    if (headerEl) headerEl.style.display = '';
+    alert("画像の保存に失敗しました。\nもう一度試すか、PCからお試しください。\n\nエラー: " + (e.message || e));
+    if (btn) { btn.textContent = originalText; btn.disabled = false; }
+  }
+}
+
+  const btn = evt && evt.currentTarget;
+  const originalText = btn ? btn.textContent : '';
+  if (btn) {
+    btn.textContent = '画像生成中…(数秒お待ちください)';
+    btn.disabled = true;
+  }
+
+  const target = document.getElementById('screen-result');
+  if (!target) {
+    alert("レポート画面が見つかりません");
+    if (btn) { btn.textContent = originalText; btn.disabled = false; }
+    return;
+  }
+  const actionsEl = target.querySelector('.result-actions');
+  const headerEl = document.querySelector('.app-header');
+  if (actionsEl) actionsEl.style.display = 'none';
+  if (headerEl) headerEl.style.display = 'none';
+
+  window.scrollTo(0, 0);
+  await new Promise(r => setTimeout(r, 100));
+
+  try {
+    const captureScale = isIOS() ? 1.2 : 2;
+    const canvas = await html2canvas(target, {
+      scale: captureScale,
+      backgroundColor: '#FFFFFF',
+      logging: false,
+      useCORS: true,
+      allowTaint: false,
+      windowWidth: target.scrollWidth,
       windowHeight: target.scrollHeight
     });
 
