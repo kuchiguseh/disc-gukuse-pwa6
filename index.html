@@ -5,34 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>DiSC口ぐせ診断 | MBWコンサルティング</title>
 <style>
-/* ===========================================
-   PART 3: スタイル定義（白×パステル 藍青・オレンジ）
-   =========================================== */
-
-/* ---- カラーパレット ---- */
 :root {
-  --c-primary: #5B8DEF;       /* 藍青 */
-  --c-primary-deep: #3D6FCF;  /* 藍青ダーク（押下） */
-  --c-primary-bg: #E8F0FE;    /* 藍青背景 */
-  --c-accent: #FF9F6B;        /* オレンジ */
-  --c-accent-deep: #E8845C;   /* オレンジダーク */
-  --c-accent-bg: #FFF1E8;     /* オレンジ背景 */
-  --c-text: #1A2A3A;          /* メインテキスト（濃いめ） */
-  --c-text-sub: #5A6B7B;      /* サブテキスト（読めるグレー） */
-  --c-bg: #FBFCFE;            /* 全体背景（ほぼ白） */
-  --c-card: #FFFFFF;          /* カード背景 */
-  --c-border: #C8D2DC;        /* 罫線（視認できる濃さ） */
-  --c-success: #4FA34F;       /* 成功・S型用 */
-  --c-warn: #D4A82B;          /* i型用 */
-  --c-danger: #C84A4A;        /* D型用 */
-
+  --c-primary: #5B8DEF;
+  --c-primary-deep: #3D6FCF;
+  --c-primary-bg: #E8F0FE;
+  --c-accent: #FF9F6B;
+  --c-accent-deep: #E8845C;
+  --c-accent-bg: #FFF1E8;
+  --c-text: #1A2A3A;
+  --c-text-sub: #5A6B7B;
+  --c-bg: #FBFCFE;
+  --c-card: #FFFFFF;
+  --c-border: #C8D2DC;
+  --c-success: #4FA34F;
+  --c-warn: #D4A82B;
+  --c-danger: #C84A4A;
   --shadow-sm: 0 2px 8px rgba(91,141,239,0.10);
   --shadow-md: 0 4px 16px rgba(91,141,239,0.16);
   --radius: 14px;
   --radius-sm: 8px;
 }
-
-/* ---- リセット ---- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { height: 100%; }
 body {
@@ -46,8 +38,6 @@ body {
 }
 button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 input, select, textarea { font: inherit; color: inherit; }
-
-/* ---- レイアウト共通 ---- */
 .app {
   max-width: 640px;
   margin: 0 auto;
@@ -59,8 +49,6 @@ input, select, textarea { font: inherit; color: inherit; }
 .screen { display: none; flex: 1; flex-direction: column; }
 .screen.active { display: flex; animation: fadeIn 0.4s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-/* ---- ヘッダー（共通） ---- */
 .app-header {
   text-align: center;
   margin-bottom: 24px;
@@ -78,8 +66,6 @@ input, select, textarea { font: inherit; color: inherit; }
   color: var(--c-text-sub);
   margin-top: 4px;
 }
-
-/* ---- 共通カード ---- */
 .card {
   background: var(--c-card);
   border-radius: var(--radius);
@@ -87,8 +73,6 @@ input, select, textarea { font: inherit; color: inherit; }
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--c-border);
 }
-
-/* ---- 共通ボタン ---- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -118,10 +102,6 @@ input, select, textarea { font: inherit; color: inherit; }
 }
 .btn-ghost:hover { background: var(--c-primary-bg); }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
-
-/* ===========================================
-   1. スタート画面
-   =========================================== */
 .start-hero {
   text-align: center;
   padding: 32px 20px;
@@ -130,8 +110,6 @@ input, select, textarea { font: inherit; color: inherit; }
   margin-bottom: 20px;
 }
 .start-hero-emoji { font-size: 56px; margin-bottom: 12px; }
-
-/* 小さな星装飾（タイトル両脇） */
 .start-hero-stars {
   display: flex;
   justify-content: center;
@@ -152,9 +130,7 @@ input, select, textarea { font: inherit; color: inherit; }
   opacity: 0.85;
   animation-delay: 0.6s;
 }
-.start-hero-stars span:nth-child(3) {
-  animation-delay: 1.2s;
-}
+.start-hero-stars span:nth-child(3) { animation-delay: 1.2s; }
 @keyframes starTwinkle {
   0%, 100% { opacity: 0.4; transform: scale(0.95); }
   50% { opacity: 0.9; transform: scale(1.05); }
@@ -189,7 +165,6 @@ input, select, textarea { font: inherit; color: inherit; }
 .start-feature-icon { font-size: 24px; margin-bottom: 6px; }
 .start-feature-text { font-size: 12px; color: var(--c-text-sub); line-height: 1.5; }
 .start-feature-text strong { display: block; color: var(--c-primary); font-size: 15px; margin-bottom: 2px; }
-
 .start-description {
   background: var(--c-card);
   border-radius: var(--radius);
@@ -213,10 +188,6 @@ input, select, textarea { font: inherit; color: inherit; }
   line-height: 1.7;
 }
 .start-description p:last-child { margin-bottom: 0; }
-
-/* ===========================================
-   2. プロフィール画面
-   =========================================== */
 .profile-intro {
   text-align: center;
   margin-bottom: 24px;
@@ -228,21 +199,13 @@ input, select, textarea { font: inherit; color: inherit; }
   letter-spacing: 0.03em;
 }
 .profile-intro p { font-size: 14px; color: var(--c-text-sub); line-height: 1.7; }
-
-.form-group {
-  margin-bottom: 22px;
-}
+.form-group { margin-bottom: 22px; }
 .form-label {
   display: block;
   font-size: 15px;
   font-weight: 700;
   color: var(--c-text);
   margin-bottom: 10px;
-}
-.form-label .required {
-  color: var(--c-accent);
-  font-size: 12px;
-  margin-left: 4px;
 }
 .form-input, .form-select, .form-textarea {
   width: 100%;
@@ -259,32 +222,6 @@ input, select, textarea { font: inherit; color: inherit; }
   border-color: var(--c-primary);
   box-shadow: 0 0 0 3px var(--c-primary-bg);
 }
-.form-textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
-.form-radio-group { display: flex; gap: 8px; flex-wrap: wrap; }
-.form-radio {
-  flex: 1;
-  min-width: calc(50% - 4px);
-  position: relative;
-}
-.form-radio input { position: absolute; opacity: 0; pointer-events: none; }
-.form-radio label {
-  display: block;
-  padding: 12px 8px;
-  text-align: center;
-  border: 1.5px solid var(--c-border);
-  border-radius: var(--radius-sm);
-  background: var(--c-card);
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.form-radio input:checked + label {
-  border-color: var(--c-primary);
-  background: var(--c-primary-bg);
-  color: var(--c-primary-deep);
-  font-weight: 700;
-}
-
 .form-actions {
   display: flex;
   gap: 12px;
@@ -292,13 +229,7 @@ input, select, textarea { font: inherit; color: inherit; }
 }
 .form-actions .btn-ghost { flex: 0 0 32%; }
 .form-actions .btn-primary { flex: 1; }
-
-/* ===========================================
-   3. 質問画面
-   =========================================== */
-.q-progress {
-  margin-bottom: 24px;
-}
+.q-progress { margin-bottom: 24px; }
 .q-progress-label {
   display: flex;
   justify-content: space-between;
@@ -327,7 +258,6 @@ input, select, textarea { font: inherit; color: inherit; }
   transition: width 0.4s ease;
   width: 10%;
 }
-
 .q-card {
   background: var(--c-card);
   border-radius: var(--radius);
@@ -344,7 +274,6 @@ input, select, textarea { font: inherit; color: inherit; }
   line-height: 1.6;
   letter-spacing: 0.02em;
 }
-
 .q-options { display: flex; flex-direction: column; gap: 12px; }
 .q-option {
   display: block;
@@ -374,7 +303,6 @@ input, select, textarea { font: inherit; color: inherit; }
   box-shadow: var(--shadow-sm);
   border-width: 2.5px;
 }
-
 .q-actions {
   display: flex;
   gap: 12px;
@@ -382,186 +310,6 @@ input, select, textarea { font: inherit; color: inherit; }
 }
 .q-actions .btn-ghost { flex: 0 0 32%; }
 .q-actions .btn-primary { flex: 1; }
-
-/* ===========================================
-   4. 結果画面
-   =========================================== */
-.result-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-.result-label-small {
-  display: inline-block;
-  background: var(--c-accent-bg);
-  color: var(--c-accent-deep);
-  padding: 6px 16px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  margin-bottom: 14px;
-}
-.result-name {
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--c-text);
-  margin-bottom: 8px;
-  letter-spacing: 0.03em;
-}
-.result-code {
-  display: inline-block;
-  background: var(--c-primary);
-  color: white;
-  padding: 6px 16px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 700;
-  margin-right: 10px;
-  letter-spacing: 0.05em;
-}
-.result-summary {
-  font-size: 16px;
-  color: var(--c-text);
-  background: var(--c-primary-bg);
-  padding: 18px 20px;
-  border-radius: var(--radius);
-  margin: 18px 0 26px;
-  line-height: 1.8;
-}
-
-/* スコアバー（4タイプ横並び） */
-.scores {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  margin: 0 0 26px;
-}
-.score-item {
-  text-align: center;
-  padding: 14px 6px;
-  background: var(--c-card);
-  border: 1px solid var(--c-border);
-  border-radius: var(--radius-sm);
-}
-.score-item.is-primary {
-  background: var(--c-primary-bg);
-  border-color: var(--c-primary);
-  border-width: 2px;
-}
-.score-item.is-secondary {
-  background: var(--c-accent-bg);
-  border-color: var(--c-accent);
-}
-.score-letter {
-  font-size: 26px;
-  font-weight: 700;
-  margin-bottom: 4px;
-  letter-spacing: 0.05em;
-}
-.score-letter[data-type="D"] { color: var(--c-danger); }
-.score-letter[data-type="i"] { color: var(--c-warn); }
-.score-letter[data-type="S"] { color: var(--c-success); }
-.score-letter[data-type="C"] { color: var(--c-primary); }
-.score-value { font-size: 15px; color: var(--c-text); font-weight: 700; }
-.score-bar { font-size: 10px; letter-spacing: -1px; margin-top: 4px; }
-
-/* セクション */
-.result-section { margin-bottom: 22px; }
-.result-section-title {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--c-primary);
-  margin-bottom: 12px;
-  letter-spacing: 0.03em;
-}
-.result-section-title.warn { color: var(--c-accent-deep); }
-
-.result-list {
-  background: var(--c-card);
-  border-radius: var(--radius);
-  padding: 16px 20px;
-  border: 1px solid var(--c-border);
-  list-style: none;
-}
-.result-list li {
-  font-size: 16px;
-  line-height: 1.7;
-  padding: 10px 0 10px 22px;
-  position: relative;
-}
-.result-list li:not(:last-child) { border-bottom: 1px dashed var(--c-border); }
-.result-list li::before {
-  content: "・";
-  position: absolute;
-  left: 0;
-  color: var(--c-primary);
-  font-weight: 700;
-  font-size: 18px;
-}
-.result-list.warn li::before { color: var(--c-accent); }
-
-/* 口ぐせ→置き換え 対比 */
-.kuchiguse-pairs {
-  background: var(--c-card);
-  border-radius: var(--radius);
-  border: 1px solid var(--c-border);
-  overflow: hidden;
-}
-.kuchiguse-pair {
-  display: grid;
-  grid-template-columns: 1fr 32px 1fr;
-  align-items: center;
-  padding: 14px 16px;
-  gap: 8px;
-}
-.kuchiguse-pair:not(:last-child) { border-bottom: 1px solid var(--c-border); }
-.kuchiguse-from {
-  font-size: 15px;
-  color: var(--c-text);
-  background: #FDECEC;
-  padding: 10px 12px;
-  border-radius: 6px;
-  text-align: center;
-  line-height: 1.5;
-}
-.kuchiguse-arrow {
-  text-align: center;
-  color: var(--c-primary);
-  font-weight: 700;
-  font-size: 18px;
-}
-.kuchiguse-to {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--c-text);
-  background: #E8F4E8;
-  padding: 10px 12px;
-  border-radius: 6px;
-  text-align: center;
-  line-height: 1.5;
-}
-
-/* アドバイス */
-.advice {
-  background: var(--c-accent-bg);
-  border-left: 5px solid var(--c-accent);
-  border-radius: var(--radius);
-  padding: 18px 20px;
-  margin-top: 22px;
-}
-.advice-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--c-accent-deep);
-  margin-bottom: 8px;
-  letter-spacing: 0.05em;
-}
-.advice-body { font-size: 16px; line-height: 1.8; color: var(--c-text); }
-
-/* 結果アクション */
 .result-actions {
   display: flex;
   flex-direction: column;
@@ -570,8 +318,6 @@ input, select, textarea { font: inherit; color: inherit; }
   padding-top: 24px;
   border-top: 1px solid var(--c-border);
 }
-
-/* フッター */
 .app-footer {
   text-align: center;
   font-size: 12px;
@@ -581,8 +327,6 @@ input, select, textarea { font: inherit; color: inherit; }
   border-top: 1px solid var(--c-border);
   line-height: 1.7;
 }
-
-/* ---- 画面サイズ最適化（小型スマホ） ---- */
 @media (max-width: 380px) {
   .start-features { gap: 6px; }
   .start-feature { padding: 14px 4px; }
@@ -590,191 +334,12 @@ input, select, textarea { font: inherit; color: inherit; }
   .start-feature-text strong { font-size: 14px; }
   .q-text { font-size: 18px; }
   .q-option { font-size: 16px; padding: 16px 16px; }
-  .result-name { font-size: 23px; }
-  .kuchiguse-pair { grid-template-columns: 1fr 24px 1fr; padding: 12px 10px; }
-  .kuchiguse-from, .kuchiguse-to { font-size: 14px; padding: 8px 8px; }
-  .result-list li { font-size: 15px; }
 }
-
-/* ============================================
-   印刷用CSS（@media print）— A4×1枚に最適化
-   ============================================ */
-@media print {
-  /* 印刷時のページ設定 */
-  @page {
-    size: A4 portrait;
-    margin: 12mm 14mm;
-  }
-
-  /* 全体リセット */
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    color-adjust: exact !important;
-  }
-
-  body {
-    background: white !important;
-    font-size: 11pt;
-    line-height: 1.6;
-  }
-
-  .app {
-    max-width: 100%;
-    padding: 0;
-    margin: 0;
-  }
-
-  /* 結果画面以外は印刷しない */
-  .screen { display: none !important; }
-  #screen-result { display: block !important; padding: 0; animation: none; }
-
-  /* 画面用の要素を印刷時は非表示 */
-  .app-header,
-  .app-footer,
-  .result-actions {
-    display: none !important;
-  }
-
-  /* 印刷専用ヘッダーを表示 */
-  .print-only {
-    display: block !important;
-  }
-
-  /* 印刷ヘッダー */
-  .print-header {
-    text-align: center;
-    margin-bottom: 8mm;
-    padding-bottom: 4mm;
-    border-bottom: 2px solid #5B8DEF;
-  }
-  .print-header h1 {
-    font-size: 16pt;
-    font-weight: 700;
-    color: #5B8DEF;
-    margin-bottom: 2mm;
-  }
-  .print-header .print-meta {
-    font-size: 9pt;
-    color: #5A6B7B;
-  }
-
-  /* 結果ヘッダー */
-  .result-header {
-    margin-bottom: 4mm;
-  }
-  .result-label-small {
-    font-size: 8pt;
-    padding: 2px 10px;
-    margin-bottom: 4px;
-  }
-  .result-name {
-    font-size: 18pt;
-  }
-  .result-code {
-    font-size: 12pt;
-    padding: 3px 12px;
-    background: #5B8DEF !important;
-    color: white !important;
-  }
-  .result-summary {
-    font-size: 10pt;
-    padding: 8px 12px;
-    margin: 8px 0 12px;
-    background: #E8F0FE !important;
-    line-height: 1.5;
-  }
-
-  /* スコアバー */
-  .scores {
-    margin-bottom: 6mm;
-    gap: 4px;
-  }
-  .score-item {
-    padding: 6px 4px;
-  }
-  .score-letter { font-size: 14pt; }
-  .score-value { font-size: 9pt; }
-  .score-bar { font-size: 7pt; }
-  .score-item.is-primary {
-    background: #E8F0FE !important;
-    border-color: #5B8DEF !important;
-  }
-  .score-item.is-secondary {
-    background: #FFF1E8 !important;
-    border-color: #FF9F6B !important;
-  }
-
-  /* セクション */
-  .result-section { margin-bottom: 4mm; page-break-inside: avoid; }
-  .result-section-title {
-    font-size: 10pt;
-    margin-bottom: 4px;
-  }
-  .result-list {
-    padding: 8px 12px;
-  }
-  .result-list li {
-    font-size: 10pt;
-    padding: 3px 0 3px 14px;
-    line-height: 1.5;
-  }
-
-  /* 口ぐせ→置き換え */
-  .kuchiguse-pair {
-    padding: 6px 10px;
-    grid-template-columns: 1fr 24px 1fr;
-  }
-  .kuchiguse-from {
-    font-size: 9pt;
-    padding: 5px 8px;
-    background: #FDECEC !important;
-  }
-  .kuchiguse-to {
-    font-size: 9pt;
-    padding: 5px 8px;
-    background: #E8F4E8 !important;
-  }
-  .kuchiguse-arrow { font-size: 11pt; }
-
-  /* アドバイス */
-  .advice {
-    padding: 8px 12px;
-    margin-top: 4mm;
-    background: #FFF1E8 !important;
-    border-left: 4px solid #FF9F6B !important;
-    page-break-inside: avoid;
-  }
-  .advice-title { font-size: 10pt; margin-bottom: 3px; }
-  .advice-body { font-size: 10pt; line-height: 1.5; }
-
-  /* 印刷フッター */
-  .print-footer {
-    display: block !important;
-    text-align: center;
-    margin-top: 8mm;
-    padding-top: 4mm;
-    border-top: 1px solid #C8D2DC;
-    font-size: 8pt;
-    color: #5A6B7B;
-    line-height: 1.6;
-  }
-}
-
-/* 画面表示時は印刷専用要素を隠す */
 .print-only { display: none; }
-
-/* ===========================================
-   ★ 新レポート画面（画像準拠）
-   =========================================== */
-
-/* 新レポート用のラッパー（既存の.app は維持しつつ、レポートだけ広く） */
 #screen-result.report-mode {
   max-width: 800px;
   margin: 0 auto;
 }
-
-/* 緑色のヘッダー帯 */
 .report-header {
   background: linear-gradient(135deg, #2A8F66 0%, #3BAA7E 100%);
   color: white;
@@ -812,8 +377,6 @@ input, select, textarea { font: inherit; color: inherit; }
   font-weight: 700;
   letter-spacing: 0.05em;
 }
-
-/* レポートカード共通 */
 .report-card {
   background: var(--c-card);
   border: 1px solid var(--c-border);
@@ -829,11 +392,7 @@ input, select, textarea { font: inherit; color: inherit; }
   font-weight: 700;
   letter-spacing: 0.05em;
 }
-.report-card-body {
-  padding: 16px 18px;
-}
-
-/* タイプ表示エリア（緑カード上部） */
+.report-card-body { padding: 16px 18px; }
 .report-type-card {
   background: #F0F9F4;
   border: 1px solid #C8E6D5;
@@ -870,8 +429,6 @@ input, select, textarea { font: inherit; color: inherit; }
   line-height: 1.7;
   margin-bottom: 0;
 }
-
-/* 追加質問バッジ */
 .report-tiebreak-badge {
   background: #F4ECFF;
   border: 1.5px solid #B89AE5;
@@ -883,8 +440,6 @@ input, select, textarea { font: inherit; color: inherit; }
   line-height: 1.6;
 }
 .report-tiebreak-badge strong { color: #4A2F7A; }
-
-/* 回答傾向グラフ */
 .report-scores {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -925,8 +480,6 @@ input, select, textarea { font: inherit; color: inherit; }
   font-size: 11px;
   margin-left: 2px;
 }
-
-/* よく使う口ぐせ TOP3（タグ） */
 .report-tags {
   display: flex;
   flex-wrap: wrap;
@@ -942,8 +495,6 @@ input, select, textarea { font: inherit; color: inherit; }
 }
 .report-tag:nth-child(2) { background: #FFF6E0; color: #B68120; }
 .report-tag:nth-child(3) { background: #E8F4E8; color: #4FA34F; }
-
-/* 口ぐせ処方箋（Before→After） */
 .report-prescription-list {
   display: grid;
   gap: 10px;
@@ -975,8 +526,6 @@ input, select, textarea { font: inherit; color: inherit; }
   color: var(--c-text);
   font-weight: 600;
 }
-
-/* 自分を整える口ぐせ（3カード） */
 .report-selfcare-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1022,8 +571,6 @@ input, select, textarea { font: inherit; color: inherit; }
   content: "📍";
   margin-right: 4px;
 }
-
-/* 場面別スクリプト + 実践メニュー（2カラム） */
 .report-two-col {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1032,11 +579,7 @@ input, select, textarea { font: inherit; color: inherit; }
 @media (max-width: 600px) {
   .report-two-col { grid-template-columns: 1fr; }
 }
-
-/* 場面別スクリプトのBefore/After */
-.report-script-section {
-  margin-bottom: 18px;
-}
+.report-script-section { margin-bottom: 18px; }
 .report-script-section:last-child { margin-bottom: 0; }
 .report-script-label {
   font-size: 13px;
@@ -1091,8 +634,6 @@ input, select, textarea { font: inherit; color: inherit; }
   font-size: 16px;
   font-weight: 700;
 }
-
-/* 実践メニュー */
 .report-practice-list {
   list-style: none;
   padding: 0;
@@ -1112,8 +653,6 @@ input, select, textarea { font: inherit; color: inherit; }
   margin-bottom: 8px;
 }
 .report-practice-item:last-child { margin-bottom: 0; }
-
-/* 悩みへの口ぐせ処方 */
 .report-worry-section {
   background: #F0F9F4;
   border-radius: 8px;
@@ -1141,9 +680,7 @@ input, select, textarea { font: inherit; color: inherit; }
   line-height: 1.6;
   font-weight: 700;
 }
-.report-worry-suggestions {
-  margin-top: 12px;
-}
+.report-worry-suggestions { margin-top: 12px; }
 .report-worry-suggestion {
   display: flex;
   align-items: flex-start;
@@ -1156,8 +693,6 @@ input, select, textarea { font: inherit; color: inherit; }
   padding-left: 12px;
   margin-bottom: 4px;
 }
-
-/* DiSCとは（4タイプ解説） */
 .disc-overview-intro {
   font-size: 13px;
   line-height: 1.7;
@@ -1203,8 +738,6 @@ input, select, textarea { font: inherit; color: inherit; }
   line-height: 1.7;
 }
 .disc-overview-card-kuchiguse div { margin-bottom: 2px; }
-
-/* 講師プロフィール */
 .report-instructor-block {
   background: linear-gradient(135deg, #FFF1E8 0%, #FEFBF6 100%);
   border-radius: var(--radius);
@@ -1274,10 +807,8 @@ input, select, textarea { font: inherit; color: inherit; }
   color: var(--c-text-sub);
   line-height: 1.5;
 }
-.instructor-qr {
-  text-align: center;
-}
-.instructor-qr canvas, .instructor-qr img {
+.instructor-qr { text-align: center; }
+.instructor-qr canvas, .instructor-qr img, .instructor-qr svg {
   width: 80px;
   height: 80px;
   background: white;
@@ -1303,8 +834,6 @@ input, select, textarea { font: inherit; color: inherit; }
   border: none;
 }
 .instructor-qr-button:hover { background: #228055; }
-
-/* レポートのフッター */
 .report-tagline {
   text-align: center;
   font-size: 12px;
@@ -1313,24 +842,16 @@ input, select, textarea { font: inherit; color: inherit; }
   padding-top: 12px;
   border-top: 1px solid var(--c-border);
 }
-
 </style>
 </head>
 <body>
 
 <div class="app">
-
-  <!-- ============================================
-       共通ヘッダー
-       ============================================ -->
   <header class="app-header">
     <div class="app-title">DiSC 口ぐせ診断</div>
     <div class="app-subtitle">あなたの言葉のクセを、やさしく見つける</div>
   </header>
 
-  <!-- ============================================
-       1. スタート画面
-       ============================================ -->
   <section class="screen active" id="screen-start">
     <div class="start-hero">
       <div class="start-hero-stars">
@@ -1339,7 +860,6 @@ input, select, textarea { font: inherit; color: inherit; }
       <div class="start-hero-title">口ぐせを変えると、<br>人生が変わる。</div>
       <p class="start-hero-text">10問の質問に答えて、<br>あなたのタイプと口ぐせを見つけましょう</p>
     </div>
-
     <div class="start-features">
       <div class="start-feature">
         <div class="start-feature-icon">⏱️</div>
@@ -1354,38 +874,28 @@ input, select, textarea { font: inherit; color: inherit; }
         <div class="start-feature-text"><strong>10問</strong>に答えるだけ</div>
       </div>
     </div>
-
     <div class="start-description">
       <h3>診断の流れ</h3>
       <p>① プロフィールを入力(任意)</p>
       <p>② 10問の質問に答える</p>
       <p>③ あなたのタイプと、おすすめの「置き換え口ぐせ」が表示されます</p>
     </div>
-
-    <button class="btn btn-primary" onclick="goToScreen('profile')">
-      はじめる →
-    </button>
-
+    <button class="btn btn-primary" onclick="goToScreen('profile')">はじめる →</button>
     <div class="app-footer">
-      MBWコンサルティング / 口ぐセラピスト 大石ゆうじ
+      MBWコンサルティング / 口ぐせセラピスト 大石ゆうじ
     </div>
   </section>
 
-  <!-- ============================================
-       2. プロフィール画面
-       ============================================ -->
   <section class="screen" id="screen-profile">
     <div class="profile-intro">
       <h2>はじめに教えてください</h2>
       <p>より良いアドバイスのために、<br>教えていただけると嬉しいです。</p>
     </div>
-
     <div class="card">
       <div class="form-group">
         <label class="form-label" for="profile-name">お名前(ニックネームでもOK)</label>
         <input type="text" id="profile-name" class="form-input" placeholder="例)山田 花子">
       </div>
-
       <div class="form-group">
         <label class="form-label" for="profile-job">職業</label>
         <select id="profile-job" class="form-select">
@@ -1406,7 +916,6 @@ input, select, textarea { font: inherit; color: inherit; }
           <option value="その他">その他</option>
         </select>
       </div>
-
       <div class="form-group">
         <label class="form-label" for="profile-age">年齢層</label>
         <select id="profile-age" class="form-select">
@@ -1419,7 +928,6 @@ input, select, textarea { font: inherit; color: inherit; }
           <option value="回答しない">回答しない</option>
         </select>
       </div>
-
       <div class="form-group">
         <label class="form-label" for="profile-gender">性別</label>
         <select id="profile-gender" class="form-select">
@@ -1430,7 +938,6 @@ input, select, textarea { font: inherit; color: inherit; }
           <option value="回答しない">回答しない</option>
         </select>
       </div>
-
       <div class="form-group">
         <label class="form-label" for="profile-pref">お住まいの都道府県</label>
         <select id="profile-pref" class="form-select">
@@ -1485,7 +992,6 @@ input, select, textarea { font: inherit; color: inherit; }
           <option value="海外">海外</option>
         </select>
       </div>
-
       <div class="form-group">
         <label class="form-label" for="profile-worry">今の一番の悩み</label>
         <select id="profile-worry" class="form-select">
@@ -1500,16 +1006,12 @@ input, select, textarea { font: inherit; color: inherit; }
         </select>
       </div>
     </div>
-
     <div class="form-actions">
       <button class="btn btn-ghost" onclick="goToScreen('start')">戻る</button>
       <button class="btn btn-primary" onclick="startQuestions()">質問へ →</button>
     </div>
   </section>
 
-  <!-- ============================================
-       3. 質問画面
-       ============================================ -->
   <section class="screen" id="screen-question">
     <div class="q-progress">
       <div class="q-progress-label">
@@ -1520,29 +1022,17 @@ input, select, textarea { font: inherit; color: inherit; }
         <div class="q-progress-fill" id="q-progress-fill"></div>
       </div>
     </div>
-
     <div class="q-card">
       <div class="q-text" id="q-text">質問文がここに表示されます</div>
-      <div class="q-options" id="q-options">
-        <!-- JSで挿入 -->
-      </div>
+      <div class="q-options" id="q-options"></div>
     </div>
-
     <div class="q-actions">
       <button class="btn btn-ghost" id="q-back" onclick="prevQuestion()">戻る</button>
       <button class="btn btn-primary" id="q-next" onclick="nextQuestion()" disabled>次へ →</button>
     </div>
   </section>
 
-  <!-- ============================================
-       4. 結果画面
-       ============================================ -->
   <section class="screen report-mode" id="screen-result">
-    <!-- ============================================
-         新レポート画面（画像準拠の11セクション）
-         ============================================ -->
-
-    <!-- 1. ヘッダー帯（緑） -->
     <div class="report-header">
       <div class="report-header-left">
         <h1>口ぐせ診断 パーソナルレポート</h1>
@@ -1554,32 +1044,28 @@ input, select, textarea { font: inherit; color: inherit; }
       </div>
     </div>
 
-    <!-- 2. タイプ表示 + キャッチコピー -->
     <div class="report-type-card">
       <span class="report-type-label">あなたのタイプ</span>
       <div class="report-type-name">
         <span id="r-type-name">結果を出す論理派</span>
-        <span class="type-code" id="r-type-code">（C-D）</span>
+        <span class="type-code" id="r-type-code">(C-D)</span>
       </div>
       <p class="report-catchcopy" id="r-catchcopy">キャッチコピーがここに入ります</p>
-
-      <!-- 3. 追加質問バッジ（同点解消があった時のみ表示） -->
       <div class="report-tiebreak-badge" id="r-tiebreak-badge" style="display: none;">
-        <strong>✦ 追加質問で決定（1問）</strong><br>
+        <strong>✦ 追加質問で決定(1問)</strong><br>
         10問終了時点で<span id="r-tied-types"></span>が同点でした。<br>
         追加質問1問の回答により、<strong id="r-tied-result"></strong>に決定しました。
       </div>
     </div>
 
-    <!-- 4. 回答傾向（DiSC選択数） -->
     <div class="report-card">
-      <div class="report-card-header">回答傾向（DiSC選択数）</div>
+      <div class="report-card-header">回答傾向(DiSC選択数)</div>
       <div class="report-card-body">
         <div class="report-scores">
           <ul class="report-score-list" id="r-score-list"></ul>
           <div id="r-tiebreak-detail" style="display: none;">
             <div style="font-size:12px; color:#5A6B7B; font-weight:700; margin-bottom:8px;">
-              ✦ 追加質問（1問）の結果
+              ✦ 追加質問(1問)の結果
             </div>
             <ul class="report-score-list" id="r-tiebreak-scores"></ul>
           </div>
@@ -1587,23 +1073,20 @@ input, select, textarea { font: inherit; color: inherit; }
       </div>
     </div>
 
-    <!-- 5. よく使う口ぐせ TOP3 -->
     <div class="report-card">
-      <div class="report-card-header">あなたがよく使う口ぐせ（TOP3）</div>
+      <div class="report-card-header">あなたがよく使う口ぐせ(TOP3)</div>
       <div class="report-card-body">
         <div class="report-tags" id="r-top-kuchiguse"></div>
       </div>
     </div>
 
-    <!-- 6. 口ぐせ処方箋（Before→After） -->
     <div class="report-card">
-      <div class="report-card-header">口ぐせ処方箋（<span id="r-prescription-title-type"></span>）</div>
+      <div class="report-card-header">口ぐせ処方箋(<span id="r-prescription-title-type"></span>)</div>
       <div class="report-card-body">
         <div class="report-prescription-list" id="r-prescription-list"></div>
       </div>
     </div>
 
-    <!-- 7. 自分を整える口ぐせ -->
     <div class="report-card">
       <div class="report-card-header">自分を整える口ぐせ</div>
       <div class="report-card-body">
@@ -1611,7 +1094,6 @@ input, select, textarea { font: inherit; color: inherit; }
       </div>
     </div>
 
-    <!-- 8. 場面別スクリプト + 実践メニュー（2カラム） -->
     <div class="report-two-col">
       <div class="report-card">
         <div class="report-card-header">場面別スクリプト</div>
@@ -1625,7 +1107,6 @@ input, select, textarea { font: inherit; color: inherit; }
       </div>
     </div>
 
-    <!-- 9. 悩みへの口ぐせ処方 -->
     <div class="report-card" id="r-worry-card">
       <div class="report-card-header">🔍 あなたの悩みへの口ぐせ処方</div>
       <div class="report-card-body">
@@ -1641,7 +1122,6 @@ input, select, textarea { font: inherit; color: inherit; }
       </div>
     </div>
 
-    <!-- 10. DiSCとは？ -->
     <div class="report-card">
       <div class="report-card-header">DiSCとは？</div>
       <div class="report-card-body">
@@ -1650,12 +1130,14 @@ input, select, textarea { font: inherit; color: inherit; }
       </div>
     </div>
 
-    <!-- 11. 講師プロフィール + QR + お申込み -->
     <div class="report-instructor-block">
-      <div class="instructor-avatar"><img src="data:image/jpeg;base64,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" alt="大石ゆうじ" /></div>
+      <div class="instructor-avatar">
+        <div style="width:80px;height:80px;background:#FFF1E8;display:flex;align-items:center;justify-content:center;font-size:28px;">👨‍🏫</div>
+      </div>
       <div class="instructor-info">
         <div class="label">講師プロフィール</div>
-        <div class="name" id="r-instructor-titles"></div>
+        <div class="name">大石ゆうじ</div>
+        <div class="titles" id="r-instructor-titles"></div>
         <div class="titles" id="r-instructor-location"></div>
         <div class="schedule" id="r-instructor-schedule"></div>
         <div class="note" id="r-instructor-note"></div>
@@ -1667,56 +1149,24 @@ input, select, textarea { font: inherit; color: inherit; }
       </div>
     </div>
 
-    <!-- レポートタグライン -->
     <div class="report-tagline">
       口ぐせを変えると、人生が変わる　— DiSC別口ぐせ診断 パーソナルレポート
     </div>
 
-    <!-- アクションボタン -->
     <div class="result-actions">
       <button class="btn btn-accent" onclick="exportPDF()">📄 PDFで保存(PC向け)</button>
       <button class="btn btn-accent" onclick="exportImage(event)" style="background:#3D6FCF;">📷 画像で保存(スマホ推奨)</button>
       <button class="btn btn-ghost" onclick="restart()">最初からやり直す</button>
     </div>
-
-    <!-- 印刷時のみ表示されるヘッダー（印刷向け簡易ヘッダー） -->
-    <div class="print-only print-header" style="display:none;">
-      <h1>DiSC 口ぐせ診断 結果シート</h1>
-      <div class="print-meta">
-        <span id="print-name"></span>
-        <span id="print-date"></span>
-      </div>
-    </div>
-
-    <!-- 印刷時のみ表示されるフッター -->
-    <div class="print-only print-footer">
-      口ぐせを変えると、人生が変わる。<br>
-      MBWコンサルティング / 口ぐセラピスト 大石ゆうじ
-    </div>
   </section>
-
 </div>
 
-<!-- ============================================
-     PART 3: 画面遷移ロジック（仮データで動作確認）
-     PART 4で本物のデータと差し替え予定
-     ============================================ -->
-<!-- QRコード生成ライブラリ（軽量・CDNから読み込み） -->
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-<!-- 画像保存用ライブラリ（スマホ向けPDF代替） -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-// ===== 質問データ + 判定ロジック（PART 1） =====
-// ========================================
-// PART 1（確定版）: 質問データ + 判定ロジック
-// 形式: 場面提示型・4択択一（D/i/S/C から1つ選ぶ）
-// 構成: 改善後質問10問 / 「口ぐせ」をQ5に配置
-// ========================================
-
+// ========== 質問データ ==========
 const QUESTIONS = [
-  {
-    id: 1,
-    question: "「やったことのない新しいこと」を前にしたとき、最初の気持ちは？",
+  { id: 1, question: "「やったことのない新しいこと」を前にしたとき、最初の気持ちは？",
     options: [
       { type: "i", text: "誰かと一緒に、楽しくやりたい" },
       { type: "C", text: "ちゃんと調べて、納得してから始めたい" },
@@ -1724,9 +1174,7 @@ const QUESTIONS = [
       { type: "S", text: "今のままでも十分かな、と感じる" }
     ]
   },
-  {
-    id: 2,
-    question: "誰かに何かをお願いするとき、自然と出る言い方は？",
+  { id: 2, question: "誰かに何かをお願いするとき、自然と出る言い方は？",
     options: [
       { type: "S", text: "「もしよかったら、お願いできますか？」と丁寧に伝える" },
       { type: "D", text: "「○○までにお願い」とはっきり伝える" },
@@ -1734,9 +1182,7 @@ const QUESTIONS = [
       { type: "i", text: "「ねえ、一緒にやらない？楽しそうだよ」と誘う" }
     ]
   },
-  {
-    id: 3,
-    question: "何かうまくいかなかったとき、心の中で最初につぶやく言葉は？",
+  { id: 3, question: "何かうまくいかなかったとき、心の中で最初につぶやく言葉は？",
     options: [
       { type: "C", text: "「なぜこうなったんだろう」と原因を考える" },
       { type: "S", text: "「迷惑かけてないかな…」と気になる" },
@@ -1744,9 +1190,7 @@ const QUESTIONS = [
       { type: "D", text: "「次はどうする？すぐ立て直そう」" }
     ]
   },
-  {
-    id: 4,
-    question: "ふだんの会話でよく使う言葉は、どれに近いですか？",
+  { id: 4, question: "ふだんの会話でよく使う言葉は、どれに近いですか？",
     options: [
       { type: "i", text: "「楽しそう！」「それ素敵！」" },
       { type: "D", text: "「決めた！やろう」「今がチャンス」" },
@@ -1754,9 +1198,7 @@ const QUESTIONS = [
       { type: "C", text: "「ちゃんと確認しよう」「段取りが大事」" }
     ]
   },
-  {
-    id: 5,
-    question: "ふと口から出る「口ぐせ」、一番近いのはどれ？",
+  { id: 5, question: "ふと口から出る「口ぐせ」、一番近いのはどれ？",
     options: [
       { type: "S", text: "「ありがとう」「無理しないでね」系" },
       { type: "C", text: "「確認しよう」「間違えたくない」系" },
@@ -1764,9 +1206,7 @@ const QUESTIONS = [
       { type: "i", text: "「楽しみだね」「なんとかなる」系" }
     ]
   },
-  {
-    id: 6,
-    question: "意見が合わない人が目の前にいるとき、自分はどうする？",
+  { id: 6, question: "意見が合わない人が目の前にいるとき、自分はどうする？",
     options: [
       { type: "C", text: "事実やデータを元に、冷静に整理して話す" },
       { type: "D", text: "自分の意見をはっきり伝え、議論をリードする" },
@@ -1774,9 +1214,7 @@ const QUESTIONS = [
       { type: "S", text: "相手の気持ちに寄り添いながら、丁寧にまとめる" }
     ]
   },
-  {
-    id: 7,
-    question: "親しい人から「最近どう？」と聞かれたとき、自然と出る答え方は？",
+  { id: 7, question: "親しい人から「最近どう？」と聞かれたとき、自然と出る答え方は？",
     options: [
       { type: "D", text: "「忙しいけど充実してる。○○に挑戦してるよ」" },
       { type: "S", text: "「まあまあかな。あなたは？」と相手に聞き返す" },
@@ -1784,9 +1222,7 @@ const QUESTIONS = [
       { type: "i", text: "「最高！すごいことがあってね～！」と盛り上がる" }
     ]
   },
-  {
-    id: 8,
-    question: "ここぞという場面で、自分の中に湧いてくる言葉は？",
+  { id: 8, question: "ここぞという場面で、自分の中に湧いてくる言葉は？",
     options: [
       { type: "S", text: "「みんながいるから大丈夫。一緒に頑張ろう」" },
       { type: "i", text: "「楽しんだもの勝ち！なんとかなる！」" },
@@ -1794,9 +1230,7 @@ const QUESTIONS = [
       { type: "C", text: "「準備はできてる。落ち着いて確認しよう」" }
     ]
   },
-  {
-    id: 9,
-    question: "大切な人が元気をなくしていたら、自分はどうする？",
+  { id: 9, question: "大切な人が元気をなくしていたら、自分はどうする？",
     options: [
       { type: "i", text: "「絶対大丈夫！元気出して！」と明るく励ます" },
       { type: "D", text: "「次はどうする？一緒に考えよう」と解決策を出す" },
@@ -1804,9 +1238,7 @@ const QUESTIONS = [
       { type: "S", text: "「話したいことあったら聞くよ」とそっと寄り添う" }
     ]
   },
-  {
-    id: 10,
-    question: "あなたが毎日、大切にしていることは？",
+  { id: 10, question: "あなたが毎日、大切にしていることは？",
     options: [
       { type: "C", text: "物事を丁寧に、正確にこなすこと" },
       { type: "i", text: "人とのつながりや、楽しい時間を味わうこと" },
@@ -1816,607 +1248,175 @@ const QUESTIONS = [
   }
 ];
 
-// ========================================
-// スコア計算ロジック
-// ========================================
-
-/**
- * answers: { 1: "D", 2: "i", 3: "S", ... } の形式（id: 選んだtype）
- * 戻り値: { D, i, S, C }（合計10点になる）
- */
 function calculateScores(answers) {
   const scores = { D: 0, i: 0, S: 0, C: 0 };
   QUESTIONS.forEach(q => {
-    const chosenType = answers[q.id];
-    if (chosenType && scores.hasOwnProperty(chosenType)) {
-      scores[chosenType] += 1;
-    }
+    const t = answers[q.id];
+    if (t && scores.hasOwnProperty(t)) scores[t] += 1;
   });
   return scores;
 }
 
-// ========================================
-// 主タイプ＋サブタイプ判定
-// 同点時の優先順位: D > i > C > S（行動を起こしやすい順）
-// ========================================
-
 const TIE_BREAK_ORDER = ["D", "i", "C", "S"];
 
 function determineType(scores) {
-  const sorted = ["D", "i", "S", "C"].sort((a, b) => {
+  const sorted = ["D","i","S","C"].sort((a, b) => {
     if (scores[b] !== scores[a]) return scores[b] - scores[a];
     return TIE_BREAK_ORDER.indexOf(a) - TIE_BREAK_ORDER.indexOf(b);
   });
-
-  const primary = sorted[0];
-  const secondary = sorted[1];
-  const code = `${primary}-${secondary}`;
-
-  return { primary, secondary, scores, code };
+  return { primary: sorted[0], secondary: sorted[1], scores, code: `${sorted[0]}-${sorted[1]}` };
 }
 
-// ========================================
-// 12組み合わせコード一覧
-// ========================================
-const TYPE_CODES = [
-  "D-i", "D-S", "D-C",
-  "i-D", "i-S", "i-C",
-  "S-D", "S-i", "S-C",
-  "C-D", "C-i", "C-S"
-];
-
-
-// ===== 12組み合わせ解説データ（PART 2） =====
-// ========================================
-// PART 2（確定版）: 12組み合わせ解説データ
-// 方針: 中立言語 × 寄り添いトーン（ジャッジしない）
-// ブロック1〜4を統合
-// ========================================
-
+// ========== 12型解説 ==========
 const TYPE_DESCRIPTIONS = {
-
-  // ===== ブロック1: D主導 =====
   "D-i": {
     name: "突破するリーダー",
     summary: "決断のスピードと、人を巻き込む明るさを併せ持つタイプ。動きながら道を作っていく力があります。",
-    strength: [
-      "決断が早く、止まらずに前に進める",
-      "周りを乗せて、勢いのある場をつくれる",
-      "予期せぬ場面でも動じず、力を発揮する"
-    ],
-    weakness: [
-      "勢いの強さの裏側で、周りが追いつくスピードに気づきにくいことがある",
-      "感情が動きやすく、勢いのまま言葉が出ることがある",
-      "推進力が高いぶん、細部の確認が後回しになりやすい"
-    ],
-    kuchiguse: [
-      "とにかくやってみよう",
-      "細かいことはあとで",
-      "なんとかなるって"
-    ],
-    replace: [
-      "一回だけ、立ち止まって確認する",
-      "周りの様子を、一拍見てから動く",
-      "詰めの部分を、先にメモしておく"
-    ],
-    advice: "あなたの推進力は、周りにとっても希望になっています。走るスピードはそのままで、5分だけ振り返る時間を持つと、結果がもっと安定していきます。"
+    kuchiguse: ["とにかくやってみよう","細かいことはあとで","なんとかなるって"],
+    replace: ["一回だけ、立ち止まって確認する","周りの様子を、一拍見てから動く","詰めの部分を、先にメモしておく"]
   },
-
   "D-S": {
     name: "粘り強い実行者",
     summary: "推進する力と、続けていく力を併せ持つタイプ。決めたことを最後までやり抜く安定感があります。",
-    strength: [
-      "決めたことを最後までやり抜く",
-      "感情に流されず、安定したペースで動ける",
-      "現場の信頼を、地道に積み上げていける"
-    ],
-    weakness: [
-      "やり方が定まっているぶん、別の選択肢に切り替える機会が少なくなりやすい",
-      "我慢強さの裏側で、内側に感情をためやすい",
-      "新しい方法を試すまでに、時間をかける傾向がある"
-    ],
-    kuchiguse: [
-      "今までこうやってきたから",
-      "変えなくていい",
-      "我慢すればいい"
-    ],
-    replace: [
-      "一度だけ、別のやり方を試してみる",
-      "我慢する前に、一言だけ伝えてみる",
-      "新しい意見も、一回聞いてから決める"
-    ],
-    advice: "やり抜く力は、何よりの財産です。たまに「変えてもいい」と自分に許可を出してあげると、もっと自由に動けるようになります。"
+    kuchiguse: ["今までこうやってきたから","変えなくていい","我慢すればいい"],
+    replace: ["一度だけ、別のやり方を試してみる","我慢する前に、一言だけ伝えてみる","新しい意見も、一回聞いてから決める"]
   },
-
   "D-C": {
     name: "戦略型の推進者",
     summary: "推進する力と、論理で考える力を併せ持つタイプ。根拠をもって動くため、結果が積み上がりやすい傾向があります。",
-    strength: [
-      "目標に向かう筋道を描ける",
-      "感情よりも事実をもとに判断できる",
-      "ムダを省いて、効率よく動ける"
-    ],
-    weakness: [
-      "正しさを大切にするぶん、相手にとって厳しい言い方になりやすい",
-      "完成度を求める気持ちが強く、失敗を受け入れにくいことがある",
-      "論理を優先するため、相手の感情に気づくのが遅れる傾向がある"
-    ],
-    kuchiguse: [
-      "それ、根拠ある？",
-      "普通に考えればわかる",
-      "なんでできないの"
-    ],
-    replace: [
-      "どう感じている？と、一言聞いてみる",
-      "そう考えたんだね、と受けてから返す",
-      "できない理由を、一緒に整理してみる"
-    ],
-    advice: "正しさは、あなたの強みです。その正しさに「相手の気持ちを受け止める一拍」を加えると、相手が動き出すスピードが変わっていきます。"
+    kuchiguse: ["それ、根拠ある？","普通に考えればわかる","なんでできないの"],
+    replace: ["どう感じている？と、一言聞いてみる","そう考えたんだね、と受けてから返す","できない理由を、一緒に整理してみる"]
   },
-
-  // ===== ブロック2: i主導 =====
   "i-D": {
     name: "巻き込み型のチャレンジャー",
     summary: "明るさと行動力を併せ持つタイプ。場の空気を動かしながら、新しいことに飛び込んでいく力があります。",
-    strength: [
-      "場を明るくして、人の気持ちを動かせる",
-      "新しいことに、ためらいなく飛び込める",
-      "発想と行動のサイクルが、テンポよく回る"
-    ],
-    weakness: [
-      "勢いの良さの裏側で、約束を抱えすぎる傾向がある",
-      "気持ちで動けるぶん、計画を立てる前にスタートしやすい",
-      "テンポが速いため、関心が次の対象へ移るのが早いことがある"
-    ],
-    kuchiguse: [
-      "やります！やれます！",
-      "なんとかなる",
-      "あとで考えればいい"
-    ],
-    replace: [
-      "今わかる範囲で、答えるね",
-      "段取りだけ、先に決めておく",
-      "終わるところまでが、ひとつの区切り"
-    ],
-    advice: "あなたの勢いは、それ自体が才能です。スタートとゴールに「小さな仕組み」を一つずつ置くと、その勢いがそのまま結果につながっていきます。"
+    kuchiguse: ["やります！やれます！","なんとかなる","あとで考えればいい"],
+    replace: ["今わかる範囲で、答えるね","段取りだけ、先に決めておく","終わるところまでが、ひとつの区切り"]
   },
-
   "i-S": {
     name: "あたたかいムードメーカー",
     summary: "明るさと寄り添う力を併せ持つタイプ。人の気持ちを察しながら、場をやわらかくしていく力があります。",
-    strength: [
-      "場の雰囲気を、自然にやわらかくできる",
-      "相手の感情の動きを、敏感に感じ取れる",
-      "人と人の間をつなぐ役割が、自然にこなせる"
-    ],
-    weakness: [
-      "やさしさの裏側で、自分の意見を後ろに置きやすい",
-      "相手を思う気持ちが強いぶん、自分の感情が後回しになりやすい",
-      "場の調和を大切にするため、決断を相手にゆだねる傾向がある"
-    ],
-    kuchiguse: [
-      "どっちでもいいよ",
-      "嫌われたくないし",
-      "私はいいから"
-    ],
-    replace: [
-      "私は〜のほうがいいかな",
-      "正直なところを、伝えてみる",
-      "自分の希望も、ちゃんと言ってみる"
-    ],
-    advice: "あなたのやさしさは、周りの安心の源です。週に一度、自分の気持ちを優先する時間を持つと、そのやさしさをもっと長く保てるようになります。"
+    kuchiguse: ["どっちでもいいよ","嫌われたくないし","私はいいから"],
+    replace: ["私は〜のほうがいいかな","正直なところを、伝えてみる","自分の希望も、ちゃんと言ってみる"]
   },
-
   "i-C": {
     name: "考える発信者",
     summary: "感性と分析する力を併せ持つタイプ。気持ちで届けながら、論理で裏付けていけるバランスがあります。",
-    strength: [
-      "感情と論理の両面で、人に届けられる",
-      "発想に裏付けがあり、説得力につながる",
-      "言葉の選び方が、丁寧で行き届いている"
-    ],
-    weakness: [
-      "考える力が深いぶん、発信までに時間をかける傾向がある",
-      "丁寧さを大切にするため、完成までのハードルが高くなりやすい",
-      "感情と分析の両方を使うため、エネルギーを多く使うことがある"
-    ],
-    kuchiguse: [
-      "ちゃんと考えてから言わないと",
-      "もっと調べてから出そう",
-      "これでいいのかな"
-    ],
-    replace: [
-      "60点で、出してみる",
-      "今の段階で、一回出してみる",
-      "出してから、直していけばいい"
-    ],
-    advice: "考える力は、あなたの大切な武器です。「出す前提」で考えるリズムに切り替えると、その武器がもっと多くの人に届くようになります。"
+    kuchiguse: ["ちゃんと考えてから言わないと","もっと調べてから出そう","これでいいのかな"],
+    replace: ["60点で、出してみる","今の段階で、一回出してみる","出してから、直していけばいい"]
   },
-
-  // ===== ブロック3: S主導 =====
   "S-D": {
     name: "静かな実行者",
     summary: "穏やかさの中に、芯の強さを併せ持つタイプ。決めたことをコツコツとやり遂げる安定感があります。",
-    strength: [
-      "決めたことを、最後まで着実にやり抜ける",
-      "周りの動きに振り回されにくく、芯がぶれない",
-      "一度決断すると、迷わずに前へ進める"
-    ],
-    weakness: [
-      "丁寧に考えるぶん、決断までに時間をかける傾向がある",
-      "頼まれごとを大切にする気持ちから、抱え込みやすいことがある",
-      "穏やかさの裏側で、本音を言葉にするまでに時間がかかる傾向がある"
-    ],
-    kuchiguse: [
-      "とりあえず引き受けます",
-      "私がやっておきます",
-      "大丈夫です"
-    ],
-    replace: [
-      "少し考えてから、お返事します",
-      "今は手一杯なので、相談させてください",
-      "正直なところ、少しキツいかもしれません"
-    ],
-    advice: "断ることは、協調性と矛盾しません。自分を守ることが、長く力を貸し続けるための土台になっていきます。"
+    kuchiguse: ["とりあえず引き受けます","私がやっておきます","大丈夫です"],
+    replace: ["少し考えてから、お返事します","今は手一杯なので、相談させてください","正直なところ、少しキツいかもしれません"]
   },
-
   "S-i": {
     name: "やわらかな調整役",
     summary: "穏やかさと親しみやすさを併せ持つタイプ。人と人の間に立って、関係をなめらかにしていく力があります。",
-    strength: [
-      "人を安心させる、やわらかい雰囲気を持っている",
-      "対立した場の温度を、自然に下げていける",
-      "相手の話を、じっくり最後まで聞ける"
-    ],
-    weakness: [
-      "場の調和を大切にするぶん、対立を避ける選択をしやすい",
-      "相手を尊重する気持ちから、意見を伝えるタイミングが遅れることがある",
-      "周りの気持ちに敏感なため、全員の感情を背負いやすい"
-    ],
-    kuchiguse: [
-      "まあまあ、そう言わずに",
-      "波風立てたくないし",
-      "みんなが良ければそれで"
-    ],
-    replace: [
-      "それは違うと思います、と一回だけ言ってみる",
-      "言うべきことは、静かに伝えてみる",
-      "私はこう感じています、と主語を立ててみる"
-    ],
-    advice: "全員に好かれることを目指さなくて大丈夫です。大切な人に誠実でいる。それだけで、あなたの価値は十分に伝わっています。"
+    kuchiguse: ["まあまあ、そう言わずに","波風立てたくないし","みんなが良ければそれで"],
+    replace: ["それは違うと思います、と一回だけ言ってみる","言うべきことは、静かに伝えてみる","私はこう感じています、と主語を立ててみる"]
   },
-
   "S-C": {
     name: "誠実な堅実派",
     summary: "穏やかさと丁寧さを併せ持つタイプ。約束を守り、コツコツと積み上げていく信頼感があります。",
-    strength: [
-      "約束や期日を、確実に守れる",
-      "ミスが少なく、丁寧に仕上げられる",
-      "感情に振り回されず、安定して進められる"
-    ],
-    weakness: [
-      "丁寧さを大切にするぶん、新しいことへの一歩に時間がかかる傾向がある",
-      "完成度を求める気持ちから、自分を追い込みやすいことがある",
-      "責任感が強いぶん、自分への評価が厳しくなりやすい"
-    ],
-    kuchiguse: [
-      "ちゃんとやらないと",
-      "私なんてまだまだ",
-      "迷惑かけたくない"
-    ],
-    replace: [
-      "ひとまず、やってみる",
-      "今のままで、十分やれている",
-      "頼ることも、ひとつの仕事"
-    ],
-    advice: "あなたの丁寧さは、すでに周りを支えています。「これでいい」と自分にOKを出す練習を、少しずつ重ねていきましょう。"
+    kuchiguse: ["ちゃんとやらないと","私なんてまだまだ","迷惑かけたくない"],
+    replace: ["ひとまず、やってみる","今のままで、十分やれている","頼ることも、ひとつの仕事"]
   },
-
-  // ===== ブロック4: C主導 =====
   "C-D": {
     name: "結果を出す論理派",
     summary: "考え抜く力と、前へ進める力を併せ持つタイプ。慎重さと推進力の両方を持ち、ぶれない判断ができる安定感があります。",
-    strength: [
-      "根拠と筋道をもって、正確に判断できる",
-      "曖昧なまま進めず、前提を整えて動ける",
-      "進む方向が定まると、迷わず一気に進められる"
-    ],
-    weakness: [
-      "丁寧に考えるぶん、動き出すタイミングが遅くなりやすい",
-      "基準を高く持つため、自分自身を疲れさせることがある",
-      "理性で進めるぶん、感情のガス抜きを後回しにしやすい"
-    ],
-    kuchiguse: [
-      "ちゃんと考えてから",
-      "もう少し調べてから",
-      "失敗したくない"
-    ],
-    replace: [
-      "ひとまず、やってみる",
-      "60点で、出してみる",
-      "試した分だけ、わかることがある"
-    ],
-    advice: "考える力は、あなたの大切な強みです。「考える時間に締切」を加えてあげると、その強みがそのまま結果のスピードに変わっていきます。"
+    kuchiguse: ["ちゃんと考えてから","もう少し調べてから","失敗したくない"],
+    replace: ["ひとまず、やってみる","60点で、出してみる","試した分だけ、わかることがある"]
   },
-
   "C-i": {
     name: "伝える研究者",
     summary: "深く考える力と、言葉にして届ける力を併せ持つタイプ。専門性と表現力を、両立させていける器用さがあります。",
-    strength: [
-      "深い内容を、わかりやすく伝えられる",
-      "感情と論理のバランスをとって届けられる",
-      "学ぶことを楽しめ、知識が広く積み上がる"
-    ],
-    weakness: [
-      "丁寧に伝えたい気持ちから、完成のハードルが高くなりやすい",
-      "受け手の反応を大切にするぶん、消耗することがある",
-      "考える深さがあるぶん、発信のタイミングを後にしやすい"
-    ],
-    kuchiguse: [
-      "もっとちゃんと伝えないと",
-      "誤解されたらどうしよう",
-      "完璧じゃないと出せない"
-    ],
-    replace: [
-      "今わかっている範囲で、伝えてみる",
-      "誤解は、出てから直していけばいい",
-      "60点で出してから、磨いていく"
-    ],
-    advice: "完璧な伝え方は、そもそも誰にも届かないものです。出して、反応を見て、直していく。そのリズムが、いちばん多くの人に届くいちばんの近道です。"
+    kuchiguse: ["もっとちゃんと伝えないと","誤解されたらどうしよう","完璧じゃないと出せない"],
+    replace: ["今わかっている範囲で、伝えてみる","誤解は、出てから直していけばいい","60点で出してから、磨いていく"]
   },
-
   "C-S": {
     name: "緻密で誠実な職人",
     summary: "考える力と、続けていく力を併せ持つタイプ。細部まで手を抜かず、信頼を地道に積み上げていく丁寧さがあります。",
-    strength: [
-      "ミスが少なく、品質を安定させられる",
-      "コツコツと、長く積み上げる力がある",
-      "信頼を裏切らない、確かな仕事ができる"
-    ],
-    weakness: [
-      "基準を高く持つぶん、自分を追い込みやすいことがある",
-      "丁寧さを大切にするぶん、新しいやり方を試すまでに時間をかける傾向がある",
-      "責任感が深いぶん、感情を内側に抱えやすい"
-    ],
-    kuchiguse: [
-      "ちゃんとやらないと",
-      "もっと完璧に",
-      "自分はまだまだだ"
-    ],
-    replace: [
-      "ひとまず、形にしてみる",
-      "今の自分を、一回認めてあげる",
-      "完璧より、続けることを大切に"
-    ],
-    advice: "あなたの基準の高さは、品質の源そのものです。でも自分にだけは、少し低い基準を許可してあげてください。それで品質が落ちることは、ありません。"
+    kuchiguse: ["ちゃんとやらないと","もっと完璧に","自分はまだまだだ"],
+    replace: ["ひとまず、形にしてみる","今の自分を、一回認めてあげる","完璧より、続けることを大切に"]
   }
-
 };
 
-// ========================================
-// 補助関数
-// ========================================
-function getDescription(code) {
-  return TYPE_DESCRIPTIONS[code] || null;
-}
-
-// 検証用：12コード一覧
-const REQUIRED_CODES = [
-  "D-i", "D-S", "D-C",
-  "i-D", "i-S", "i-C",
-  "S-D", "S-i", "S-C",
-  "C-D", "C-i", "C-S"
-];
-
-
-// ============================================
-// 【設定】Google Sheets送信用 GAS Webhook URL
-// ============================================
-// ↓↓↓ ここに、GASでデプロイしたウェブアプリURLを貼り付けてください ↓↓↓
-// 空文字のままでもアプリは動作します（送信のみスキップされます）
-const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxO4XfwGhNsGDsepdmcAMg_aN4zQd-2COGAn3otWg_-i2HyqR9bD9Ss885tQu7DPwOp/exec";
-// 例: const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfy.../exec";
-// ============================================
-
-
-
-
-// ============================================
-// ブロック1: 12型キャッチコピー
-// ============================================
-// ============================================
-// ブロック1: 12型キャッチコピー
-// 構成: 1行目=比喩・情景 / 2行目=強み認定 / 3行目=やさしいメッセージ
-// ============================================
-
+// ========== 12型キャッチコピー ==========
 const TYPE_CATCHCOPY = {
-
-  // ===== D主導 =====
-  "D-i": {
-    title: "突破するリーダーのあなた",
-    catchcopy: "あなたの言葉は風のように人を前へ動かします。その勢いは強さ。たまには立ち止まって、自分にも風を感じてあげよう。"
-  },
-  "D-S": {
-    title: "粘り強い実行者のあなた",
-    catchcopy: "あなたの言葉は太い幹のようにぶれません。その安定感は強さ。たまには枝を伸ばす自由も、自分に許してあげよう。"
-  },
-  "D-C": {
-    title: "戦略型の推進者のあなた",
-    catchcopy: "あなたの言葉は地図のように道を示します。その明晰さは強さ。地図にない景色も、楽しんでみよう。"
-  },
-
-  // ===== i主導 =====
-  "i-D": {
-    title: "巻き込み型のチャレンジャーのあなた",
-    catchcopy: "あなたの言葉は花火のように場を明るくします。その明るさは強さ。打ち上げた後の静けさも、大切にしてみよう。"
-  },
-  "i-S": {
-    title: "あたたかいムードメーカーのあなた",
-    catchcopy: "あなたの言葉は陽だまりのように人を包みます。その温かさは強さ。自分にも同じ温かさを向けよう。"
-  },
-  "i-C": {
-    title: "考える発信者のあなた",
-    catchcopy: "あなたの言葉は宝石のように磨かれています。その丁寧さは強さ。原石のままでも、誰かに届く日があると信じよう。"
-  },
-
-  // ===== S主導 =====
-  "S-D": {
-    title: "静かな実行者のあなた",
-    catchcopy: "あなたの言葉は岩のように動きません。その芯の強さは魅力です。背負いすぎる前に、誰かに頼る勇気も持とう。"
-  },
-  "S-i": {
-    title: "やわらかな調整役のあなた",
-    catchcopy: "あなたの言葉はそよ風のように人と人を結びます。その柔らかさは強さ。自分の風向きも、大切にしてみよう。"
-  },
-  "S-C": {
-    title: "誠実な堅実派のあなた",
-    catchcopy: "あなたの言葉は手紙のように丁寧に届きます。その誠実さは強さ。自分宛にも、ねぎらいの一通を書いてあげよう。"
-  },
-
-  // ===== C主導 =====
-  "C-D": {
-    title: "結果を出す論理派のあなた",
-    catchcopy: "あなたの言葉はコンパスのように的確です。その明晰さは強さ。たまには羅針盤を置いて、感覚で歩く時間も持とう。"
-  },
-  "C-i": {
-    title: "伝える研究者のあなた",
-    catchcopy: "あなたの言葉は本のように深く届きます。その知性は強さ。完璧でない章があっても、十分に伝わっていることを忘れずに。"
-  },
-  "C-S": {
-    title: "緻密で誠実な職人のあなた",
-    catchcopy: "あなたの言葉は美しい工芸品のように整っています。その丁寧さは強さ。少し肩の力を抜くことも、上達のひとつ。"
-  }
-
+  "D-i": { title: "突破するリーダーのあなた", catchcopy: "あなたの言葉は風のように人を前へ動かします。その勢いは強さ。たまには立ち止まって、自分にも風を感じてあげよう。" },
+  "D-S": { title: "粘り強い実行者のあなた", catchcopy: "あなたの言葉は太い幹のようにぶれません。その安定感は強さ。たまには枝を伸ばす自由も、自分に許してあげよう。" },
+  "D-C": { title: "戦略型の推進者のあなた", catchcopy: "あなたの言葉は地図のように道を示します。その明晰さは強さ。地図にない景色も、楽しんでみよう。" },
+  "i-D": { title: "巻き込み型のチャレンジャーのあなた", catchcopy: "あなたの言葉は花火のように場を明るくします。その明るさは強さ。打ち上げた後の静けさも、大切にしてみよう。" },
+  "i-S": { title: "あたたかいムードメーカーのあなた", catchcopy: "あなたの言葉は陽だまりのように人を包みます。その温かさは強さ。自分にも同じ温かさを向けよう。" },
+  "i-C": { title: "考える発信者のあなた", catchcopy: "あなたの言葉は宝石のように磨かれています。その丁寧さは強さ。原石のままでも、誰かに届く日があると信じよう。" },
+  "S-D": { title: "静かな実行者のあなた", catchcopy: "あなたの言葉は岩のように動きません。その芯の強さは魅力です。背負いすぎる前に、誰かに頼る勇気も持とう。" },
+  "S-i": { title: "やわらかな調整役のあなた", catchcopy: "あなたの言葉はそよ風のように人と人を結びます。その柔らかさは強さ。自分の風向きも、大切にしてみよう。" },
+  "S-C": { title: "誠実な堅実派のあなた", catchcopy: "あなたの言葉は手紙のように丁寧に届きます。その誠実さは強さ。自分宛にも、ねぎらいの一通を書いてあげよう。" },
+  "C-D": { title: "結果を出す論理派のあなた", catchcopy: "あなたの言葉はコンパスのように的確です。その明晰さは強さ。たまには羅針盤を置いて、感覚で歩く時間も持とう。" },
+  "C-i": { title: "伝える研究者のあなた", catchcopy: "あなたの言葉は本のように深く届きます。その知性は強さ。完璧でない章があっても、十分に伝わっていることを忘れずに。" },
+  "C-S": { title: "緻密で誠実な職人のあなた", catchcopy: "あなたの言葉は美しい工芸品のように整っています。その丁寧さは強さ。少し肩の力を抜くことも、上達のひとつ。" }
 };
 
-
-// ============================================
-// ブロック1: 同点解消用追加質問
-// ============================================
-// ============================================
-// 追加質問データ（主タイプ同点解消用）
-// 6パターン: Tieが起きた2タイプ間の違いを問う1問
-// ============================================
-
+// ========== 同点解消用追加質問 ==========
 const TIEBREAK_QUESTIONS = {
-
-  // D vs i: 推進力（D） vs 社交性（i）
-  "D-i": {
-    question: "あなたが場をリードするとき、どちらに近いですか？",
+  "D-i": { question: "あなたが場をリードするとき、どちらに近いですか？",
     options: [
       { type: "D", text: "目標に向かって、ぐいぐい前へ進める" },
       { type: "i", text: "みんなを楽しませながら、明るく進める" }
     ]
   },
-
-  // D vs S: 主導性（D） vs 安定志向（S）
-  "D-S": {
-    question: "あなたが大切にしたいのは、どちらに近いですか？",
+  "D-S": { question: "あなたが大切にしたいのは、どちらに近いですか？",
     options: [
       { type: "D", text: "自分の信念を貫くこと" },
       { type: "S", text: "周りとの調和を保つこと" }
     ]
   },
-
-  // D vs C: 行動力（D） vs 慎重さ（C）
-  "D-C": {
-    question: "迷ったとき、あなたはどちらの行動を取りやすいですか？",
+  "D-C": { question: "迷ったとき、あなたはどちらの行動を取りやすいですか？",
     options: [
       { type: "D", text: "とりあえず動いて、走りながら考える" },
       { type: "C", text: "立ち止まって、しっかり考えてから動く" }
     ]
   },
-
-  // i vs S: 表現性（i） vs 受容性（S）
-  "i-S": {
-    question: "人と関わるとき、あなたはどちらに近いですか？",
+  "i-S": { question: "人と関わるとき、あなたはどちらに近いですか？",
     options: [
       { type: "i", text: "場を明るく盛り上げて、楽しさを広げたい" },
       { type: "S", text: "相手の気持ちに寄り添って、そっと支えたい" }
     ]
   },
-
-  // i vs C: 感情型（i） vs 論理型（C）
-  "i-C": {
-    question: "何かを伝えるとき、あなたはどちらに近いですか？",
+  "i-C": { question: "何かを伝えるとき、あなたはどちらに近いですか？",
     options: [
       { type: "i", text: "気持ちで伝えて、相手の心を動かしたい" },
       { type: "C", text: "根拠を示して、相手にしっかり納得してもらいたい" }
     ]
   },
-
-  // S vs C: 協調性（S） vs 正確性（C）
-  "S-C": {
-    question: "物事を進めるとき、あなたはどちらに近いですか？",
+  "S-C": { question: "物事を進めるとき、あなたはどちらに近いですか？",
     options: [
       { type: "S", text: "周りの人の気持ちを大切にしながら進める" },
       { type: "C", text: "正確さや手順を大切にしながら進める" }
     ]
   }
-
 };
 
-// ========================================
-// Tie判定ロジック
-// ========================================
-
-/**
- * scoresから「主タイプ同点」のペアを返す
- * @param {Object} scores - { D, i, S, C }
- * @returns {string|null} - "D-i" などのコード、Tieなしならnull
- *
- * 主タイプは「最高得点」のタイプ。最高得点が複数ある場合、その上位2つをTieペアとする
- * 3つ以上同点の場合は、優先順位D>i>C>Sの上位2つをペアとする
- */
 function detectTie(scores) {
   const max = Math.max(scores.D, scores.i, scores.S, scores.C);
   const tied = ["D","i","S","C"].filter(t => scores[t] === max);
-
-  if (tied.length < 2) return null;  // 単独最高 → Tieなし
-
-  // 2つ以上同点 → 上位2つを取ってペアコード化
+  if (tied.length < 2) return null;
   const PRIORITY = ["D","i","C","S"];
   const sorted = tied.sort((a, b) => PRIORITY.indexOf(a) - PRIORITY.indexOf(b));
   const [a, b] = sorted.slice(0, 2);
-
-  // コードは辞書順で揃える（D-i, D-S, D-C, i-S, i-C, S-C の6パターン）
   const ORDER = ["D","i","S","C"];
-  const codeOrder = ORDER.indexOf(a) < ORDER.indexOf(b) ? `${a}-${b}` : `${b}-${a}`;
-  return codeOrder;
+  return ORDER.indexOf(a) < ORDER.indexOf(b) ? `${a}-${b}` : `${b}-${a}`;
 }
 
-
-// ============================================
-// ブロック2: 4タイプ「自分を整える口ぐせ」「実践メニュー」
-// ============================================
-// ============================================
-// ブロック2（確定版）: 4タイプ別「自分を整える口ぐせ」「実践メニュー」
-//
-// 方針:
-// - 「自分を整える口ぐせ」は声に出して自分につぶやく短いフレーズ
-// - 5〜10文字程度、リズムのある言葉
-// - 自然な日本語、お守りのように繰り返せる言葉
-// ============================================
-
+// ========== 自分を整える口ぐせ + 実践メニュー ==========
 const TYPE_REPORT_PARTS = {
-
-  // ===== D（主導型）=====
-  // D型は「もっとやれる」「まだ足りない」と自分を駆り立てがち
-  // → 自分を許す・休ませる方向の言葉
   "D": {
     selfCare: [
-      {
-        phrase: "ここまでで、十分",
-        scene: "もっとやらなきゃと自分を急かしたときに"
-      },
-      {
-        phrase: "ゆっくりでも、いい",
-        scene: "焦りで言葉がきつくなりそうなときに"
-      },
-      {
-        phrase: "休むのも、大事",
-        scene: "止まることに罪悪感を覚えたときに"
-      }
+      { phrase: "ここまでで、十分", scene: "もっとやらなきゃと自分を急かしたときに" },
+      { phrase: "ゆっくりでも、いい", scene: "焦りで言葉がきつくなりそうなときに" },
+      { phrase: "休むのも、大事", scene: "止まることに罪悪感を覚えたときに" }
     ],
     practice: [
       "朝の3分、何も決めずにコーヒーを飲む時間をつくる",
@@ -2424,24 +1424,11 @@ const TYPE_REPORT_PARTS = {
       "誰かを褒める言葉を、1日1回声に出す"
     ]
   },
-
-  // ===== i（感化型）=====
-  // i型は周囲の反応に揺れやすく、嫌われたくなくて自分を出せない
-  // → 自分を肯定する方向の言葉
   "i": {
     selfCare: [
-      {
-        phrase: "そのままで、いい",
-        scene: "誰かに合わせすぎて疲れたときに"
-      },
-      {
-        phrase: "私の気持ちも、大切",
-        scene: "本音を言えなかったと感じたときに"
-      },
-      {
-        phrase: "今日もよくやった",
-        scene: "1日の終わりに自分をねぎらいたいときに"
-      }
+      { phrase: "そのままで、いい", scene: "誰かに合わせすぎて疲れたときに" },
+      { phrase: "私の気持ちも、大切", scene: "本音を言えなかったと感じたときに" },
+      { phrase: "今日もよくやった", scene: "1日の終わりに自分をねぎらいたいときに" }
     ],
     practice: [
       "夜寝る前に「今日の一番楽しかったこと」を書き出す",
@@ -2449,24 +1436,11 @@ const TYPE_REPORT_PARTS = {
       "予定を入れる前に「本当に楽しみか」を3秒考える"
     ]
   },
-
-  // ===== S（安定型）=====
-  // S型は自分を後回しにしがち、迷惑をかけたくないと我慢する
-  // → 自分の存在を肯定する・自分を大切にする言葉
   "S": {
     selfCare: [
-      {
-        phrase: "だいじょうぶ",
-        scene: "不安が押し寄せてきたときに"
-      },
-      {
-        phrase: "私も、大事",
-        scene: "自分のことが後回しになっていると気づいたときに"
-      },
-      {
-        phrase: "お疲れさま、私",
-        scene: "頑張ってきた自分を認めたいときに"
-      }
+      { phrase: "だいじょうぶ", scene: "不安が押し寄せてきたときに" },
+      { phrase: "私も、大事", scene: "自分のことが後回しになっていると気づいたときに" },
+      { phrase: "お疲れさま、私", scene: "頑張ってきた自分を認めたいときに" }
     ],
     practice: [
       "感情が揺れた瞬間に「大丈夫」とつぶやく",
@@ -2474,357 +1448,126 @@ const TYPE_REPORT_PARTS = {
       "自然の中で深呼吸しながら口ぐせを唱える"
     ]
   },
-
-  // ===== C（慎重型）=====
-  // C型は自分に厳しく、完璧を求めすぎる
-  // → 自分を許す・基準を下げてOKを出す言葉
   "C": {
     selfCare: [
-      {
-        phrase: "それで、いい",
-        scene: "完璧を求めて動けなくなったときに"
-      },
-      {
-        phrase: "もう、十分考えた",
-        scene: "考えすぎて疲れたと感じたときに"
-      },
-      {
-        phrase: "これでよし",
-        scene: "自分に厳しくなりすぎたときに"
-      }
+      { phrase: "それで、いい", scene: "完璧を求めて動けなくなったときに" },
+      { phrase: "もう、十分考えた", scene: "考えすぎて疲れたと感じたときに" },
+      { phrase: "これでよし", scene: "自分に厳しくなりすぎたときに" }
     ],
     practice: [
       "毎朝「今日やることは3つだけ」と紙に書く",
-      "週に1回、感想だけのメモを書く（評価ではなく）",
+      "週に1回、感想だけのメモを書く(評価ではなく)",
       "考え込んだら、5分間だけ歩いてみる"
     ]
   }
-
 };
 
-
-// ============================================
-// ブロック3 パート1: 場面別スクリプト
-// ============================================
-// ============================================
-// ブロック3 パート1（修正版）: 場面別スクリプト
-// 形式: Before（つい言いがち） → After（整えた言い方）
-// 4タイプ × 2場面（相談・お願い）= 8組16フレーズ
-// ============================================
-
+// ========== 場面別スクリプト ==========
 const TYPE_SCRIPTS = {
-
-  // ===== D（主導型）=====
-  // 直接的すぎて相手が引いてしまうパターン → やわらかく整える
   "D": {
-    consult: {
-      before: "ちょっといい？　時間ある？",
-      after: "5分だけ、意見を聞かせてもらえますか？"
-    },
-    request: {
-      before: "これ、やっといて",
-      after: "○日までにお願いできますか？　助かります"
-    }
+    consult: { before: "ちょっといい？　時間ある？", after: "5分だけ、意見を聞かせてもらえますか？" },
+    request: { before: "これ、やっといて", after: "○日までにお願いできますか？　助かります" }
   },
-
-  // ===== i（感化型）=====
-  // 勢いで言いすぎる・要点が伝わらないパターン → 整理して伝える
   "i": {
-    consult: {
-      before: "ねえねえ聞いて〜！　あのね〜",
-      after: "ちょっと相談したいことがあって、聞いてもらえますか？"
-    },
-    request: {
-      before: "なんとかなるよね？お願い〜！",
-      after: "ぜひお願いしたいんです。あなたとならうまくいきそうで"
-    }
+    consult: { before: "ねえねえ聞いて〜！　あのね〜", after: "ちょっと相談したいことがあって、聞いてもらえますか？" },
+    request: { before: "なんとかなるよね？お願い〜！", after: "ぜひお願いしたいんです。あなたとならうまくいきそうで" }
   },
-
-  // ===== S（安定型）=====
-  // 遠慮しすぎて、申し訳なさが先に立つパターン → 感謝を添えて素直に
   "S": {
-    consult: {
-      before: "あの…すみません、お忙しいところ…",
-      after: "ありがとうございます。少しご相談させてください"
-    },
-    request: {
-      before: "迷惑じゃなければ…でも無理しないでください…",
-      after: "お願いできると心強いです。一緒にやれると安心します"
-    }
+    consult: { before: "あの…すみません、お忙しいところ…", after: "ありがとうございます。少しご相談させてください" },
+    request: { before: "迷惑じゃなければ…でも無理しないでください…", after: "お願いできると心強いです。一緒にやれると安心します" }
   },
-
-  // ===== C（慎重型）=====
-  // 前置きや説明が長すぎて要点が見えにくいパターン → 要点を先に
   "C": {
-    consult: {
-      before: "えーと、いくつか確認したい点があって、まず一つ目が…",
-      after: "整理したいことがあって、5分ご意見いただけますか？"
-    },
-    request: {
-      before: "もし可能であれば、お時間あるときで構わないのですが…",
-      after: "この点を確認していただけると助かります。○日までで大丈夫です"
-    }
+    consult: { before: "えーと、いくつか確認したい点があって、まず一つ目が…", after: "整理したいことがあって、5分ご意見いただけますか？" },
+    request: { before: "もし可能であれば、お時間あるときで構わないのですが…", after: "この点を確認していただけると助かります。○日までで大丈夫です" }
   }
-
 };
 
-
-// ============================================
-// ブロック3 パート2: 悩み×タイプ処方28パターン
-// ============================================
-// ============================================
-// ブロック3 パート2（確定版）: 悩み×タイプ処方
-// 7悩み × 4タイプ = 28パターン
-//
-// 修正方針: 口ぐせを5〜12文字程度のシンプル化
-// 声に出してつぶやける短いフレーズに統一
-// ============================================
-
+// ========== 悩み×タイプ処方 ==========
 const WORRY_PRESCRIPTIONS = {
-
-  // ========== D（主導型）==========
   "D": {
-    "人間関係がうまくいかない": {
-      pattern: "「自分が正しい」と前に出てしまい、相手が引いてしまうことがあります",
-      kuchiguse: ["まず、聞こう", "正しさより、つながり"]
-    },
-    "自分に自信が持てない": {
-      pattern: "「もっとやれるはず」と自分を追い込み、達成しても満足できないことがあります",
-      kuchiguse: ["ここまで、来た", "今日もやれた"]
-    },
-    "お金・収入の悩み": {
-      pattern: "勢いで動きすぎて、計画的なお金の管理が後回しになりがちです",
-      kuchiguse: ["数字も、見よう", "焦らない、続ける"]
-    },
-    "感情をうまく伝えられない": {
-      pattern: "結論や事実を先に伝えがちで、気持ちの部分が後回しになることがあります",
-      kuchiguse: ["気持ちから、伝えよう", "気持ちを、言葉にしよう"]
-    },
-    "やる気が続かない": {
-      pattern: "ゴールに早く到達しようと飛ばしすぎて、途中で燃え尽きやすい傾向があります",
-      kuchiguse: ["ゆっくりも、前進", "休むのも、戦略"]
-    },
-    "職場・家族との関係": {
-      pattern: "相手にもスピードや結果を求めがちで、温度差が生まれやすいことがあります",
-      kuchiguse: ["相手のペースで、進めよう", "過程も、楽しむ"]
-    },
-    "特になし・回答しない": {
-      pattern: "推進力の強さの裏側で、自分のメンテナンスを後回しにすることがあります",
-      kuchiguse: ["走って、休んで", "自分も、労ろう"]
-    }
+    "人間関係がうまくいかない": { pattern: "「自分が正しい」と前に出てしまい、相手が引いてしまうことがあります", kuchiguse: ["まず、聞こう", "正しさより、つながり"] },
+    "自分に自信が持てない": { pattern: "「もっとやれるはず」と自分を追い込み、達成しても満足できないことがあります", kuchiguse: ["ここまで、来た", "今日もやれた"] },
+    "お金・収入の悩み": { pattern: "勢いで動きすぎて、計画的なお金の管理が後回しになりがちです", kuchiguse: ["数字も、見よう", "焦らない、続ける"] },
+    "感情をうまく伝えられない": { pattern: "結論や事実を先に伝えがちで、気持ちの部分が後回しになることがあります", kuchiguse: ["気持ちから、伝えよう", "気持ちを、言葉にしよう"] },
+    "やる気が続かない": { pattern: "ゴールに早く到達しようと飛ばしすぎて、途中で燃え尽きやすい傾向があります", kuchiguse: ["ゆっくりも、前進", "休むのも、戦略"] },
+    "職場・家族との関係": { pattern: "相手にもスピードや結果を求めがちで、温度差が生まれやすいことがあります", kuchiguse: ["相手のペースで、進めよう", "過程も、楽しむ"] },
+    "特になし・回答しない": { pattern: "推進力の強さの裏側で、自分のメンテナンスを後回しにすることがあります", kuchiguse: ["走って、休んで", "自分も、労ろう"] }
   },
-
-  // ========== i（感化型）==========
   "i": {
-    "人間関係がうまくいかない": {
-      pattern: "嫌われたくない気持ちが強く、本音を言えずに後でモヤモヤすることがあります",
-      kuchiguse: ["正直で、いい", "誠実が、いちばん"]
-    },
-    "自分に自信が持てない": {
-      pattern: "周りの反応で気持ちが揺れやすく、評価で自分を測りがちです",
-      kuchiguse: ["私は、私でいい", "私の声、信じる"]
-    },
-    "お金・収入の悩み": {
-      pattern: "気分で使ってしまい、計画的なお金の管理が苦手な傾向があります",
-      kuchiguse: ["気分で、使わない", "未来の私にも残そう"]
-    },
-    "感情をうまく伝えられない": {
-      pattern: "明るく振る舞いすぎて、本当に伝えたい気持ちが伝わらないことがあります",
-      kuchiguse: ["本音も、出していい", "本音の気持ちを、出そう"]
-    },
-    "やる気が続かない": {
-      pattern: "始まりの楽しさで動き出すぶん、途中で関心が次へ移りやすい傾向があります",
-      kuchiguse: ["最後まで、楽しむ", "コツコツも、私"]
-    },
-    "職場・家族との関係": {
-      pattern: "場の空気を優先しすぎて、自分の希望を言い出せないことがあります",
-      kuchiguse: ["私の希望も、ある", "言って、いい"]
-    },
-    "特になし・回答しない": {
-      pattern: "明るさの裏側で、ひとりの時間が足りなくなりがちです",
-      kuchiguse: ["ひとりも、栄養", "静けさも、いい"]
-    }
+    "人間関係がうまくいかない": { pattern: "嫌われたくない気持ちが強く、本音を言えずに後でモヤモヤすることがあります", kuchiguse: ["正直で、いい", "誠実が、いちばん"] },
+    "自分に自信が持てない": { pattern: "周りの反応で気持ちが揺れやすく、評価で自分を測りがちです", kuchiguse: ["私は、私でいい", "私の声、信じる"] },
+    "お金・収入の悩み": { pattern: "気分で使ってしまい、計画的なお金の管理が苦手な傾向があります", kuchiguse: ["気分で、使わない", "未来の私にも残そう"] },
+    "感情をうまく伝えられない": { pattern: "明るく振る舞いすぎて、本当に伝えたい気持ちが伝わらないことがあります", kuchiguse: ["本音も、出していい", "本音の気持ちを、出そう"] },
+    "やる気が続かない": { pattern: "始まりの楽しさで動き出すぶん、途中で関心が次へ移りやすい傾向があります", kuchiguse: ["最後まで、楽しむ", "コツコツも、私"] },
+    "職場・家族との関係": { pattern: "場の空気を優先しすぎて、自分の希望を言い出せないことがあります", kuchiguse: ["私の希望も、ある", "言って、いい"] },
+    "特になし・回答しない": { pattern: "明るさの裏側で、ひとりの時間が足りなくなりがちです", kuchiguse: ["ひとりも、栄養", "静けさも、いい"] }
   },
-
-  // ========== S（安定型）==========
   "S": {
-    "人間関係がうまくいかない": {
-      pattern: "相手に合わせすぎて、自分の気持ちが置いていかれることがあります",
-      kuchiguse: ["私も、伝えていい", "全員じゃなくていい"]
-    },
-    "自分に自信が持てない": {
-      pattern: "謙遜が強く出すぎて、自分の価値を小さく見積もってしまうことがあります",
-      kuchiguse: ["頑張った、私", "私は支えてきた"]
-    },
-    "お金・収入の悩み": {
-      pattern: "「お金のことを言うのは悪い気がする」と遠慮して、収入が増えにくいことがあります",
-      kuchiguse: ["価値は、伝えていい", "受け取っていい"]
-    },
-    "感情をうまく伝えられない": {
-      pattern: "「言ったら迷惑かも」と飲み込んで、自分の気持ちが伝わりにくいことがあります",
-      kuchiguse: ["言って、いい", "私の言葉も、大事"]
-    },
-    "やる気が続かない": {
-      pattern: "周りのために動きすぎて、自分のやりたいことを見失いがちです",
-      kuchiguse: ["今日は、私のために使おう", "自分の時間を作る"]
-    },
-    "職場・家族との関係": {
-      pattern: "我慢を重ねて、ある日急に限界が来てしまうことがあります",
-      kuchiguse: ["我慢の前に、一言伝えよう", "助けてって言える"]
-    },
-    "特になし・回答しない": {
-      pattern: "穏やかさの裏側で、自分の小さな願いが後回しになりがちです",
-      kuchiguse: ["柔らかな時間を、過ごそう", "ありがとう、私"]
-    }
+    "人間関係がうまくいかない": { pattern: "相手に合わせすぎて、自分の気持ちが置いていかれることがあります", kuchiguse: ["私も、伝えていい", "全員じゃなくていい"] },
+    "自分に自信が持てない": { pattern: "謙遜が強く出すぎて、自分の価値を小さく見積もってしまうことがあります", kuchiguse: ["頑張った、私", "私は支えてきた"] },
+    "お金・収入の悩み": { pattern: "「お金のことを言うのは悪い気がする」と遠慮して、収入が増えにくいことがあります", kuchiguse: ["価値は、伝えていい", "受け取っていい"] },
+    "感情をうまく伝えられない": { pattern: "「言ったら迷惑かも」と飲み込んで、自分の気持ちが伝わりにくいことがあります", kuchiguse: ["言って、いい", "私の言葉も、大事"] },
+    "やる気が続かない": { pattern: "周りのために動きすぎて、自分のやりたいことを見失いがちです", kuchiguse: ["今日は、私のために使おう", "自分の時間を作る"] },
+    "職場・家族との関係": { pattern: "我慢を重ねて、ある日急に限界が来てしまうことがあります", kuchiguse: ["我慢の前に、一言伝えよう", "助けてって言える"] },
+    "特になし・回答しない": { pattern: "穏やかさの裏側で、自分の小さな願いが後回しになりがちです", kuchiguse: ["柔らかな時間を、過ごそう", "ありがとう、私"] }
   },
-
-  // ========== C（慎重型）==========
   "C": {
-    "人間関係がうまくいかない": {
-      pattern: "正論が先に出てしまい、相手の感情を受け止める余裕が持ちにくいことがあります",
-      kuchiguse: ["気持ちから、聞く", "共感を、先に届けよう"]
-    },
-    "自分に自信が持てない": {
-      pattern: "「まだ足りない」と自分を測りすぎて、達成感を味わいにくい傾向があります",
-      kuchiguse: ["今のままで、合格", "完璧を求めない"]
-    },
-    "お金・収入の悩み": {
-      pattern: "リスクを避けすぎて、機会を逃してしまうことがあります",
-      kuchiguse: ["まずは、試そう", "失敗も、学び"]
-    },
-    "感情をうまく伝えられない": {
-      pattern: "事実や論理を優先しすぎて、気持ちの言葉が後回しになりがちです",
-      kuchiguse: ["気持ちを、先に伝えよう", "気持ちも、聞こう"]
-    },
-    "やる気が続かない": {
-      pattern: "考える時間が長すぎて、動き出す前にエネルギーを使い切ってしまうことがあります",
-      kuchiguse: ["もう、十分考えた", "60点で、動く"]
-    },
-    "職場・家族との関係": {
-      pattern: "正確さや手順を求めすぎて、相手にプレッシャーを与えてしまうことがあります",
-      kuchiguse: ["相手のやり方も、認めよう", "完璧を求めすぎない"]
-    },
-    "特になし・回答しない": {
-      pattern: "丁寧さの裏側で、感情のガス抜きを後回しにしがちです",
-      kuchiguse: ["紙に、書き出す", "ただ、感じる時間"]
-    }
+    "人間関係がうまくいかない": { pattern: "正論が先に出てしまい、相手の感情を受け止める余裕が持ちにくいことがあります", kuchiguse: ["気持ちから、聞く", "共感を、先に届けよう"] },
+    "自分に自信が持てない": { pattern: "「まだ足りない」と自分を測りすぎて、達成感を味わいにくい傾向があります", kuchiguse: ["今のままで、合格", "完璧を求めない"] },
+    "お金・収入の悩み": { pattern: "リスクを避けすぎて、機会を逃してしまうことがあります", kuchiguse: ["まずは、試そう", "失敗も、学び"] },
+    "感情をうまく伝えられない": { pattern: "事実や論理を優先しすぎて、気持ちの言葉が後回しになりがちです", kuchiguse: ["気持ちを、先に伝えよう", "気持ちも、聞こう"] },
+    "やる気が続かない": { pattern: "考える時間が長すぎて、動き出す前にエネルギーを使い切ってしまうことがあります", kuchiguse: ["もう、十分考えた", "60点で、動く"] },
+    "職場・家族との関係": { pattern: "正確さや手順を求めすぎて、相手にプレッシャーを与えてしまうことがあります", kuchiguse: ["相手のやり方も、認めよう", "完璧を求めすぎない"] },
+    "特になし・回答しない": { pattern: "丁寧さの裏側で、感情のガス抜きを後回しにしがちです", kuchiguse: ["紙に、書き出す", "ただ、感じる時間"] }
   }
-
 };
 
-
-// ============================================
-// ブロック4 パート1: DiSCとは
-// ============================================
-// ============================================
-// ブロック4 パート1: DiSCとは？（4タイプ解説）
-// レポート全員に同じ内容を表示する教育コンテンツ
-// ============================================
-
+// ========== DiSCとは ==========
 const DISC_OVERVIEW = {
-
-  // 全体イントロ
   intro: "DiSC理論は、人の行動パターンを4つのタイプに分類する心理モデルです。あなたの口ぐせには、このタイプ特有の思考パターンが表れています。",
-
-  // 4タイプ解説
   types: [
-    {
-      code: "D",
-      name: "主導型",
-      colorKey: "danger",  // CSS変数で配色（D = 赤系）
-      traits: "行動力・決断力・リーダー気質",
-      kuchiguse: [
-        "「早くやろう」",
-        "「こうすれば絶対うまくいく」"
-      ]
-    },
-    {
-      code: "i",
-      name: "感化型",
-      colorKey: "warn",  // i = 黄系
-      traits: "社交的・楽観的・表現力豊か",
-      kuchiguse: [
-        "「楽しみだね！」",
-        "「なんとかなる！」"
-      ]
-    },
-    {
-      code: "S",
-      name: "安定型",
-      colorKey: "success",  // S = 緑系
-      traits: "協調性・思いやり・穏やか",
-      kuchiguse: [
-        "「大丈夫？」",
-        "「いつもありがとう」"
-      ]
-    },
-    {
-      code: "C",
-      name: "慎重型",
-      colorKey: "primary",  // C = 青系
-      traits: "分析力・正確さ・こだわり強め",
-      kuchiguse: [
-        "「ちゃんと確認しよう」",
-        "「段取りが大事」"
-      ]
-    }
+    { code: "D", name: "主導型", traits: "行動力・決断力・リーダー気質", kuchiguse: ["「早くやろう」", "「こうすれば絶対うまくいく」"] },
+    { code: "i", name: "感化型", traits: "社交的・楽観的・表現力豊か", kuchiguse: ["「楽しみだね！」", "「なんとかなる！」"] },
+    { code: "S", name: "安定型", traits: "協調性・思いやり・穏やか", kuchiguse: ["「大丈夫？」", "「いつもありがとう」"] },
+    { code: "C", name: "慎重型", traits: "分析力・正確さ・こだわり強め", kuchiguse: ["「ちゃんと確認しよう」", "「段取りが大事」"] }
   ]
 };
 
-
-// ============================================
-// ブロック4 パート2: 講師プロフィール
-// ============================================
-// ============================================
-// ブロック4 パート2: 講師プロフィール + 申込先
-// レポート全員に同じ内容を表示する
-// ============================================
-
+// ========== 講師プロフィール ==========
 const INSTRUCTOR_PROFILE = {
-
-  // 講師基本情報
   name: "大石ゆうじ",
   titleMain: "口ぐせセラピスト",
   titleSub: "口ぐせ改善コンサルタント",
   location: "長野県佐久市在住",
-
-  // セミナー・セッション情報
-  seminarSchedule: [
-    "オンラインセミナー：毎週水曜日 10:00〜 / 土曜日 10:00〜"
-  ],
-  sessionNote: "口ぐせセッション（個別）も是非ご検討ください",
-
-  // 申込先
+  seminarSchedule: ["オンラインセミナー：毎週水曜日 10:00〜 / 土曜日 10:00〜"],
+  sessionNote: "口ぐせセッション(個別)も是非ご検討ください",
   applyUrl: "https://u-word.com/horby/store/storeDetail/132935",
-  applyButtonLabel: "お申込み",
-  applyHint: "お申込みは右のQRコードからどうぞ",
-
-  // ブランド情報
   organization: "MBWコンサルティング",
   tagline: "口ぐせを変えると、人生が変わる"
 };
 
+const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxO4XfwGhNsGDsepdmcAMg_aN4zQd-2COGAn3otWg_-i2HyqR9bD9Ss885tQu7DPwOp/exec";
 
-// ===== アプリ状態 =====
+const typeLabelMap = { "D": "主導型", "i": "感化型", "S": "安定型", "C": "慎重型" };
+
+// ========== アプリ状態 ==========
 const appState = {
   profile: { name: "", job: "", age: "", gender: "", pref: "", worry: "" },
-  answers: {},          // { 1: "D", 2: "i", ... }
-  currentQ: 0,          // 0始まり
+  answers: {},
+  currentQ: 0,
   result: null,
-  // 追加質問用
   tiebreakDone: false,
   tiebreakCode: null,
   tiebreakAnswer: null
 };
 
-// ===== 画面遷移 =====
+// ========== 画面遷移 ==========
 function goToScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + name).classList.add('active');
   window.scrollTo(0, 0);
 }
 
-// ===== プロフィール入力 → 質問へ =====
 function startQuestions() {
   appState.profile.name   = document.getElementById('profile-name').value.trim();
   appState.profile.job    = document.getElementById('profile-job').value;
@@ -2838,17 +1581,14 @@ function startQuestions() {
   goToScreen('question');
 }
 
-// ===== 質問描画 =====
 function renderQuestion() {
   const q = QUESTIONS[appState.currentQ];
   const num = appState.currentQ + 1;
   const total = QUESTIONS.length;
-
   document.getElementById('q-num').textContent = num;
   document.getElementById('q-percent').textContent = Math.round(num / total * 100) + "%";
   document.getElementById('q-progress-fill').style.width = (num / total * 100) + "%";
   document.getElementById('q-text').textContent = q.question;
-
   const optsEl = document.getElementById('q-options');
   optsEl.innerHTML = "";
   const currentAns = appState.answers[q.id];
@@ -2860,8 +1600,6 @@ function renderQuestion() {
     btn.onclick = () => selectAnswer(q.id, opt.type);
     optsEl.appendChild(btn);
   });
-
-  // ボタン状態更新
   document.getElementById('q-back').disabled = (appState.currentQ === 0);
   document.getElementById('q-next').disabled = !appState.answers[q.id];
   document.getElementById('q-next').textContent = (num === total) ? "結果を見る ✓" : "次へ →";
@@ -2877,11 +1615,9 @@ function nextQuestion() {
     appState.currentQ++;
     renderQuestion();
   } else {
-    // 10問終了時に同点判定
     const scores = calculateScores(appState.answers);
     const tieCode = detectTie(scores);
     if (tieCode && !appState.tiebreakDone) {
-      // 同点なら追加質問へ
       showTiebreakQuestion(tieCode);
     } else {
       showResult();
@@ -2889,21 +1625,14 @@ function nextQuestion() {
   }
 }
 
-// ===== 追加質問（同点解消）画面 =====
 function showTiebreakQuestion(tieCode) {
   appState.tiebreakCode = tieCode;
   const q = TIEBREAK_QUESTIONS[tieCode];
-  if (!q) {
-    showResult();
-    return;
-  }
-
-  // 既存の質問画面を再利用して表示
+  if (!q) { showResult(); return; }
   document.getElementById('q-num').textContent = '+1';
   document.getElementById('q-percent').textContent = '追加質問';
   document.getElementById('q-progress-fill').style.width = '100%';
   document.getElementById('q-text').textContent = '✦ あと1問だけ：' + q.question;
-
   const optsEl = document.getElementById('q-options');
   optsEl.innerHTML = "";
   q.options.forEach(opt => {
@@ -2917,7 +1646,6 @@ function showTiebreakQuestion(tieCode) {
     };
     optsEl.appendChild(btn);
   });
-
   document.getElementById('q-back').disabled = true;
   document.getElementById('q-next').disabled = true;
   document.getElementById('q-next').style.display = 'none';
@@ -2930,16 +1658,11 @@ function prevQuestion() {
   }
 }
 
-// ===== 結果計算（PART 1のロジック + PART 2の解説 + 追加質問対応） =====
 function calculateResult() {
   const scores = calculateScores(appState.answers);
-
-  // 追加質問でTieが解消された場合、その回答を勝者に
   let primary, secondary, code;
   if (appState.tiebreakDone && appState.tiebreakAnswer) {
-    // 追加質問で選ばれたタイプを主タイプに
     primary = appState.tiebreakAnswer;
-    // サブタイプ：scores上で2番目に高いタイプ（primary除外）
     const others = ["D","i","S","C"].filter(t => t !== primary);
     others.sort((a, b) => {
       if (scores[b] !== scores[a]) return scores[b] - scores[a];
@@ -2949,57 +1672,45 @@ function calculateResult() {
     secondary = others[0];
     code = `${primary}-${secondary}`;
   } else {
-    const typeInfo = determineType(scores);
-    primary = typeInfo.primary;
-    secondary = typeInfo.secondary;
-    code = typeInfo.code;
+    const t = determineType(scores);
+    primary = t.primary; secondary = t.secondary; code = t.code;
   }
-
-  const desc = TYPE_DESCRIPTIONS[code] || null;
-  const catchcopy = TYPE_CATCHCOPY[code] || null;
-
   return {
-    primary,
-    secondary,
-    code,
-    scores,
-    desc,
-    catchcopy,
+    primary, secondary, code, scores,
+    desc: TYPE_DESCRIPTIONS[code] || null,
+    catchcopy: TYPE_CATCHCOPY[code] || null,
     tiebreakUsed: !!appState.tiebreakDone,
     tiebreakCode: appState.tiebreakCode || null,
     tiebreakAnswer: appState.tiebreakAnswer || null
   };
 }
 
-// ===== 結果描画（新レポート画面） =====
+function createScoreRow(type, value, isCheck) {
+  const max = 10;
+  const widthPct = Math.min(100, (value / max) * 100);
+  const checkMark = isCheck ? ' <span class="check">✓決定</span>' : '';
+  return `<li class="report-score-row">
+      <span class="report-score-label">${type}タイプ</span>
+      <div class="report-score-bar-bg">
+        <div class="report-score-bar-fill" data-type="${type}" style="width:${widthPct}%"></div>
+      </div>
+      <span class="report-score-value">${value}問${checkMark}</span>
+    </li>`;
+}
+
 function showResult() {
   const r = calculateResult();
   appState.result = r;
-
-  // ----- 1. ヘッダー（日付・名前） -----
   const today = new Date();
   const dateStr = `${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日`;
   document.getElementById('r-date').textContent = `診断日：${dateStr}`;
   const userName = appState.profile.name || "ゲスト";
   document.getElementById('r-name-header').textContent = `${userName} 様`;
-
-  // 印刷用も同期
-  document.getElementById('print-name').textContent = `お名前：${userName}　`;
-  document.getElementById('print-date').textContent = `診断日：${dateStr}`;
-
-  // ----- 2. タイプ表示 + キャッチコピー -----
-  const typeName = r.desc ? r.desc.name : "（不明）";
-  document.getElementById('r-type-name').textContent = typeName.replace('のあなた', '派のあなた');
-  document.getElementById('r-type-code').textContent = `（${r.code}）`;
-
+  document.getElementById('r-type-code').textContent = `(${r.code})`;
   const catchcopyText = (r.catchcopy && r.catchcopy.catchcopy) || (r.desc && r.desc.summary) || "";
   document.getElementById('r-catchcopy').textContent = catchcopyText;
-
-  // タイプ表示の見出しを画像準拠に
-  const titleFromCatch = (r.catchcopy && r.catchcopy.title) || typeName;
+  const titleFromCatch = (r.catchcopy && r.catchcopy.title) || (r.desc ? r.desc.name : "");
   document.getElementById('r-type-name').textContent = titleFromCatch;
-
-  // ----- 3. 追加質問バッジ -----
   const tieBadge = document.getElementById('r-tiebreak-badge');
   const tieDetail = document.getElementById('r-tiebreak-detail');
   if (r.tiebreakUsed) {
@@ -3008,7 +1719,6 @@ function showResult() {
     const [a, b] = r.tiebreakCode.split('-');
     document.getElementById('r-tied-types').textContent = `${a}・${b}`;
     document.getElementById('r-tied-result').textContent = titleFromCatch;
-    // 追加質問のスコア（選んだ方が1点）
     const tbScores = document.getElementById('r-tiebreak-scores');
     tbScores.innerHTML = '';
     [a, b].forEach(t => {
@@ -3019,24 +1729,17 @@ function showResult() {
     tieBadge.style.display = 'none';
     tieDetail.style.display = 'none';
   }
-
-  // ----- 4. 回答傾向グラフ -----
   const scoreList = document.getElementById('r-score-list');
   scoreList.innerHTML = '';
   ["D","i","S","C"].forEach(t => {
     scoreList.innerHTML += createScoreRow(t, r.scores[t], false);
   });
-
-  // ----- 5. よく使う口ぐせ TOP3（PART2の kuchiguse 流用） -----
   const topKuchiguseEl = document.getElementById('r-top-kuchiguse');
   const topKuchiguse = (r.desc && r.desc.kuchiguse) ? r.desc.kuchiguse.slice(0, 3) : [];
   topKuchiguseEl.innerHTML = topKuchiguse.map(k =>
     `<span class="report-tag">「${k}」</span>`
   ).join('');
-
-  // ----- 6. 口ぐせ処方箋（Before→After） -----
-  document.getElementById('r-prescription-title-type').textContent =
-    `${r.primary}：${typeLabelMap[r.primary]}`;
+  document.getElementById('r-prescription-title-type').textContent = `${r.primary}：${typeLabelMap[r.primary]}`;
   const presList = document.getElementById('r-prescription-list');
   if (r.desc && r.desc.kuchiguse && r.desc.replace) {
     presList.innerHTML = r.desc.kuchiguse.map((k, i) => `
@@ -3046,8 +1749,6 @@ function showResult() {
         <div class="report-prescription-to">「${r.desc.replace[i]}」</div>
       </div>`).join('');
   }
-
-  // ----- 7. 自分を整える口ぐせ（4タイプ別） -----
   const selfCareData = TYPE_REPORT_PARTS[r.primary] || TYPE_REPORT_PARTS.S;
   const selfCareGrid = document.getElementById('r-selfcare-grid');
   selfCareGrid.innerHTML = selfCareData.selfCare.map(s => `
@@ -3055,8 +1756,6 @@ function showResult() {
       <div class="report-selfcare-phrase">${s.phrase}</div>
       <div class="report-selfcare-scene">${s.scene}</div>
     </div>`).join('');
-
-  // ----- 8. 場面別スクリプト（Before→After）+ 実践メニュー -----
   const scriptsData = TYPE_SCRIPTS[r.primary] || TYPE_SCRIPTS.S;
   document.getElementById('r-scripts-body').innerHTML = `
     <div class="report-script-section">
@@ -3071,13 +1770,10 @@ function showResult() {
       <div class="report-script-arrow">↓</div>
       <div class="report-script-after">${scriptsData.request.after}</div>
     </div>`;
-
   const practiceList = document.getElementById('r-practice-list');
   practiceList.innerHTML = selfCareData.practice.map(p =>
     `<li class="report-practice-item">${p}</li>`
   ).join('');
-
-  // ----- 9. 悩みへの口ぐせ処方 -----
   const worry = appState.profile.worry || '特になし・回答しない';
   const worryCard = document.getElementById('r-worry-card');
   if (WORRY_PRESCRIPTIONS[r.primary] && WORRY_PRESCRIPTIONS[r.primary][worry]) {
@@ -3090,163 +1786,85 @@ function showResult() {
   } else {
     worryCard.style.display = 'none';
   }
-
-  // ----- 10. DiSCとは？ -----
   document.getElementById('r-disc-intro').textContent = DISC_OVERVIEW.intro;
   const discGrid = document.getElementById('r-disc-grid');
   discGrid.innerHTML = DISC_OVERVIEW.types.map(t => `
     <div class="disc-overview-card" data-type="${t.code}">
-      <div class="disc-overview-card-title">${t.code}（${t.name}）</div>
+      <div class="disc-overview-card-title">${t.code}(${t.name})</div>
       <div class="disc-overview-card-traits">${t.traits}</div>
       <div class="disc-overview-card-kuchiguse">
         ${t.kuchiguse.map(k => `<div>・${k}</div>`).join('')}
       </div>
     </div>`).join('');
-
-  // ----- 11. 講師プロフィール + QRコード + お申込み -----
   const ip = INSTRUCTOR_PROFILE;
   document.getElementById('r-instructor-titles').textContent = `${ip.titleMain} / ${ip.titleSub}`;
   document.getElementById('r-instructor-location').textContent = ip.location;
   document.getElementById('r-instructor-schedule').textContent = ip.seminarSchedule.join(' / ');
   document.getElementById('r-instructor-note').textContent = ip.sessionNote;
-
-  // QRコード生成
   generateQRCode(ip.applyUrl);
-
-  // 画面遷移
   goToScreen('result');
-
-  // Sheets送信（バックグラウンド）
   sendToSheets(r);
 }
 
-// ----- ヘルパー関数: スコア行のHTML生成 -----
-function createScoreRow(type, value, isCheck) {
-  const max = 10;
-  const widthPct = Math.min(100, (value / max) * 100);
-  const checkMark = isCheck ? ' <span class="check">✓決定</span>' : '';
-  return `
-    <li class="report-score-row">
-      <span class="report-score-label">${type}タイプ</span>
-      <div class="report-score-bar-bg">
-        <div class="report-score-bar-fill" data-type="${type}" style="width:${widthPct}%"></div>
-      </div>
-      <span class="report-score-value">${value}問${checkMark}</span>
-    </li>`;
-}
-
-// ----- ヘルパー: 4タイプの正式名称 -----
-const typeLabelMap = {
-  "D": "主導型",
-  "i": "感化型",
-  "S": "安定型",
-  "C": "慎重型"
-};
-
-// ----- QRコード生成（qrcode-generator ライブラリ使用） -----
 function generateQRCode(url) {
   const container = document.getElementById('r-qrcode');
   if (!container) return;
   container.innerHTML = '';
   try {
     if (typeof qrcode === 'function') {
-      // qrcode-generator API: qrcode(typeNumber=0, errorCorrectionLevel)
       const qr = qrcode(0, 'M');
       qr.addData(url);
       qr.make();
-      // SVGとして80x80で表示
       const svg = qr.createSvgTag({ cellSize: 3, margin: 4, scalable: true });
       container.innerHTML = svg;
       const svgEl = container.querySelector('svg');
       if (svgEl) {
         svgEl.setAttribute('width', '80');
         svgEl.setAttribute('height', '80');
-        svgEl.style.background = 'white';
-        svgEl.style.padding = '4px';
-        svgEl.style.borderRadius = '6px';
-        svgEl.style.border = '1px solid var(--c-border)';
       }
     } else {
-      // ライブラリ未読み込み時のフォールバック
-      container.innerHTML = `
-        <div style="width:80px;height:80px;background:white;border:1px solid var(--c-border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#888;text-align:center;line-height:1.3;">
-          QR<br>申込URL<br>右ボタン
-        </div>`;
+      container.innerHTML = `<div style="width:80px;height:80px;background:white;border:1px solid #C8D2DC;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#888;text-align:center;line-height:1.3;">QR<br>申込URL<br>右ボタン</div>`;
     }
   } catch (e) {
-    console.warn('QR生成エラー:', e);
     container.innerHTML = '<div style="font-size:9px;color:#888;padding:8px;">QR生成失敗</div>';
   }
 }
 
-// ----- お申込みボタン -----
 function openApplyUrl() {
   const url = INSTRUCTOR_PROFILE.applyUrl;
   if (url) window.open(url, '_blank');
 }
 
-// ===== Google Sheets 送信 =====
 function sendToSheets(result) {
-  // GAS URL未設定なら何もしない
-  if (!GAS_WEBHOOK_URL || GAS_WEBHOOK_URL.trim() === "") {
-    console.log("[GAS] URL未設定のためスキップ");
-    return;
-  }
-
+  if (!GAS_WEBHOOK_URL || GAS_WEBHOOK_URL.trim() === "") return;
   const payload = {
-    name:      appState.profile.name,
-    job:       appState.profile.job,
-    age:       appState.profile.age,
-    gender:    appState.profile.gender,
-    pref:      appState.profile.pref,
-    worry:     appState.profile.worry,
-    scoreD:    result.scores.D,
-    scoreI:    result.scores.i,
-    scoreS:    result.scores.S,
-    scoreC:    result.scores.C,
-    primary:   result.primary,
-    secondary: result.secondary,
-    code:      result.code,
-    typeName:  result.desc ? result.desc.name : ""
+    name: appState.profile.name, job: appState.profile.job, age: appState.profile.age,
+    gender: appState.profile.gender, pref: appState.profile.pref, worry: appState.profile.worry,
+    scoreD: result.scores.D, scoreI: result.scores.i, scoreS: result.scores.S, scoreC: result.scores.C,
+    primary: result.primary, secondary: result.secondary, code: result.code,
+    typeName: result.desc ? result.desc.name : ""
   };
-
-  // GASはCORSプリフライトを受けないので、no-cors + text/plain で送る
-  // 結果は読めないが、Sheetへの追加は成功する
   fetch(GAS_WEBHOOK_URL, {
-    method: "POST",
-    mode: "no-cors",
+    method: "POST", mode: "no-cors",
     headers: { "Content-Type": "text/plain;charset=utf-8" },
     body: JSON.stringify(payload)
-  }).then(() => {
-    console.log("[GAS] 送信完了");
-  }).catch(err => {
-    console.warn("[GAS] 送信エラー:", err);
-    // エラーはユーザーには見せない（体験を損なわない）
-  });
+  }).then(() => console.log("[GAS] 送信完了"))
+    .catch(err => console.warn("[GAS] 送信エラー:", err));
 }
 
-// ===== PDF出力（ブラウザの印刷ダイアログ経由・PC向け） =====
 function exportPDF() {
-  // モバイル端末を検出
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
   if (isMobile) {
-    // モバイルでは印刷ダイアログが期待通り動かない可能性が高いので画像保存を案内
-    if (confirm("スマホからの保存は『画像で保存』ボタンの方が確実です。\nそれでもPDFを試しますか？\n\n（PDFが出ない場合は『画像で保存』をご利用ください）")) {
+    if (confirm("スマホからの保存は『画像で保存』ボタンの方が確実です。\nそれでもPDFを試しますか？")) {
       window.print();
     } else {
       exportImage();
     }
     return;
   }
-
-  // PC：通常通り印刷ダイアログ
-  setTimeout(() => {
-    window.print();
-  }, 100);
+  setTimeout(() => window.print(), 100);
 }
 
-// ===== 端末検出ユーティリティ =====
 function isIOS() {
   return /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
     (navigator.userAgent.includes("Mac") && "ontouchend" in document);
@@ -3255,20 +1873,17 @@ function isAndroid() {
   return /Android/i.test(navigator.userAgent);
 }
 
-// ===== 画像出力（iPhone・Android・PC全対応版 v2 / Blob URL方式） =====
 async function exportImage(evt) {
   if (typeof html2canvas !== 'function') {
     alert("画像保存に必要なライブラリが読み込めませんでした。\nインターネット接続を確認して再度お試しください。");
     return;
   }
-
   const btn = evt && evt.currentTarget;
   const originalText = btn ? btn.textContent : '';
   if (btn) {
     btn.textContent = '画像生成中…(数秒お待ちください)';
     btn.disabled = true;
   }
-
   const target = document.getElementById('screen-result');
   if (!target) {
     alert("レポート画面が見つかりません");
@@ -3279,10 +1894,8 @@ async function exportImage(evt) {
   const headerEl = document.querySelector('.app-header');
   if (actionsEl) actionsEl.style.display = 'none';
   if (headerEl) headerEl.style.display = 'none';
-
   window.scrollTo(0, 0);
   await new Promise(r => setTimeout(r, 100));
-
   try {
     const captureScale = isIOS() ? 1.2 : 2;
     const canvas = await html2canvas(target, {
@@ -3293,162 +1906,73 @@ async function exportImage(evt) {
       allowTaint: false,
       windowWidth: target.scrollWidth,
       windowHeight: target.scrollHeight,
-      // ★ iOS Safari対応: CSS変数を実値に強制変換
       onclone: (clonedDoc) => {
         const style = clonedDoc.createElement('style');
         style.textContent = `
-          /* CSS変数を実値で上書き(html2canvas iOS対応) */
-          #screen-result, #screen-result * {
-            color: #1A2A3A !important;
-          }
+          #screen-result, #screen-result * { color: #1A2A3A !important; }
           #screen-result .report-header,
           #screen-result .report-header *,
           #screen-result .report-card-header,
-          #screen-result .report-card-header * {
-            color: #FFFFFF !important;
-          }
-          #screen-result .report-header {
-            background: #2A8F66 !important;
-          }
-          #screen-result .report-card-header {
-            background: #2A8F66 !important;
-          }
-          #screen-result .report-type-card {
-            background: #F0F9F4 !important;
-            border-color: #C8E6D5 !important;
-          }
-          #screen-result .report-type-label {
-            color: #2A8F66 !important;
-            background: #FFFFFF !important;
-          }
-          #screen-result .report-type-name .type-code {
-            color: #2A8F66 !important;
-          }
-          #screen-result .report-tiebreak-badge {
-            background: #F4ECFF !important;
-            border-color: #B89AE5 !important;
-            color: #6B4FA0 !important;
-          }
-          #screen-result .report-tiebreak-badge strong {
-            color: #4A2F7A !important;
-          }
-          #screen-result .report-card {
-            background: #FFFFFF !important;
-            border-color: #C8D2DC !important;
-          }
-          #screen-result .report-tag {
-            background: #FDECEC !important;
-            color: #C84A4A !important;
-          }
-          #screen-result .report-tag:nth-child(2) {
-            background: #FFF6E0 !important;
-            color: #B68120 !important;
-          }
-          #screen-result .report-tag:nth-child(3) {
-            background: #E8F4E8 !important;
-            color: #4FA34F !important;
-          }
-          #screen-result .report-prescription-from {
-            background: #F4F4F8 !important;
-          }
-          #screen-result .report-prescription-to {
-            background: #E8F4E8 !important;
-          }
-          #screen-result .report-prescription-arrow {
-            color: #2A8F66 !important;
-          }
-          #screen-result .report-selfcare-card:nth-child(1) {
-            background: #FFF1E8 !important;
-            border-color: #FFB57A !important;
-          }
-          #screen-result .report-selfcare-card:nth-child(2) {
-            background: #FFFAE5 !important;
-            border-color: #E8C46B !important;
-          }
-          #screen-result .report-selfcare-card:nth-child(3) {
-            background: #E8F4F8 !important;
-            border-color: #7BC1D6 !important;
-          }
-          #screen-result .report-script-before {
-            background: #FDECEC !important;
-          }
-          #screen-result .report-script-after {
-            background: #E8F4E8 !important;
-          }
+          #screen-result .report-card-header * { color: #FFFFFF !important; }
+          #screen-result .report-header { background: #2A8F66 !important; }
+          #screen-result .report-card-header { background: #2A8F66 !important; }
+          #screen-result .report-type-card { background: #F0F9F4 !important; border-color: #C8E6D5 !important; }
+          #screen-result .report-type-label { color: #2A8F66 !important; background: #FFFFFF !important; }
+          #screen-result .report-type-name .type-code { color: #2A8F66 !important; }
+          #screen-result .report-tiebreak-badge { background: #F4ECFF !important; border-color: #B89AE5 !important; color: #6B4FA0 !important; }
+          #screen-result .report-tiebreak-badge strong { color: #4A2F7A !important; }
+          #screen-result .report-card { background: #FFFFFF !important; border-color: #C8D2DC !important; }
+          #screen-result .report-tag { background: #FDECEC !important; color: #C84A4A !important; }
+          #screen-result .report-tag:nth-child(2) { background: #FFF6E0 !important; color: #B68120 !important; }
+          #screen-result .report-tag:nth-child(3) { background: #E8F4E8 !important; color: #4FA34F !important; }
+          #screen-result .report-prescription-from { background: #F4F4F8 !important; }
+          #screen-result .report-prescription-to { background: #E8F4E8 !important; }
+          #screen-result .report-prescription-arrow { color: #2A8F66 !important; }
+          #screen-result .report-selfcare-card:nth-child(1) { background: #FFF1E8 !important; border-color: #FFB57A !important; }
+          #screen-result .report-selfcare-card:nth-child(2) { background: #FFFAE5 !important; border-color: #E8C46B !important; }
+          #screen-result .report-selfcare-card:nth-child(3) { background: #E8F4F8 !important; border-color: #7BC1D6 !important; }
+          #screen-result .report-script-before { background: #FDECEC !important; }
+          #screen-result .report-script-after { background: #E8F4E8 !important; }
           #screen-result .report-script-label,
-          #screen-result .report-script-arrow {
-            color: #2A8F66 !important;
-          }
-          #screen-result .report-practice-item {
-            border-left-color: #2A8F66 !important;
-          }
-          #screen-result .report-worry-section {
-            background: #F0F9F4 !important;
-          }
-          #screen-result .report-worry-label {
-            color: #2A8F66 !important;
-          }
-          #screen-result .report-worry-pattern-text {
-            background: #FFFFFF !important;
-          }
-          #screen-result .report-worry-suggestion {
-            border-left-color: #2A8F66 !important;
-          }
-          #screen-result .report-score-bar-bg {
-            background: #EEF1F4 !important;
-          }
+          #screen-result .report-script-arrow { color: #2A8F66 !important; }
+          #screen-result .report-practice-item { border-left-color: #2A8F66 !important; }
+          #screen-result .report-worry-section { background: #F0F9F4 !important; }
+          #screen-result .report-worry-label { color: #2A8F66 !important; }
+          #screen-result .report-worry-pattern-text { background: #FFFFFF !important; }
+          #screen-result .report-worry-suggestion { border-left-color: #2A8F66 !important; }
+          #screen-result .report-score-bar-bg { background: #EEF1F4 !important; }
           #screen-result .report-score-bar-fill[data-type="D"] { background: #E07A7A !important; }
           #screen-result .report-score-bar-fill[data-type="i"] { background: #E8B645 !important; }
           #screen-result .report-score-bar-fill[data-type="S"] { background: #4FA34F !important; }
           #screen-result .report-score-bar-fill[data-type="C"] { background: #5B8DEF !important; }
-          #screen-result .disc-overview-card[data-type="D"] {
-            border-color: #E07A7A !important; background: #FDECEC !important;
-          }
-          #screen-result .disc-overview-card[data-type="i"] {
-            border-color: #E8B645 !important; background: #FFF6E0 !important;
-          }
-          #screen-result .disc-overview-card[data-type="S"] {
-            border-color: #4FA34F !important; background: #E8F4E8 !important;
-          }
-          #screen-result .disc-overview-card[data-type="C"] {
-            border-color: #5B8DEF !important; background: #E8F0FE !important;
-          }
+          #screen-result .disc-overview-card[data-type="D"] { border-color: #E07A7A !important; background: #FDECEC !important; }
+          #screen-result .disc-overview-card[data-type="i"] { border-color: #E8B645 !important; background: #FFF6E0 !important; }
+          #screen-result .disc-overview-card[data-type="S"] { border-color: #4FA34F !important; background: #E8F4E8 !important; }
+          #screen-result .disc-overview-card[data-type="C"] { border-color: #5B8DEF !important; background: #E8F0FE !important; }
           #screen-result .disc-overview-card[data-type="D"] .disc-overview-card-title { color: #C84A4A !important; }
           #screen-result .disc-overview-card[data-type="i"] .disc-overview-card-title { color: #B68120 !important; }
           #screen-result .disc-overview-card[data-type="S"] .disc-overview-card-title { color: #2D7A2D !important; }
           #screen-result .disc-overview-card[data-type="C"] .disc-overview-card-title { color: #3D6FCF !important; }
-          #screen-result .report-instructor-block {
-            background: #FFF1E8 !important;
-          }
-          #screen-result .instructor-info .label {
-            color: #C84A4A !important;
-          }
-          #screen-result .instructor-qr-button {
-            background: #2A8F66 !important;
-            color: #FFFFFF !important;
-          }
+          #screen-result .report-instructor-block { background: #FFF1E8 !important; }
+          #screen-result .instructor-info .label { color: #C84A4A !important; }
+          #screen-result .instructor-qr-button { background: #2A8F66 !important; color: #FFFFFF !important; }
         `;
         clonedDoc.head.appendChild(style);
       }
     });
-
     if (actionsEl) actionsEl.style.display = '';
     if (headerEl) headerEl.style.display = '';
-
     const userName = (appState.profile.name || 'guest').replace(/[\s\\/:*?"<>|]/g, '_');
     const today = new Date();
     const dateStr = `${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}`;
     const fileName = `口ぐせ診断_${userName}_${dateStr}.png`;
-
     canvas.toBlob((blob) => {
       if (!blob) {
         alert("画像の生成に失敗しました。もう一度お試しください。");
         if (btn) { btn.textContent = originalText; btn.disabled = false; }
         return;
       }
-
       const blobUrl = URL.createObjectURL(blob);
-
       if (isIOS()) {
         showImageInOverlay(blobUrl, fileName);
       } else if (isAndroid()) {
@@ -3456,10 +1980,8 @@ async function exportImage(evt) {
       } else {
         downloadImageForPC(blobUrl, fileName);
       }
-
       if (btn) { btn.textContent = originalText; btn.disabled = false; }
     }, 'image/png', 0.92);
-
   } catch (e) {
     console.error('画像保存エラー:', e);
     if (actionsEl) actionsEl.style.display = '';
@@ -3469,89 +1991,12 @@ async function exportImage(evt) {
   }
 }
 
-  const btn = evt && evt.currentTarget;
-  const originalText = btn ? btn.textContent : '';
-  if (btn) {
-    btn.textContent = '画像生成中…(数秒お待ちください)';
-    btn.disabled = true;
-  }
-
-  const target = document.getElementById('screen-result');
-  if (!target) {
-    alert("レポート画面が見つかりません");
-    if (btn) { btn.textContent = originalText; btn.disabled = false; }
-    return;
-  }
-  const actionsEl = target.querySelector('.result-actions');
-  const headerEl = document.querySelector('.app-header');
-  if (actionsEl) actionsEl.style.display = 'none';
-  if (headerEl) headerEl.style.display = 'none';
-
-  window.scrollTo(0, 0);
-  await new Promise(r => setTimeout(r, 100));
-
-  try {
-    const captureScale = isIOS() ? 1.2 : 2;
-    const canvas = await html2canvas(target, {
-      scale: captureScale,
-      backgroundColor: '#FFFFFF',
-      logging: false,
-      useCORS: true,
-      allowTaint: false,
-      windowWidth: target.scrollWidth,
-      windowHeight: target.scrollHeight
-    });
-
-    if (actionsEl) actionsEl.style.display = '';
-    if (headerEl) headerEl.style.display = '';
-
-    const userName = (appState.profile.name || 'guest').replace(/[\s\\/:*?"<>|]/g, '_');
-    const today = new Date();
-    const dateStr = `${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}`;
-    const fileName = `口ぐせ診断_${userName}_${dateStr}.png`;
-
-    canvas.toBlob((blob) => {
-      if (!blob) {
-        alert("画像の生成に失敗しました。もう一度お試しください。");
-        if (btn) { btn.textContent = originalText; btn.disabled = false; }
-        return;
-      }
-
-      const blobUrl = URL.createObjectURL(blob);
-
-      if (isIOS()) {
-        showImageInOverlay(blobUrl, fileName);
-      } else if (isAndroid()) {
-        downloadImageForAndroid(blobUrl, fileName);
-      } else {
-        downloadImageForPC(blobUrl, fileName);
-      }
-
-      if (btn) { btn.textContent = originalText; btn.disabled = false; }
-    }, 'image/png', 0.92);
-
-  } catch (e) {
-    console.error('画像保存エラー:', e);
-    if (actionsEl) actionsEl.style.display = '';
-    if (headerEl) headerEl.style.display = '';
-    alert("画像の保存に失敗しました。\nもう一度試すか、PCからお試しください。\n\nエラー: " + (e.message || e));
-    if (btn) { btn.textContent = originalText; btn.disabled = false; }
-  }
-}
-
-// ===== iPhone/iPad向け: 画面内オーバーレイで画像表示 =====
 function showImageInOverlay(blobUrl, fileName) {
   const existing = document.getElementById('image-save-overlay');
   if (existing) existing.remove();
-
   const overlay = document.createElement('div');
   overlay.id = 'image-save-overlay';
-  overlay.style.cssText = `
-    position: fixed; inset: 0; background: #000;
-    z-index: 99999; overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  `;
-
+  overlay.style.cssText = `position: fixed; inset: 0; background: #000; z-index: 99999; overflow-y: auto; -webkit-overflow-scrolling: touch;`;
   overlay.innerHTML = `
     <div style="position: sticky; top: 0; background: #2A8F66; color: white; padding: 14px 16px 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.4); z-index: 10;">
       <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px; padding-right: 80px;">📸 画像を写真に保存する手順</div>
@@ -3565,23 +2010,13 @@ function showImageInOverlay(blobUrl, fileName) {
       <div id="overlay-loading" style="color: white; padding: 40px 20px; text-align: center; font-size: 14px;">画像を読み込み中…</div>
     </div>
   `;
-
   document.body.appendChild(overlay);
   document.body.style.overflow = 'hidden';
-
   const wrap = overlay.querySelector('#overlay-img-wrap');
   const loading = overlay.querySelector('#overlay-loading');
   const img = new Image();
-  img.style.cssText = `
-    width: 100%; max-width: 100%; height: auto; display: block;
-    border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.5);
-    -webkit-touch-callout: default !important;
-    -webkit-user-select: auto !important;
-    user-select: auto !important;
-    pointer-events: auto !important;
-  `;
+  img.style.cssText = `width: 100%; max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.5); -webkit-touch-callout: default !important; -webkit-user-select: auto !important; user-select: auto !important; pointer-events: auto !important;`;
   img.alt = fileName;
-
   img.onload = () => {
     if (loading) loading.remove();
     wrap.appendChild(img);
@@ -3589,9 +2024,7 @@ function showImageInOverlay(blobUrl, fileName) {
   img.onerror = () => {
     if (loading) loading.textContent = '画像の読み込みに失敗しました。閉じてもう一度お試しください。';
   };
-
   img.src = blobUrl;
-
   document.getElementById('overlay-close-btn').onclick = () => {
     overlay.remove();
     document.body.style.overflow = '';
@@ -3599,7 +2032,6 @@ function showImageInOverlay(blobUrl, fileName) {
   };
 }
 
-// ===== Android向け: ダウンロード =====
 function downloadImageForAndroid(blobUrl, fileName) {
   const a = document.createElement('a');
   a.href = blobUrl;
@@ -3608,13 +2040,11 @@ function downloadImageForAndroid(blobUrl, fileName) {
   a.click();
   document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(blobUrl), 2000);
-
   setTimeout(() => {
     alert("画像をダウンロードしました!\n\n「ダウンロード」フォルダまたは「ギャラリー」から確認できます。");
   }, 500);
 }
 
-// ===== PC向け: 通常のダウンロード =====
 function downloadImageForPC(blobUrl, fileName) {
   const a = document.createElement('a');
   a.href = blobUrl;
@@ -3625,7 +2055,6 @@ function downloadImageForPC(blobUrl, fileName) {
   setTimeout(() => URL.revokeObjectURL(blobUrl), 2000);
 }
 
-// ===== やり直し =====
 function restart() {
   appState.profile = { name: "", job: "", age: "", gender: "", pref: "", worry: "" };
   appState.answers = {};
@@ -3634,14 +2063,12 @@ function restart() {
   appState.tiebreakDone = false;
   appState.tiebreakCode = null;
   appState.tiebreakAnswer = null;
-  // 入力リセット
   document.getElementById('profile-name').value = "";
   document.getElementById('profile-job').value = "";
   document.getElementById('profile-age').value = "";
   document.getElementById('profile-gender').value = "";
   document.getElementById('profile-pref').value = "";
   document.getElementById('profile-worry').value = "";
-  // 「次へ」ボタンを再表示（追加質問で隠していた可能性）
   document.getElementById('q-next').style.display = '';
   goToScreen('start');
 }
