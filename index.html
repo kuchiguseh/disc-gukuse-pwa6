@@ -1155,7 +1155,7 @@ input, select, textarea { font: inherit; color: inherit; }
 
     <div class="result-actions">
       <button class="btn btn-accent" onclick="exportPDF()">📄 PDFで保存(PC向け)</button>
-      <button class="btn btn-accent" onclick="exportImage(event)" style="background:#3D6FCF;">📷 画像で保存(スマホ推奨)</button>
+      <button class="btn btn-accent" onclick="showSaveGuide(event)" style="background:#3D6FCF;">📷 画像で保存(スマホ推奨)</button>
       <button class="btn btn-ghost" onclick="restart()">最初からやり直す</button>
     </div>
   </section>
@@ -1871,6 +1871,84 @@ function isIOS() {
 }
 function isAndroid() {
   return /Android/i.test(navigator.userAgent);
+}
+
+// ===== 画像で保存ガイド (端末標準のスクショ機能を案内) =====
+function showSaveGuide(evt) {
+  const existing = document.getElementById('save-guide-overlay');
+  if (existing) { existing.remove(); document.body.style.overflow = ''; return; }
+
+  let title, steps, tip;
+  if (isIOS()) {
+    title = "📸 iPhoneで画像保存する方法";
+    steps = [
+      '<strong>① レポート全体を画像化</strong><br>サイドボタン + 音量上ボタンを<u>同時押し</u>',
+      '<strong>② 左下のサムネイルをタップ</strong>',
+      '<strong>③ 上の「フルページ」をタップ</strong><br>するとレポート全体が画像化されます',
+      '<strong>④ 右上の「完了」→「PDFを写真に保存」</strong>',
+    ];
+    tip = '※ Safariの「フルページ」機能を使うと、画面に映っていない下の方まで全部1枚に収まります';
+  } else if (isAndroid()) {
+    title = "📸 Androidで画像保存する方法";
+    steps = [
+      '<strong>① 電源ボタン + 音量下ボタンを<u>同時押し</u></strong>',
+      '<strong>② 「キャプチャ範囲を拡大」または「スクロール」をタップ</strong><br>(機種により表示が異なります)',
+      '<strong>③ 下までスクロールして範囲を選択</strong>',
+      '<strong>④ 保存をタップ</strong> → 画像フォルダに保存されます',
+    ];
+    tip = '※ お使いの機種でスクロールスクショができない場合は、画面ごとに通常のスクショを撮ってください';
+  } else {
+    title = "💻 PCで画像保存する方法";
+    steps = [
+      '<strong>① キーボードで F12 キーを押す</strong> (デベロッパーツールを開く)',
+      '<strong>② Ctrl + Shift + P</strong> を押す',
+      '<strong>③ 「Capture full size screenshot」</strong> と入力 → Enter',
+      '<strong>④ 自動でPNG画像がダウンロードされます</strong>',
+    ];
+    tip = '※ もっと簡単にしたい場合は、Windowsなら「Snipping Tool」、Macなら「Cmd+Shift+4」で範囲選択スクショができます';
+  }
+
+  const overlay = document.createElement('div');
+  overlay.id = 'save-guide-overlay';
+  overlay.style.cssText = `
+    position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+    z-index: 99999; overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 20px;
+  `;
+
+  const stepsHtml = steps.map((s, i) => `
+    <div style="background: #FFFFFF; border-left: 4px solid #2A8F66; padding: 14px 16px; margin-bottom: 10px; border-radius: 6px; font-size: 15px; line-height: 1.7; color: #1A2A3A;">
+      ${s}
+    </div>
+  `).join('');
+
+  overlay.innerHTML = `
+    <div style="background: #FFFFFF; max-width: 500px; width: 100%; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.4); margin: auto;">
+      <div style="background: linear-gradient(135deg, #2A8F66 0%, #3BAA7E 100%); color: #FFFFFF; padding: 18px 22px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="font-size: 17px; font-weight: 700; color: #FFFFFF;">${title}</div>
+        <button id="guide-close-btn" style="background: rgba(255,255,255,0.25); color: #FFFFFF; border: none; border-radius: 999px; width: 32px; height: 32px; font-size: 16px; font-weight: 700; cursor: pointer;">✕</button>
+      </div>
+      <div style="padding: 20px 22px; background: #F0F9F4;">
+        ${stepsHtml}
+        <div style="font-size: 12px; color: #5A6B7B; line-height: 1.6; margin-top: 12px; padding: 10px 12px; background: #FFFAE5; border-radius: 6px;">
+          ${tip}
+        </div>
+        <button id="guide-ok-btn" style="display: block; width: 100%; margin-top: 16px; background: #2A8F66; color: #FFFFFF; border: none; border-radius: 8px; padding: 14px; font-size: 15px; font-weight: 700; cursor: pointer;">わかりました</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+  document.body.style.overflow = 'hidden';
+
+  const closeOverlay = () => {
+    overlay.remove();
+    document.body.style.overflow = '';
+  };
+  document.getElementById('guide-close-btn').onclick = closeOverlay;
+  document.getElementById('guide-ok-btn').onclick = closeOverlay;
 }
 
 // ===== iOS Safari対策: DOM要素に直接 style 属性で色を強制適用する =====
